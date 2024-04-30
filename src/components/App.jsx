@@ -1,3 +1,10 @@
+// mui
+import { CssBaseline } from '@mui/material';
+
+// components
+import { Navbar, Router } from './';
+
+//
 export default function App() {
   //
   // hooks
@@ -6,7 +13,9 @@ export default function App() {
   //
   return (
     <>
-      <h1>App</h1>
+      <CssBaseline />
+      <Navbar />
+      <Router />
     </>
   );
 }
