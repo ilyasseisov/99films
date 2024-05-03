@@ -1,8 +1,8 @@
 // mui
-import { CssBaseline } from '@mui/material';
+import { Grid, CssBaseline } from '@mui/material';
 
 // components
-import { Navbar, Router } from './';
+import { Navbar, Sidebar, Router } from './';
 
 //
 export default function App() {
@@ -14,8 +14,24 @@ export default function App() {
   return (
     <>
       <CssBaseline />
-      <Navbar />
-      <Router />
+
+      <Grid container spacing={2}>
+        <Grid bgcolor='aqua' item xs={12}>
+          <Navbar />
+        </Grid>
+        <Grid
+          bgcolor='blueviolet'
+          item
+          md={3}
+          xl={2}
+          sx={{ display: { xs: 'none', md: 'block' } }}
+        >
+          <Sidebar />
+        </Grid>
+        <Grid item xs={9} xl={10}>
+          <Router />
+        </Grid>
+      </Grid>
     </>
   );
 }

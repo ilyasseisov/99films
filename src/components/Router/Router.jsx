@@ -16,6 +16,7 @@ export default function Router() {
         <Route path='/movie/:id' element={<MovieInformation />} />
         <Route path='/actors/:id' element={<Actors />} />
         <Route path='/profile/:id' element={<Profile />} />
+        <Route path='*' element={<h2>404</h2>} />
       </Routes>
     </>
   );
