@@ -1,3 +1,5 @@
+// react
+import { useState } from 'react';
 // mui
 import {
   Menu,
@@ -14,8 +16,16 @@ import {
   Toolbar,
   Typography,
   Avatar,
+  Drawer,
+  Button,
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
+
+// useTheme (mui)
+import { useTheme } from '@mui/material/styles';
+
+// components
+import { Sidebar } from '..';
 
 // styling
 const Search = styled('div')(({ theme }) => ({
@@ -50,8 +60,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Navbar() {
   // hooks
+  const theme = useTheme();
+  const [isDrawerOpened, setIsDrawerOpened] = useState(false);
   // local variables
+  const isAuth = true;
   // functions
+  function toggleDrawer() {
+    setIsDrawerOpened((prev) => !prev);
+  }
   // return
   return (
     <>
@@ -78,6 +94,7 @@ export default function Navbar() {
                   color='inherit'
                   aria-label='open drawer'
                   sx={{ display: { xs: 'block', md: 'none' } }}
+                  onClick={toggleDrawer}
                 >
                   <Menu />
                 </IconButton>
@@ -125,15 +142,42 @@ export default function Navbar() {
                   order: { xs: '2', md: '3' },
                 }}
               >
-                <Avatar
-                  alt='user'
-                  src='https://mui.com/static/images/avatar/2.jpg'
-                />
+                {isAuth ? (
+                  <>
+                    <Button
+                      sx={{
+                        color: `${theme.palette.white.main}`,
+                        borderColor: `${theme.palette.white.main}`,
+                        display: { xs: 'none', sm: 'block' },
+                      }}
+                      variant='outlined'
+                    >
+                      Account
+                    </Button>
+                    <Avatar
+                      alt='user'
+                      src='https://mui.com/static/images/avatar/2.jpg'
+                      sx={{ marginLeft: '12px' }}
+                    />
+                  </>
+                ) : (
+                  <Button
+                    sx={{
+                      color: `${theme.palette.white.main}`,
+                      borderColor: `${theme.palette.white.main}`,
+                    }}
+                    variant='outlined'
+                  >
+                    Login
+                  </Button>
+                )}
+
                 <IconButton
                   size='large'
                   edge='end'
                   color='inherit'
                   aria-label='theme color mode'
+                  sx={{ marginLeft: '12px' }}
                 >
                   <LightMode />
                 </IconButton>
@@ -142,6 +186,16 @@ export default function Navbar() {
           </Toolbar>
         </AppBar>
       </Box>
+
+      <Drawer
+        open={isDrawerOpened}
+        anchor='right'
+        onClose={() => {
+          setIsDrawerOpened((prev) => !prev);
+        }}
+      >
+        <Sidebar />
+      </Drawer>
     </>
   );
 }
