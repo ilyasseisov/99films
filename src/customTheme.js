@@ -16,5 +16,17 @@ export const customTheme = createTheme({
     white: {
       main: '#FFFFFF',
     },
+    greyLight: {
+      main: '#FAFAFA',
+    },
+  },
+  //
+  typography: {
+    fontFamily: [
+      'Plus Jakarta Sans',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+    ].join(','),
   },
 });

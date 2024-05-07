@@ -73,7 +73,8 @@ export default function Navbar() {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
-          position='static'
+          position='fixed'
+          elevation='0'
           sx={{ padding: { xs: '8px 0px 20px 0px', md: '8px 0px 8px 0px' } }}
         >
           <Toolbar>
@@ -148,7 +149,6 @@ export default function Navbar() {
                       sx={{
                         color: `${theme.palette.white.main}`,
                         borderColor: `${theme.palette.white.main}`,
-                        display: { xs: 'none', sm: 'block' },
                       }}
                       variant='outlined'
                     >
@@ -157,7 +157,10 @@ export default function Navbar() {
                     <Avatar
                       alt='user'
                       src='https://mui.com/static/images/avatar/2.jpg'
-                      sx={{ marginLeft: '12px' }}
+                      sx={{
+                        marginLeft: '12px',
+                        display: { xs: 'none', sm: 'block' },
+                      }}
                     />
                   </>
                 ) : (
@@ -192,6 +195,9 @@ export default function Navbar() {
         anchor='right'
         onClose={() => {
           setIsDrawerOpened((prev) => !prev);
+        }}
+        PaperProps={{
+          sx: { width: { xs: '80%', sm: '300px' } },
         }}
       >
         <Sidebar />
