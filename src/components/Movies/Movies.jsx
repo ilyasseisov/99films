@@ -1,3 +1,5 @@
+import MovieSingle from '../MovieSingle/MovieSingle';
+
 export default function Movies() {
   // hooks
   // local variables
@@ -6,6 +8,7 @@ export default function Movies() {
   return (
     <>
       <h1>Movies</h1>
+      <MovieSingle />
     </>
   );
 }

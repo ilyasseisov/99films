@@ -74,7 +74,7 @@ export default function Navbar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
           position='fixed'
-          elevation='0'
+          elevation={0}
           sx={{ padding: { xs: '8px 0px 20px 0px', md: '8px 0px 8px 0px' } }}
         >
           <Toolbar>
