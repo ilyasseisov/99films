@@ -4,3 +4,81 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+.MovieInformation__cover {
+  width: 200px;
+}
+@media (min-width: 600px) {
+  .MovieInformation__cover {
+    width: 240px;
+  }
+}
+@media (min-width: 1200px) {
+  .MovieInformation__cover {
+    width: 280px;
+  }
+}
+@media (min-width: 1536px) {
+  .MovieInformation__cover {
+    width: 320px;
+  }
+}
+@media (min-width: 1800px) {
+  .MovieInformation__cover {
+    width: 360px;
+  }
+}
+@media (min-width: 1920px) {
+  .MovieInformation__cover {
+    width: 400px;
+  }
+}
+
+.MovieInformation__video {
+  width: 311.1111111111px;
+  height: 175px;
+}
+@media (min-width: 600px) {
+  .MovieInformation__video {
+    width: 560px;
+    height: 315px;
+  }
+}
+@media (min-width: 1200px) {
+  .MovieInformation__video {
+    width: 1120px;
+    height: 630px;
+  }
+}
+
+swiper-container {
+  width: 100%;
+  height: 600px;
+  padding: 20px;
+}
+swiper-container swiper-slide {
+  background: #c4d080;
+  border-radius: 20px;
+  position: relative;
+}
+swiper-container swiper-slide .img-container {
+  width: 100%;
+  height: 100%;
+}
+swiper-container swiper-slide .img-container::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 20px;
+  z-index: 1;
+}
+swiper-container swiper-slide .img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}

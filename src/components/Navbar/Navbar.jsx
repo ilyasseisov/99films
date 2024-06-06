@@ -1,10 +1,10 @@
 // react
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 // mui
 import {
   Menu,
   Search as SearchIcon,
-  DarkMode,
+  DarkModeOutlined,
   LightMode,
 } from '@mui/icons-material';
 import {
@@ -15,7 +15,6 @@ import {
   InputBase,
   Toolbar,
   Typography,
-  Avatar,
   Drawer,
   Button,
 } from '@mui/material';
@@ -26,6 +25,9 @@ import { useTheme } from '@mui/material/styles';
 
 // components
 import { Sidebar } from '..';
+
+// color mode context
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 
 // styling
 const Search = styled('div')(({ theme }) => ({
@@ -61,6 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Navbar() {
   // hooks
   const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
   // local variables
   const isAuth = true;
@@ -75,7 +78,13 @@ export default function Navbar() {
         <AppBar
           position='fixed'
           elevation={0}
-          sx={{ padding: { xs: '8px 0px 20px 0px', md: '8px 0px 8px 0px' } }}
+          sx={{
+            bgcolor:
+              theme.palette.mode === 'light'
+                ? theme.palette.primary.main
+                : theme.palette.primary.dark,
+            padding: { xs: '8px 0px 20px 0px', md: '8px 0px 8px 0px' },
+          }}
         >
           <Toolbar>
             <Grid container>
@@ -147,27 +156,25 @@ export default function Navbar() {
                   <>
                     <Button
                       sx={{
-                        color: `${theme.palette.white.main}`,
-                        borderColor: `${theme.palette.white.main}`,
+                        color: '#fff',
+                        borderColor: '#fff',
+                        '&:hover': {
+                          borderColor: '#fff',
+                        },
                       }}
                       variant='outlined'
                     >
                       Account
                     </Button>
-                    <Avatar
-                      alt='user'
-                      src='https://mui.com/static/images/avatar/2.jpg'
-                      sx={{
-                        marginLeft: '12px',
-                        display: { xs: 'none', sm: 'block' },
-                      }}
-                    />
                   </>
                 ) : (
                   <Button
                     sx={{
-                      color: `${theme.palette.white.main}`,
-                      borderColor: `${theme.palette.white.main}`,
+                      color: '#fff',
+                      borderColor: '#fff',
+                      '&:hover': {
+                        borderColor: '#fff',
+                      },
                     }}
                     variant='outlined'
                   >
@@ -181,8 +188,13 @@ export default function Navbar() {
                   color='inherit'
                   aria-label='theme color mode'
                   sx={{ marginLeft: '12px' }}
+                  onClick={colorMode.toggleColorMode}
                 >
-                  <LightMode />
+                  {theme.palette.mode === 'dark' ? (
+                    <DarkModeOutlined />
+                  ) : (
+                    <LightMode />
+                  )}
                 </IconButton>
               </Grid>
             </Grid>

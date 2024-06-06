@@ -8,12 +8,12 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+// mui icons
+import { SlideshowRounded } from '@mui/icons-material';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
 // router
 import { Link } from 'react-router-dom';
-// icons
-import icons from '../../assets/icons';
 
 export default function Sidebar() {
   // hooks
@@ -26,7 +26,7 @@ export default function Sidebar() {
     <>
       <Box
         sx={{
-          bgcolor: `${theme.palette.greyLight.main}`,
+          bgcolor: theme.palette.action.hover,
           position: 'fixed',
           overflowY: 'auto',
           height: '100%',
@@ -34,18 +34,18 @@ export default function Sidebar() {
         }}
       >
         <List>
-          <ListSubheader sx={{ bgcolor: `${theme.palette.greyLight.main}` }}>
-            Categories
-          </ListSubheader>
+          <ListSubheader sx={{ bgcolor: 'inherit' }}>Categories</ListSubheader>
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -58,12 +58,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -76,12 +78,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -96,19 +100,19 @@ export default function Sidebar() {
         <Divider />
 
         <List>
-          <ListSubheader sx={{ bgcolor: `${theme.palette.greyLight.main}` }}>
-            Genres
-          </ListSubheader>
+          <ListSubheader sx={{ bgcolor: 'inherit' }}>Genres</ListSubheader>
 
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -121,12 +125,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -139,12 +145,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -157,12 +165,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -175,12 +185,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -193,12 +205,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -211,12 +225,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -229,12 +245,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -247,12 +265,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -265,12 +285,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -283,12 +305,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -301,12 +325,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -319,12 +345,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -337,12 +365,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -355,12 +385,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -373,12 +405,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -391,12 +425,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{
@@ -409,12 +445,14 @@ export default function Sidebar() {
           <Link
             style={{
               textDecoration: 'none',
-              color: `${theme.palette.dark.main}`,
+              color: theme.palette.text.primary,
             }}
           >
             <ListItemButton onClick={() => {}}>
-              <ListItemIcon sx={{ height: '32px' }}>
-                <img src={icons.icon} />
+              <ListItemIcon>
+                <SlideshowRounded
+                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{

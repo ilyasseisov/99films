@@ -16,11 +16,10 @@ export default function App() {
       <CssBaseline />
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sx={{ marginBottom: { xs: '120px', md: '64px' } }}>
+        <Grid item xs={12} sx={{ marginBottom: { xs: '140px', md: '64px' } }}>
           <Navbar />
         </Grid>
         <Grid
-          bgcolor='lightgoldenrodyellow'
           item
           md={4}
           lg={3}
@@ -31,7 +30,7 @@ export default function App() {
         >
           <Sidebar />
         </Grid>
-        <Grid bgcolor='lightcyan' item xs={12} md={8} lg={9} xl={10}>
+        <Grid item xs={12} md={8} lg={9} xl={10}>
           <Router />
         </Grid>
       </Grid>

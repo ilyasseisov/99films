@@ -1,25 +1,55 @@
 // mui
-import { Rating, Typography, Box, Stack } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 // router
 import { Link } from 'react-router-dom';
-// icons
+// images
 import imgs from '../../assets/imgs';
+// useTheme (mui)
+import { useTheme } from '@mui/material/styles';
 
-export default function Movie() {
+export default function MovieSingle() {
   // hooks
+  const theme = useTheme();
   // local variables
-  console.log(imgs);
   // functions
   // return
   return (
     <>
-      <Link to='google.com'>
-        <Stack>
-          <img alt={'movie title'} src={imgs.defaultMovieImage} />
-          <Stack>
-            <img alt='movie rating' src={imgs.star} />
-          </Stack>
-        </Stack>
+      <Link
+        to='google.com'
+        style={{
+          textDecoration: 'none',
+          color: theme.palette.text.primary,
+        }}
+      >
+        <Box
+          sx={{
+            padding: { sm: '20px 20px 20px 0px' },
+            marginBottom: '12px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <img
+            alt={'movie title'}
+            src={imgs.defaultMovieImage}
+            style={{
+              width: '200px',
+              marginBottom: '12px',
+              borderRadius: '12px',
+            }}
+          />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <img style={{ width: '32px' }} alt='movie rating' src={imgs.star} />
+            <Typography variant='h6' sx={{ opacity: 0.8 }}>
+              8.5
+            </Typography>
+          </Box>
+          <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+            Movie name
+          </Typography>
+        </Box>
       </Link>
     </>
   );
