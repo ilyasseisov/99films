@@ -7,6 +7,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from '@mui/material';
 // mui icons
 import { SlideshowRounded } from '@mui/icons-material';
@@ -14,13 +15,44 @@ import { SlideshowRounded } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 // router
 import { Link } from 'react-router-dom';
+// rtk query hooks
+import { useGetGenresQuery } from '../../services/TMDB';
+// react redux hooks
+import { useDispatch, useSelector } from 'react-redux';
+// redux actions
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
+// categories (hardcoded)
+const categories = [
+  { name: 'Popular', id: 'popular' },
+  { name: 'Top Rated', id: 'top_rated' },
+  { name: 'Upcoming', id: 'upcoming' },
+];
 
 export default function Sidebar() {
   // hooks
   const theme = useTheme();
+  const { data, isFetching, error } = useGetGenresQuery();
+  const dispatch = useDispatch();
+
   // local variables
   // functions
 
+  // while fetching stage
+  if (isFetching) {
+    return <Typography>Fetching...</Typography>;
+  }
+
+  // if no movies were returned
+  if (!data.genres.length) {
+    return <Typography>No categories</Typography>;
+  }
+
+  // if error
+  if (error) {
+    return <Typography>Error</Typography>;
+  }
+
+  // primary return
   // return
   return (
     <>
@@ -33,435 +65,70 @@ export default function Sidebar() {
           width: { xs: '100%', md: '33.333%', lg: '25%', xl: '16.666%' },
         }}
       >
+        {/* categories */}
         <List>
           <ListSubheader sx={{ bgcolor: 'inherit' }}>Categories</ListSubheader>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+
+          {categories.map((category) => (
+            <Link
+              to='/'
+              key={category.id}
+              style={{
+                textDecoration: 'none',
+                color: theme.palette.text.primary,
+              }}
+            >
+              <ListItemButton
+                onClick={() => dispatch(selectGenreOrCategory(category.id))}
+              >
+                <ListItemIcon>
+                  <SlideshowRounded
+                    sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontSize: 20,
+                  }}
+                  primary={category.name}
                 />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Popular'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Top Rated'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Upcoming'
-              />
-            </ListItemButton>
-          </Link>
+              </ListItemButton>
+            </Link>
+          ))}
         </List>
 
         <Divider />
 
+        {/* genres */}
         <List>
           <ListSubheader sx={{ bgcolor: 'inherit' }}>Genres</ListSubheader>
 
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
+          {data?.genres?.map((genre) => (
+            <Link
+              to='/'
+              key={genre.id}
+              style={{
+                textDecoration: 'none',
+                color: theme.palette.text.primary,
+              }}
+            >
+              <ListItemButton
+                onClick={() => dispatch(selectGenreOrCategory(genre.id))}
+              >
+                <ListItemIcon>
+                  <SlideshowRounded
+                    sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    fontSize: 20,
+                  }}
+                  primary={genre.name}
                 />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Action'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Adventure'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Animation'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Comedy'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Crime'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Documentary'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Drama'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Family'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Fantasy'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='History'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Horror'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Music'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Mystery'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Romance'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Science Fiction'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='TV Movie'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='War'
-              />
-            </ListItemButton>
-          </Link>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.text.primary,
-            }}
-          >
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <SlideshowRounded
-                  sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primaryTypographyProps={{
-                  fontSize: 20,
-                }}
-                primary='Western'
-              />
-            </ListItemButton>
-          </Link>
+              </ListItemButton>
+            </Link>
+          ))}
         </List>
       </Box>
     </>

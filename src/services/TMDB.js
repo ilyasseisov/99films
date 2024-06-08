@@ -22,8 +22,16 @@ export const tmdbApi = createApi({
         return `/movie/popular?page=${page}&api_key=${tmdbApiKey}`;
       },
     }),
+    // get genres
+    getGenres: builder.query({
+      query: () => `genre/movie/list?api_key=${tmdbApiKey}`,
+    }),
+    //
+    //
+    //
+    //
   }),
 });
 
 // export
-export const { useGetMoviesQuery } = tmdbApi;
+export const { useGetMoviesQuery, useGetGenresQuery } = tmdbApi;
