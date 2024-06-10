@@ -8,10 +8,22 @@ import { MovieList, Slider } from '..';
 import { useSelector } from 'react-redux';
 // rtk query hooks
 import { useGetMoviesQuery } from '../../services/TMDB';
-useGetMoviesQuery;
+// redux actions
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
 export default function Movies() {
   // hooks
-  const { data, isFetching, error } = useGetMoviesQuery();
+  const [page, setPage] = useState(1);
+  // redux
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
+  // rtk query
+  const { data, isFetching, error } = useGetMoviesQuery({
+    genreIdOrCategoryName,
+    page,
+    // searchQuery,
+  });
+
   // local variables
   // functions
   // return

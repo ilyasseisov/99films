@@ -30,9 +30,15 @@ const categories = [
 
 export default function Sidebar() {
   // hooks
+  // mui theme
   const theme = useTheme();
+  // rtk query
   const { data, isFetching, error } = useGetGenresQuery();
+  // redux
   const dispatch = useDispatch();
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
 
   // local variables
   // functions
@@ -63,6 +69,7 @@ export default function Sidebar() {
           overflowY: 'auto',
           height: '100%',
           width: { xs: '100%', md: '33.333%', lg: '25%', xl: '16.666%' },
+          paddingBottom: '20px',
         }}
       >
         {/* categories */}
