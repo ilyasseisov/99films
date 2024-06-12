@@ -22,7 +22,7 @@ export default function MovieSingle({ movie, index }) {
         easing={'ease-out'}
       >
         <Link
-          to={`/movie/${movie.id}`}
+          to={`/movie/${movie?.id}`}
           style={{
             textDecoration: 'none',
             color: theme.palette.text.primary,
@@ -40,7 +40,7 @@ export default function MovieSingle({ movie, index }) {
             <img
               alt={'movie title'}
               src={
-                movie.poster_path
+                movie?.poster_path
                   ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                   : imgs.defaultMovieImage
               }
@@ -57,7 +57,7 @@ export default function MovieSingle({ movie, index }) {
                 src={imgs.star}
               />
               <Typography variant='h6' sx={{ opacity: 0.8 }}>
-                {parseFloat(movie.vote_average).toFixed(1)}
+                {parseFloat(movie?.vote_average).toFixed(1)}
               </Typography>
             </Box>
             <Typography
@@ -69,7 +69,7 @@ export default function MovieSingle({ movie, index }) {
                 fontSize: { xs: '18px', sm: '20px' },
               }}
             >
-              {movie.title}
+              {movie?.title}
             </Typography>
           </Box>
         </Link>

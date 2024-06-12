@@ -26,14 +26,74 @@ import { useTheme } from '@mui/material/styles';
 import { MovieList } from '..';
 // useState
 import { useState } from 'react';
+// router
+import { Link, useParams } from 'react-router-dom';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+// axios
+import axios from 'axios';
+// rtk query hooks
+import {
+  useGetMovieQuery,
+  useGetRecommendationsQuery,
+} from '../../services/TMDB';
+// redux actions
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
 
 export default function MovieInformation() {
-  // hooks
+  //// hooks
+  // mui theme
   const theme = useTheme();
+  // useState
   const [openTrailerModal, setOpenTrailerModal] = useState(false);
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
+  // router - to get param from URL
+  const { id } = useParams();
+  //// rtk query
+  // single movie
+  const { data: movie, isFetching, error } = useGetMovieQuery(id);
+  // recommendations
+  const {
+    data: recommendations,
+    isFetching: isRecommendationsFetching,
+    error: recommendationsError,
+  } = useGetRecommendationsQuery({
+    list: '/recommendations',
+    movieId: id,
+  });
+
+  console.log(recommendations);
+
+  // redux
+  const dispatch = useDispatch();
   // local variables
   // functions
+  function addToFavorites() {}
+  function addToWatchlist() {}
   // return
+
+  // while fetching stage
+  if (isFetching) {
+    return <Typography>Fetching...</Typography>;
+  }
+
+  // if error
+  if (error) {
+    return <Typography>Error</Typography>;
+  }
+
+  // while fetching stage (recommendations)
+  if (isRecommendationsFetching) {
+    return <Typography>Fetching...</Typography>;
+  }
+
+  // if error (recommendations)
+  if (recommendationsError) {
+    return <Typography>Error</Typography>;
+  }
+
+  // primary return
   return (
     <>
       <Container
@@ -64,16 +124,23 @@ export default function MovieInformation() {
                 marginBottom: '24px',
               }}
             >
+              {/* cover */}
               <Box sx={{ marginBottom: '16px', position: 'relative' }}>
                 <img
-                  alt={'movie title'}
-                  src={imgs.defaultMovieImage}
+                  alt={movie?.title}
+                  src={
+                    movie?.poster_path
+                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                      : imgs.defaultMovieImage
+                  }
                   style={{
                     borderRadius: '12px',
                   }}
                   className='MovieInformation__cover'
                 />
+                {/* add to favorites */}
                 <IconButton
+                  onClick={addToFavorites}
                   sx={{
                     backgroundColor: theme.palette.background.default,
                     position: 'absolute',
@@ -81,12 +148,20 @@ export default function MovieInformation() {
                     left: '8px',
                   }}
                 >
-                  <FavoriteBorderRounded
-                    sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                  />
+                  {isMovieFavorited ? (
+                    <FavoriteRounded
+                      sx={{ fontSize: 32, color: theme.palette.primary.main }}
+                    />
+                  ) : (
+                    <FavoriteBorderRounded
+                      sx={{ fontSize: 32, color: theme.palette.primary.main }}
+                    />
+                  )}
                 </IconButton>
 
+                {/* add to watchlist */}
                 <IconButton
+                  onClick={addToWatchlist}
                   sx={{
                     backgroundColor: theme.palette.background.default,
                     position: 'absolute',
@@ -94,11 +169,16 @@ export default function MovieInformation() {
                     right: '8px',
                   }}
                 >
-                  <StarBorderRounded
-                    sx={{ fontSize: 32, color: theme.palette.text.primary }}
-                  />
+                  {isMovieWatchlisted ? (
+                    <StarRounded sx={{ fontSize: 32, color: '#F1B80D' }} />
+                  ) : (
+                    <StarBorderRounded
+                      sx={{ fontSize: 32, color: '#F1B80D' }}
+                    />
+                  )}
                 </IconButton>
               </Box>
+              {/* rating */}
               <Box
                 sx={{
                   display: 'flex',
@@ -112,7 +192,10 @@ export default function MovieInformation() {
                   src={imgs.star}
                 />
                 <Typography variant='h6' sx={{ opacity: 0.8 }}>
-                  <span style={{ fontWeight: 'bold' }}>8.5</span>/10
+                  <span style={{ fontWeight: 'bold' }}>
+                    {parseFloat(movie.vote_average).toFixed(1)}
+                  </span>
+                  /10
                 </Typography>
               </Box>
             </Grid>
@@ -130,20 +213,16 @@ export default function MovieInformation() {
                     marginBottom: '6px',
                   }}
                 >
-                  Dune: Part Two
+                  {movie?.title}
                 </Typography>
                 <Typography
                   variant='h5'
                   sx={{ textAlign: 'center', marginBottom: '12px' }}
                 >
-                  • Long live the fighters •
+                  • {movie?.tagline} •
                 </Typography>
                 <Typography variant='h6' sx={{ fontWeight: 'normal' }}>
-                  Follow the mythic journey of Paul Atreides as he unites with
-                  Chani and the Fremen while on a path of revenge against the
-                  conspirators who destroyed his family. Facing a choice between
-                  the love of his life and the fate of the known universe, Paul
-                  endeavors to prevent a terrible future only he can foresee.
+                  {movie?.overview}
                 </Typography>
               </Grid>
 
@@ -161,11 +240,20 @@ export default function MovieInformation() {
                 <Box
                   sx={{ display: 'flex', gap: '12px', marginBottom: '12px' }}
                 >
-                  <Typography variant='body1'>2024</Typography>
+                  <Typography variant='body1'>
+                    {movie?.release_date.split('-')[0]}
+                  </Typography>
                   <span style={{ lineHeight: '1.2' }}>•</span>
-                  <Typography variant='body1'>2h46m</Typography>
+                  <Typography variant='body1'>
+                    {`
+                      ${Math.floor(movie?.runtime / 60)}h
+                      ${movie?.runtime % 60}m
+                    `}
+                  </Typography>
                   <span style={{ lineHeight: '1.2' }}>•</span>
-                  <Typography variant='body1'>English</Typography>
+                  <Typography variant='body1'>
+                    {movie?.spoken_languages[0].name}
+                  </Typography>
                 </Box>
 
                 {/* #2 genres */}
@@ -177,26 +265,30 @@ export default function MovieInformation() {
                     marginBottom: '24px',
                   }}
                 >
-                  <Typography
-                    variant='body1'
-                    sx={{
-                      border: `1px solid ${theme.palette.text.primary}`,
-                      borderRadius: '20px',
-                      padding: '0 6px 0 6px',
-                    }}
-                  >
-                    Science Fiction
-                  </Typography>
-                  <Typography
-                    variant='body1'
-                    sx={{
-                      border: `1px solid ${theme.palette.text.primary}`,
-                      borderRadius: '20px',
-                      padding: '0 6px 0 6px',
-                    }}
-                  >
-                    Adventure
-                  </Typography>
+                  {movie?.genres.map((genre) => (
+                    <Link
+                      to='/'
+                      key={genre.id}
+                      style={{
+                        textDecoration: 'none',
+                        color: theme.palette.text.primary,
+                      }}
+                    >
+                      <Typography
+                        onClick={() =>
+                          dispatch(selectGenreOrCategory(genre.id))
+                        }
+                        variant='body1'
+                        sx={{
+                          border: `1px solid ${theme.palette.text.primary}`,
+                          borderRadius: '20px',
+                          padding: '0 6px 0 6px',
+                        }}
+                      >
+                        {genre.name}
+                      </Typography>
+                    </Link>
+                  ))}
                 </Box>
 
                 {/* #3 trailer, website, imdb */}
@@ -207,7 +299,11 @@ export default function MovieInformation() {
                     flexWrap: 'wrap',
                   }}
                 >
+                  {/* website */}
                   <Button
+                    href={movie?.homepage}
+                    target='_blank'
+                    rel='noopener noreferrer'
                     variant='outlined'
                     endIcon={<Language />}
                     sx={{
@@ -219,7 +315,10 @@ export default function MovieInformation() {
                   >
                     Website
                   </Button>
+
+                  {/* trailer */}
                   <Button
+                    href='#'
                     onClick={() => setOpenTrailerModal(true)}
                     variant='outlined'
                     endIcon={<Theaters />}
@@ -232,7 +331,12 @@ export default function MovieInformation() {
                   >
                     Trailer
                   </Button>
+
+                  {/* IMDB */}
                   <Button
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href={`https://www.imdb.com/title/${movie?.imdb_id}`}
                     variant='outlined'
                     endIcon={<MovieIcon />}
                     sx={{
@@ -254,254 +358,64 @@ export default function MovieInformation() {
               Top cast
             </Typography>
             <Grid container>
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                lg={4}
-                xl={3}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px',
-                }}
-              >
-                <Box
-                  sx={{
-                    width: '80px',
-                    height: '80px',
-                    backgroundColor: '#D9D9D9',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    position: 'relative',
-                  }}
-                >
-                  <img
-                    style={{ objectFit: 'cover', maxWidth: '100%' }}
-                    alt={'actor name'}
-                    src={imgs.actor}
-                  />
-                </Box>
-
-                <Box>
-                  <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                    Timothée Chalamet
-                  </Typography>
-                  <Typography variant='body1'>Paul Atreides</Typography>
-                </Box>
-              </Grid>
-
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                lg={4}
-                xl={3}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px',
-                }}
-              >
-                <Box
-                  sx={{
-                    width: '80px',
-                    height: '80px',
-                    backgroundColor: '#D9D9D9',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    position: 'relative',
-                  }}
-                >
-                  <img
-                    style={{
-                      objectFit: 'cover',
-                      maxWidth: '100%',
-                      position: 'absolute',
-                      top: '60%',
-                      left: '50%',
-                      transform: 'translate(-50%,-50%)',
+              {movie &&
+                movie.credits?.cast.slice(0, 12).map((actor) => (
+                  <Grid
+                    component={Link}
+                    to={`/actors/${actor.id}`}
+                    key={actor.id}
+                    item
+                    xs={12}
+                    sm={6}
+                    lg={4}
+                    xl={3}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      marginBottom: '12px',
+                      textDecoration: 'none',
+                      color: theme.palette.text.primary,
                     }}
-                    alt={'actor name'}
-                    src={imgs.defaultActorImage}
-                  />
-                </Box>
+                  >
+                    <Box
+                      sx={{
+                        width: '80px',
+                        height: '80px',
+                        backgroundColor: '#D9D9D9',
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        position: 'relative',
+                      }}
+                    >
+                      <img
+                        style={{
+                          objectFit: 'cover',
+                          maxWidth: '100%',
+                          position: 'absolute',
+                          top: '60%',
+                          left: '50%',
+                          transform: 'translate(-50%,-50%)',
+                        }}
+                        alt={actor?.name}
+                        src={
+                          actor?.profile_path
+                            ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+                            : imgs.defaultActorImage
+                        }
+                      />
+                    </Box>
 
-                <Box>
-                  <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                    Timothée Chalamet
-                  </Typography>
-                  <Typography variant='body1'>Paul Atreides</Typography>
-                </Box>
-              </Grid>
-
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                lg={4}
-                xl={3}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px',
-                }}
-              >
-                <Box
-                  sx={{
-                    width: '80px',
-                    height: '80px',
-                    backgroundColor: '#D9D9D9',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    position: 'relative',
-                  }}
-                >
-                  <img
-                    style={{ objectFit: 'cover', maxWidth: '100%' }}
-                    alt={'actor name'}
-                    src={imgs.actor}
-                  />
-                </Box>
-
-                <Box>
-                  <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                    Timothée Chalamet
-                  </Typography>
-                  <Typography variant='body1'>Paul Atreides</Typography>
-                </Box>
-              </Grid>
-
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                lg={4}
-                xl={3}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px',
-                }}
-              >
-                <Box
-                  sx={{
-                    width: '80px',
-                    height: '80px',
-                    backgroundColor: '#D9D9D9',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    position: 'relative',
-                  }}
-                >
-                  <img
-                    style={{
-                      objectFit: 'cover',
-                      maxWidth: '100%',
-                      position: 'absolute',
-                      top: '60%',
-                      left: '50%',
-                      transform: 'translate(-50%,-50%)',
-                    }}
-                    alt={'actor name'}
-                    src={imgs.defaultActorImage}
-                  />
-                </Box>
-
-                <Box>
-                  <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                    Timothée Chalamet
-                  </Typography>
-                  <Typography variant='body1'>Paul Atreides</Typography>
-                </Box>
-              </Grid>
-
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                lg={4}
-                xl={3}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px',
-                }}
-              >
-                <Box
-                  sx={{
-                    width: '80px',
-                    height: '80px',
-                    backgroundColor: '#D9D9D9',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    position: 'relative',
-                  }}
-                >
-                  <img
-                    style={{ objectFit: 'cover', maxWidth: '100%' }}
-                    alt={'actor name'}
-                    src={imgs.actor}
-                  />
-                </Box>
-
-                <Box>
-                  <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                    Timothée Chalamet
-                  </Typography>
-                  <Typography variant='body1'>Paul Atreides</Typography>
-                </Box>
-              </Grid>
-
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                lg={4}
-                xl={3}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px',
-                }}
-              >
-                <Box
-                  sx={{
-                    width: '80px',
-                    height: '80px',
-                    backgroundColor: '#D9D9D9',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    position: 'relative',
-                  }}
-                >
-                  <img
-                    style={{
-                      objectFit: 'cover',
-                      maxWidth: '100%',
-                      position: 'absolute',
-                      top: '60%',
-                      left: '50%',
-                      transform: 'translate(-50%,-50%)',
-                    }}
-                    alt={'actor name'}
-                    src={imgs.defaultActorImage}
-                  />
-                </Box>
-
-                <Box>
-                  <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                    Timothée Chalamet
-                  </Typography>
-                  <Typography variant='body1'>Paul Atreides</Typography>
-                </Box>
-              </Grid>
+                    <Box>
+                      <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
+                        {actor?.name}
+                      </Typography>
+                      <Typography variant='body1'>
+                        {actor?.character}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
 
@@ -510,11 +424,15 @@ export default function MovieInformation() {
             <Typography variant='h5' sx={{ marginBottom: '12px' }}>
               You may also like
             </Typography>
-            <MovieList />
+            {recommendations ? (
+              <MovieList movies={recommendations?.results.slice(0, 12)} />
+            ) : (
+              <Typography>Sorry nothing was found</Typography>
+            )}
           </Grid>
         </Grid>
 
-        {/* modal */}
+        {/* trailer modal */}
         <Modal
           closeAfterTransition
           open={openTrailerModal}
@@ -525,14 +443,16 @@ export default function MovieInformation() {
             alignItems: 'center',
           }}
         >
-          <iframe
-            className='MovieInformation__video'
-            autoPlay
-            allow='autoplay'
-            frameBorder='0'
-            title='Movie trailer'
-            src='https://www.youtube.com/embed/_YUzQa_1RCE?si=55LxY2Qn9cvMYv1V'
-          />
+          {movie?.videos?.results?.length > 0 && (
+            <iframe
+              className='MovieInformation__video'
+              autoPlay
+              allow='autoplay'
+              frameBorder='0'
+              title='Movie trailer'
+              src={`https://www.youtube.com/embed/${movie?.videos?.results[0]?.key}`}
+            />
+          )}
         </Modal>
       </Container>
     </>
