@@ -8,13 +8,52 @@ import imgs from '../../assets/imgs';
 import { MovieList } from '..';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
-//
+// rtk query hooks
+import {
+  useGetActorQuery,
+  useGetMoviesByActorIdQuery,
+} from '../../services/TMDB';
+// router
+import { Link, useParams } from 'react-router-dom';
 export default function Actors() {
   // hooks
+  // mui
   const theme = useTheme();
+  // router
+  const { id } = useParams();
+  // rtk
+  const { data: actor, isFetching, error } = useGetActorQuery(id);
+  const {
+    data: actorMovies,
+    isFetching: isFetchingMovies,
+    error: moviesError,
+  } = useGetMoviesByActorIdQuery({ id, page: 1 });
+  console.log(actorMovies);
   // local variables
   // functions
   // return
+
+  // while fetching stage
+  if (isFetching) {
+    return <Typography>Fetching...</Typography>;
+  }
+
+  // if error
+  if (error) {
+    return <Typography>Error</Typography>;
+  }
+
+  // while fetching stage (movies)
+  if (isFetchingMovies) {
+    return <Typography>Fetching...</Typography>;
+  }
+
+  // if error (movies)
+  if (moviesError) {
+    return <Typography>Error</Typography>;
+  }
+
+  // primary return
   return (
     <>
       <Container
@@ -47,8 +86,12 @@ export default function Actors() {
             >
               <Box sx={{ marginBottom: '16px', position: 'relative' }}>
                 <img
-                  alt={'movie title'}
-                  src={imgs.defaultMovieImage}
+                  alt={actor?.name}
+                  src={
+                    actor?.profile_path
+                      ? `https://image.tmdb.org/t/p/w780/${actor.profile_path}`
+                      : imgs.defaultActorImage
+                  }
                   style={{
                     borderRadius: '12px',
                   }}
@@ -70,26 +113,11 @@ export default function Actors() {
                     marginBottom: '6px',
                   }}
                 >
-                  Timothée Chalamet
+                  {actor?.name || 'Sorry, no name yet ...'}
                 </Typography>
 
                 <Typography variant='h6' sx={{ fontWeight: 'normal' }}>
-                  Timothée Hal Chalamet was born in Manhattan, to Nicole
-                  Flender, a real estate broker and dancer, and Marc Chalamet, a
-                  UNICEF editor. His mother, who is from New York, is Jewish, of
-                  Russian Jewish and Austrian Jewish descent. His father, who is
-                  from Nîmes, France, is of French and English ancestry. He is
-                  the brother of actress Pauline Chalamet, a nephew of director
-                  Rodman Flender, and a grandson of screenwriter Harold Flender.
-                  He grew up in an artistic family, appearing in commercials and
-                  the New York theatre scene, and attending the LaGuardia High
-                  School of Music, Art and Performing Arts, where his classmate
-                  and friend was actor Ansel Elgort (the two later received
-                  their first Golden Globe nominations in the same year, 2017).
-                  For a time, Timothée also attended Columbia University. He
-                  made his film debut in 2014, as a high school student in Jason
-                  Reitman's Men, Women & Children (2014) and Matthew
-                  McConaughey's character's teenage son in Interstellar (2014).
+                  {actor?.biography || 'Sorry, no biography yet ...'}
                 </Typography>
               </Grid>
 
@@ -112,6 +140,9 @@ export default function Actors() {
                   }}
                 >
                   <Button
+                    href={`https://www.imdb.com/name/${actor?.imdb_id}` || '#'}
+                    target='_blank'
+                    rel='noopener noreferrer'
                     variant='outlined'
                     endIcon={<MovieIcon />}
                     sx={{
@@ -132,7 +163,11 @@ export default function Actors() {
             <Typography variant='h5' sx={{ marginBottom: '12px' }}>
               Movies
             </Typography>
-            <MovieList />
+            {actorMovies ? (
+              <MovieList movies={actorMovies?.results.slice(0, 12)} />
+            ) : (
+              <Typography>Sorry nothing was found</Typography>
+            )}
           </Grid>
         </Grid>
       </Container>

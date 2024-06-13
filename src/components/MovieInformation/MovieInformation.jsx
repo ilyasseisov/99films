@@ -401,7 +401,7 @@ export default function MovieInformation() {
                         src={
                           actor?.profile_path
                             ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                            : imgs.defaultActorImage
+                            : imgs.defaultCastImage
                         }
                       />
                     </Box>
