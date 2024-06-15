@@ -1,3 +1,5 @@
+// react hooks
+import { useState } from 'react';
 // mui
 import { Grid, Container, Typography, Box, Button } from '@mui/material';
 // mui icons
@@ -5,7 +7,7 @@ import { Movie as MovieIcon } from '@mui/icons-material';
 // images
 import imgs from '../../assets/imgs';
 // components
-import { MovieList } from '..';
+import { MovieList, PaginationCustom } from '..';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
 // rtk query hooks
@@ -17,6 +19,8 @@ import {
 import { Link, useParams } from 'react-router-dom';
 export default function Actors() {
   // hooks
+  const [page, setPage] = useState(1);
+  console.log(`page: ${page}`);
   // mui
   const theme = useTheme();
   // router
@@ -27,7 +31,7 @@ export default function Actors() {
     data: actorMovies,
     isFetching: isFetchingMovies,
     error: moviesError,
-  } = useGetMoviesByActorIdQuery({ id, page: 1 });
+  } = useGetMoviesByActorIdQuery({ id, page });
   console.log(actorMovies);
   // local variables
   // functions
@@ -60,7 +64,7 @@ export default function Actors() {
         maxWidth='xxl'
         sx={{ padding: { xs: '12px', md: '32px 12px 12px 12px' } }}
       >
-        <Grid container>
+        <Grid container sx={{ marginBottom: '48px' }}>
           {/* image and text */}
           <Grid
             item
@@ -170,6 +174,21 @@ export default function Actors() {
             )}
           </Grid>
         </Grid>
+        {/* pagination */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '48px',
+          }}
+        >
+          <PaginationCustom
+            currentPage={page}
+            setPage={setPage}
+            totalPages={actorMovies?.total_pages}
+          />
+        </Box>
       </Container>
     </>
   );

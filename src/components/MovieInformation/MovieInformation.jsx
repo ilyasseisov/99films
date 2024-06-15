@@ -53,6 +53,7 @@ export default function MovieInformation() {
   //// rtk query
   // single movie
   const { data: movie, isFetching, error } = useGetMovieQuery(id);
+
   // recommendations
   const {
     data: recommendations,
@@ -252,7 +253,7 @@ export default function MovieInformation() {
                   </Typography>
                   <span style={{ lineHeight: '1.2' }}>•</span>
                   <Typography variant='body1'>
-                    {movie?.spoken_languages[0].name}
+                    {movie?.original_language.toUpperCase()}
                   </Typography>
                 </Box>
 
@@ -322,6 +323,7 @@ export default function MovieInformation() {
                     onClick={() => setOpenTrailerModal(true)}
                     variant='outlined'
                     endIcon={<Theaters />}
+                    disabled={!movie?.videos?.results.length}
                     sx={{
                       color: theme.palette.text.primary,
                       borderColor: theme.palette.text.primary,
@@ -433,27 +435,29 @@ export default function MovieInformation() {
         </Grid>
 
         {/* trailer modal */}
-        <Modal
-          closeAfterTransition
-          open={openTrailerModal}
-          onClose={() => setOpenTrailerModal(false)}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {movie?.videos?.results?.length > 0 && (
-            <iframe
-              className='MovieInformation__video'
-              autoPlay
-              allow='autoplay'
-              frameBorder='0'
-              title='Movie trailer'
-              src={`https://www.youtube.com/embed/${movie?.videos?.results[0]?.key}`}
-            />
-          )}
-        </Modal>
+        {movie?.videos?.results.length && (
+          <Modal
+            closeAfterTransition
+            open={openTrailerModal}
+            onClose={() => setOpenTrailerModal(false)}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {movie?.videos?.results?.length > 0 && (
+              <iframe
+                className='MovieInformation__video'
+                autoPlay
+                allow='autoplay'
+                frameBorder='0'
+                title='Movie trailer'
+                src={`https://www.youtube.com/embed/${movie?.videos?.results[0]?.key}`}
+              />
+            )}
+          </Modal>
+        )}
       </Container>
     </>
   );

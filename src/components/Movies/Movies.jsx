@@ -3,7 +3,7 @@ import { useState } from 'react';
 // mui
 import { Box, Typography } from '@mui/material';
 // components
-import { MovieList, Slider } from '..';
+import { MovieList, Slider, PaginationCustom } from '..';
 // redux
 import { useSelector } from 'react-redux';
 // rtk query hooks
@@ -49,8 +49,24 @@ export default function Movies() {
       <Box sx={{ marginBottom: '24px' }}>
         <Slider />
       </Box>
-      <Box>
+      <Box sx={{ marginBottom: '48px' }}>
         <MovieList movies={data.results} centerAlign />
+      </Box>
+
+      {/* pagination */}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: '48px',
+        }}
+      >
+        <PaginationCustom
+          currentPage={page}
+          setPage={setPage}
+          totalPages={data?.total_pages}
+        />
       </Box>
     </>
   );
