@@ -1,7 +1,7 @@
 // hooks
 import { useState } from 'react';
 // mui
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 // components
 import { MovieList, Slider, PaginationCustom } from '..';
 // redux
@@ -13,18 +13,34 @@ import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlic
 export default function Movies() {
   // hooks
   const [page, setPage] = useState(1);
+  const isLgBreakpoint = useMediaQuery(
+    '(min-width: 1200px) and (max-width: 1535.99px)'
+  );
+  const isXxlBreakpoint = useMediaQuery('(min-width: 1800px)');
+  console.log(`lg: ${isLgBreakpoint}`);
+  console.log(`xxl: ${isXxlBreakpoint}`);
+
   // redux
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
   // rtk query
-  const { data, isFetching, error } = useGetMoviesQuery({
+  const {
+    data: movies,
+    isFetching,
+    error,
+  } = useGetMoviesQuery({
     genreIdOrCategoryName,
     page,
     // searchQuery,
   });
 
   // local variables
+  // to make sure that rows are symmetrical
+  const numberOfMovies = isLgBreakpoint || isXxlBreakpoint ? 12 : 16;
+  const numberOfSlides = 20 - numberOfMovies;
+  console.log(`number of slides: ${numberOfSlides}`);
+  console.log(`number of movies: ${numberOfMovies}`);
   // functions
   // return
 
@@ -34,7 +50,7 @@ export default function Movies() {
   }
 
   // if no movies were returned
-  if (!data.results.length) {
+  if (!movies.results.length) {
     return <Typography>No movies</Typography>;
   }
 
@@ -47,10 +63,13 @@ export default function Movies() {
   return (
     <>
       <Box sx={{ marginBottom: '24px' }}>
-        <Slider />
+        <Slider movies={movies.results.slice(0, numberOfSlides)} />
       </Box>
       <Box sx={{ marginBottom: '48px' }}>
-        <MovieList movies={data.results} centerAlign />
+        <MovieList
+          movies={movies.results.slice(numberOfSlides, 20)}
+          centerAlign
+        />
       </Box>
 
       {/* pagination */}
@@ -65,7 +84,7 @@ export default function Movies() {
         <PaginationCustom
           currentPage={page}
           setPage={setPage}
-          totalPages={data?.total_pages}
+          totalPages={movies?.total_pages}
         />
       </Box>
     </>
