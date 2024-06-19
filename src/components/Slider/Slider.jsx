@@ -21,7 +21,7 @@ export default function Slider({ movies }) {
     swiperRef.current.initialize();
   }, []);
   // local variables
-  console.log(movies);
+
   // functions
   // return
   return (

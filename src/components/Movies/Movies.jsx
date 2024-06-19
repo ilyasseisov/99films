@@ -17,11 +17,9 @@ export default function Movies() {
     '(min-width: 1200px) and (max-width: 1535.99px)'
   );
   const isXxlBreakpoint = useMediaQuery('(min-width: 1800px)');
-  console.log(`lg: ${isLgBreakpoint}`);
-  console.log(`xxl: ${isXxlBreakpoint}`);
 
   // redux
-  const { genreIdOrCategoryName } = useSelector(
+  const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state) => state.currentGenreOrCategory
   );
   // rtk query
@@ -32,15 +30,14 @@ export default function Movies() {
   } = useGetMoviesQuery({
     genreIdOrCategoryName,
     page,
-    // searchQuery,
+    searchQuery,
   });
 
   // local variables
   // to make sure that rows are symmetrical
   const numberOfMovies = isLgBreakpoint || isXxlBreakpoint ? 12 : 16;
   const numberOfSlides = 20 - numberOfMovies;
-  console.log(`number of slides: ${numberOfSlides}`);
-  console.log(`number of movies: ${numberOfMovies}`);
+
   // functions
   // return
 

@@ -16,6 +16,13 @@ export const genreOrCategorySlice = createSlice({
     // action: select genre or category
     selectGenreOrCategory: (state, action) => {
       state.genreIdOrCategoryName = action.payload;
+      state.searchQuery = '';
+      // state.page = 1;
+    },
+
+    // search movie
+    searchMovie: (state, action) => {
+      state.searchQuery = action.payload;
     },
   },
 });
@@ -23,6 +30,7 @@ export const genreOrCategorySlice = createSlice({
 //// export
 
 // actions
-export const { selectGenreOrCategory } = genreOrCategorySlice.actions;
+export const { selectGenreOrCategory, searchMovie } =
+  genreOrCategorySlice.actions;
 // reducer
 export const genreOrCategoryReducer = genreOrCategorySlice.reducer;

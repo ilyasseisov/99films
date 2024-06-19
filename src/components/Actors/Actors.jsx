@@ -20,7 +20,7 @@ import { Link, useParams } from 'react-router-dom';
 export default function Actors() {
   // hooks
   const [page, setPage] = useState(1);
-  console.log(`page: ${page}`);
+
   // mui
   const theme = useTheme();
   // router
@@ -32,7 +32,7 @@ export default function Actors() {
     isFetching: isFetchingMovies,
     error: moviesError,
   } = useGetMoviesByActorIdQuery({ id, page });
-  console.log(actorMovies);
+
   // local variables
   // functions
   // return

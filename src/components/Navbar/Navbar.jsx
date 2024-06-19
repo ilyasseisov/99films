@@ -1,72 +1,84 @@
 // react
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+// mui icons
+import { Menu, DarkModeOutlined, LightMode } from '@mui/icons-material';
 // mui
-import {
-  Menu,
-  Search as SearchIcon,
-  DarkModeOutlined,
-  LightMode,
-} from '@mui/icons-material';
 import {
   AppBar,
   Box,
   Grid,
   IconButton,
-  InputBase,
   Toolbar,
   Typography,
   Drawer,
   Button,
 } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
 
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
 
+// react router
+import { Link } from 'react-router-dom';
+
+// react redux
+import { useDispatch, useSelector } from 'react-redux';
+
 // components
-import { Sidebar } from '..';
+import { Sidebar, Search } from '..';
 
 // color mode context
 import { ColorModeContext } from '../../utils/ToggleColorMode';
 
-// styling
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  width: '100%',
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(2, 1, 2, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    width: '100%',
-  },
-}));
+// auth
+import { fetchToken, createSessionId, moviesApi } from '../../utils/auth';
+import { setUser } from '../../features/authSlice';
 
 export default function Navbar() {
   // hooks
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
+  const dispatch = useDispatch();
+
+  // to use below for sidebar action
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
+
+  // to close sidebar when category is selected
+  useEffect(() => {
+    setIsDrawerOpened(false);
+  }, [genreIdOrCategoryName]);
+
+  // auth
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const tokenFromLocalStorage = localStorage.getItem('request_token');
+  const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+
+  useEffect(() => {
+    async function logInUser() {
+      if (tokenFromLocalStorage) {
+        if (sessionIdFromLocalStorage) {
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionIdFromLocalStorage}`
+          );
+
+          dispatch(setUser(userData));
+        } else {
+          const sessionId = await createSessionId();
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionId}`
+          );
+
+          dispatch(setUser(userData));
+        }
+      }
+    }
+
+    logInUser();
+  }, [tokenFromLocalStorage]);
+
   // local variables
-  const isAuth = true;
   // functions
   function toggleDrawer() {
     setIsDrawerOpened((prev) => !prev);
@@ -130,15 +142,8 @@ export default function Navbar() {
                   order: { xs: '3', md: '2' },
                 }}
               >
-                <Search>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                    placeholder='Search…'
-                    inputProps={{ 'aria-label': 'search' }}
-                  />
-                </Search>
+                {/* search */}
+                <Search />
               </Grid>
 
               <Grid
@@ -152,9 +157,11 @@ export default function Navbar() {
                   order: { xs: '2', md: '3' },
                 }}
               >
-                {isAuth ? (
+                {isAuthenticated ? (
                   <>
                     <Button
+                      component={Link}
+                      to={`/profile/${user.id}`}
                       sx={{
                         color: '#fff',
                         borderColor: '#fff',
@@ -169,6 +176,7 @@ export default function Navbar() {
                   </>
                 ) : (
                   <Button
+                    onClick={fetchToken}
                     sx={{
                       color: '#fff',
                       borderColor: '#fff',

@@ -64,8 +64,6 @@ export default function MovieInformation() {
     movieId: id,
   });
 
-  console.log(recommendations);
-
   // redux
   const dispatch = useDispatch();
   // local variables
