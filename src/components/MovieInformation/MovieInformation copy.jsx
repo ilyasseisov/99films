@@ -24,12 +24,14 @@ import imgs from '../../assets/imgs';
 import { useTheme } from '@mui/material/styles';
 // components
 import { MovieList } from '..';
-// react hooks
+// useState
 import { useState, useEffect } from 'react';
 // router
 import { Link, useParams } from 'react-router-dom';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
+// axios
+import axios from 'axios';
 // rtk query hooks
 import {
   useGetMovieQuery,
@@ -38,22 +40,23 @@ import {
 } from '../../services/TMDB';
 // redux actions
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
-// axios
-import axios from 'axios';
+
 export default function MovieInformation() {
+  //// hooks
   // redux
   const { user } = useSelector((state) => state.user);
   // mui theme
   const theme = useTheme();
-  // state for trailer modal
+  // useState
   const [openTrailerModal, setOpenTrailerModal] = useState(false);
-  // state for movie status (fav/watchlist)
-  const [movieStatus, setMovieStatus] = useState({});
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
   // router - to get param from URL
   const { id } = useParams();
   //// rtk query
   // single movie
   const { data: movie, isFetching, error } = useGetMovieQuery(id);
+
   // recommendations
   const {
     data: recommendations,
@@ -63,6 +66,7 @@ export default function MovieInformation() {
     list: '/recommendations',
     movieId: id,
   });
+
   // user favorite movies
   const { data: favoriteMovies } = useGetListQuery({
     listName: 'favorite/movies',
@@ -70,6 +74,7 @@ export default function MovieInformation() {
     sessionId: localStorage.getItem('session_id'),
     page: 1,
   });
+
   // user watchlist movies
   const { data: watchlistMovies } = useGetListQuery({
     listName: 'watchlist/movies',
@@ -78,29 +83,29 @@ export default function MovieInformation() {
     page: 1,
   });
 
-  // to know whether movie is in favorite or in watchlist
+  // to know whether movie is in favorite or watchlist
+
   useEffect(() => {
     if (movie) {
-      setMovieStatus((prevStatus) => ({
-        ...prevStatus,
-        [movie.id]: {
-          isFavorited: !!favoriteMovies?.results?.find(
-            (favMovie) => favMovie.id === movie?.id
-          ),
-          isWatchlisted: !!watchlistMovies?.results?.find(
-            (watchlistMovie) => watchlistMovie.id === movie?.id
-          ),
-        },
-      }));
+      setIsMovieFavorited(
+        !!favoriteMovies?.results?.find((movie) => movie.id === movie?.id)
+      );
     }
-  }, [favoriteMovies, watchlistMovies, movie]);
+  }, [favoriteMovies, movie]);
+
+  useEffect(() => {
+    if (movie) {
+      setIsMovieWatchlisted(
+        !!watchlistMovies?.results?.find((movie) => movie.id === movie?.id)
+      );
+    }
+  }, [watchlistMovies, movie]);
 
   // redux
   const dispatch = useDispatch();
   // local variables
   const tmdbApiKey = 'c3e422a2ea4fbce1b97cbebce6616f71';
-
-  // add to favorite
+  // functions
   async function addToFavorites() {
     await axios.post(
       `https://api.themoviedb.org/3/account/${
@@ -111,19 +116,11 @@ export default function MovieInformation() {
       {
         media_type: 'movie',
         media_id: id,
-        favorite: !movieStatus[movie.id]?.isFavorited,
+        favorite: !isMovieFavorited,
       }
     );
-    setMovieStatus((prevStatus) => ({
-      ...prevStatus,
-      [movie.id]: {
-        ...prevStatus[movie.id],
-        isFavorited: !prevStatus[movie.id]?.isFavorited,
-      },
-    }));
+    setIsMovieFavorited((prev) => !prev);
   }
-
-  // add to watchlist
   async function addToWatchlist() {
     await axios.post(
       `https://api.themoviedb.org/3/account/${
@@ -134,17 +131,12 @@ export default function MovieInformation() {
       {
         media_type: 'movie',
         media_id: id,
-        watchlist: !movieStatus[movie.id]?.isWatchlisted,
+        watchlist: !isMovieWatchlisted,
       }
     );
-    setMovieStatus((prevStatus) => ({
-      ...prevStatus,
-      [movie.id]: {
-        ...prevStatus[movie.id],
-        isWatchlisted: !prevStatus[movie.id]?.isWatchlisted,
-      },
-    }));
+    setIsMovieWatchlisted((prev) => !prev);
   }
+  // return
 
   // while fetching stage
   if (isFetching) {
@@ -166,6 +158,7 @@ export default function MovieInformation() {
     return <Typography>Error</Typography>;
   }
 
+  // primary return
   return (
     <>
       <Container
@@ -220,7 +213,7 @@ export default function MovieInformation() {
                     left: '8px',
                   }}
                 >
-                  {movieStatus[movie.id]?.isFavorited ? (
+                  {isMovieFavorited ? (
                     <FavoriteRounded
                       sx={{ fontSize: 32, color: theme.palette.primary.main }}
                     />
@@ -230,6 +223,7 @@ export default function MovieInformation() {
                     />
                   )}
                 </IconButton>
+
                 {/* add to watchlist */}
                 <IconButton
                   onClick={addToWatchlist}
@@ -240,7 +234,7 @@ export default function MovieInformation() {
                     right: '8px',
                   }}
                 >
-                  {movieStatus[movie.id]?.isWatchlisted ? (
+                  {isMovieWatchlisted ? (
                     <StarRounded sx={{ fontSize: 32, color: '#F1B80D' }} />
                   ) : (
                     <StarBorderRounded
@@ -296,6 +290,7 @@ export default function MovieInformation() {
                   {movie?.overview}
                 </Typography>
               </Grid>
+
               {/* Details */}
               <Grid
                 item
@@ -305,6 +300,7 @@ export default function MovieInformation() {
                 <Typography variant='h5' sx={{ marginBottom: '12px' }}>
                   Details
                 </Typography>
+
                 {/* #1 year, duration, language */}
                 <Box
                   sx={{ display: 'flex', gap: '12px', marginBottom: '12px' }}
