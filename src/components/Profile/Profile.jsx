@@ -84,6 +84,16 @@ export default function Profile() {
           <Typography variant='h5' sx={{ marginBottom: '16px' }}>
             Favorite
           </Typography>
+          {favoriteMovies?.results.length > 0 ? (
+            <MovieList movies={favoriteMovies?.results} />
+          ) : (
+            <Typography
+              variant='h6'
+              sx={{ color: theme.palette.text.disabled }}
+            >
+              No favorite movies
+            </Typography>
+          )}
           <MovieList movies={favoriteMovies?.results} />
         </Grid>
 
@@ -92,7 +102,16 @@ export default function Profile() {
           <Typography variant='h5' sx={{ marginBottom: '16px' }}>
             Watchlist
           </Typography>
-          <MovieList movies={watchlistMovies?.results} />
+          {watchlistMovies?.results.length > 0 ? (
+            <MovieList movies={watchlistMovies?.results} />
+          ) : (
+            <Typography
+              variant='h6'
+              sx={{ color: theme.palette.text.disabled }}
+            >
+              No watchlist movies
+            </Typography>
+          )}
         </Grid>
       </Container>
     </>

@@ -250,6 +250,7 @@ export default function MovieInformation() {
                 </IconButton>
               </Box>
               {/* rating */}
+
               <Box
                 sx={{
                   display: 'flex',
@@ -262,12 +263,22 @@ export default function MovieInformation() {
                   alt='movie rating'
                   src={imgs.star}
                 />
-                <Typography variant='h6' sx={{ opacity: 0.8 }}>
-                  <span style={{ fontWeight: 'bold' }}>
-                    {parseFloat(movie.vote_average).toFixed(1)}
-                  </span>
-                  /10
-                </Typography>
+                {movie?.vote_average ? (
+                  <Typography variant='h6' sx={{ opacity: 0.8 }}>
+                    <span style={{ fontWeight: 'bold' }}>
+                      {movie?.vote_average &&
+                        parseFloat(movie.vote_average).toFixed(1)}
+                    </span>
+                    /10
+                  </Typography>
+                ) : (
+                  <Typography
+                    variant='h6'
+                    sx={{ color: theme.palette.text.disabled }}
+                  >
+                    No rating
+                  </Typography>
+                )}
               </Box>
             </Grid>
 
@@ -276,6 +287,8 @@ export default function MovieInformation() {
             <Grid item lg={7}>
               {/* name, slogan and description */}
               <Grid item xs={12} sx={{ marginBottom: '32px' }}>
+                {/* title */}
+
                 <Typography
                   variant='h4'
                   sx={{
@@ -284,18 +297,23 @@ export default function MovieInformation() {
                     marginBottom: '6px',
                   }}
                 >
-                  {movie?.title}
+                  {movie?.title || 'No title 🤔'}
                 </Typography>
+
+                {/* tagline */}
                 <Typography
                   variant='h5'
                   sx={{ textAlign: 'center', marginBottom: '12px' }}
                 >
                   • {movie?.tagline} •
                 </Typography>
+
+                {/* description */}
                 <Typography variant='h6' sx={{ fontWeight: 'normal' }}>
-                  {movie?.overview}
+                  {movie?.overview || 'No description 🤔'}
                 </Typography>
               </Grid>
+
               {/* Details */}
               <Grid
                 item
@@ -309,56 +327,74 @@ export default function MovieInformation() {
                 <Box
                   sx={{ display: 'flex', gap: '12px', marginBottom: '12px' }}
                 >
-                  <Typography variant='body1'>
-                    {movie?.release_date.split('-')[0]}
-                  </Typography>
-                  <span style={{ lineHeight: '1.2' }}>•</span>
-                  <Typography variant='body1'>
-                    {`
+                  {/* year */}
+                  {movie?.release_date && movie.release_date !== 'null' && (
+                    <>
+                      <Typography variant='body1'>
+                        {movie?.release_date.split('-')[0]}
+                      </Typography>
+                      <span style={{ lineHeight: '1.2' }}>•</span>
+                    </>
+                  )}
+
+                  {/* duration */}
+                  {Number.isFinite(movie?.runtime) && movie.runtime !== 0 && (
+                    <>
+                      <Typography variant='body1'>
+                        {`
                       ${Math.floor(movie?.runtime / 60)}h
                       ${movie?.runtime % 60}m
                     `}
-                  </Typography>
-                  <span style={{ lineHeight: '1.2' }}>•</span>
-                  <Typography variant='body1'>
-                    {movie?.original_language.toUpperCase()}
-                  </Typography>
+                      </Typography>
+                      <span style={{ lineHeight: '1.2' }}>•</span>
+                    </>
+                  )}
+
+                  {/* language */}
+                  {movie?.original_language &&
+                    movie.original_language !== 'null' && (
+                      <Typography variant='body1'>
+                        {movie?.original_language.toUpperCase()}
+                      </Typography>
+                    )}
                 </Box>
 
                 {/* #2 genres */}
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '12px',
-                    flexWrap: 'wrap',
-                    marginBottom: '24px',
-                  }}
-                >
-                  {movie?.genres.map((genre) => (
-                    <Link
-                      to='/'
-                      key={genre.id}
-                      style={{
-                        textDecoration: 'none',
-                        color: theme.palette.text.primary,
-                      }}
-                    >
-                      <Typography
-                        onClick={() =>
-                          dispatch(selectGenreOrCategory(genre.id))
-                        }
-                        variant='body1'
-                        sx={{
-                          border: `1px solid ${theme.palette.text.primary}`,
-                          borderRadius: '20px',
-                          padding: '0 6px 0 6px',
+                {movie?.genres.length > 0 && (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: '12px',
+                      flexWrap: 'wrap',
+                      marginBottom: '24px',
+                    }}
+                  >
+                    {movie?.genres.map((genre) => (
+                      <Link
+                        to='/'
+                        key={genre.id}
+                        style={{
+                          textDecoration: 'none',
+                          color: theme.palette.text.primary,
                         }}
                       >
-                        {genre.name}
-                      </Typography>
-                    </Link>
-                  ))}
-                </Box>
+                        <Typography
+                          onClick={() =>
+                            dispatch(selectGenreOrCategory(genre.id))
+                          }
+                          variant='body1'
+                          sx={{
+                            border: `1px solid ${theme.palette.text.primary}`,
+                            borderRadius: '20px',
+                            padding: '0 6px 0 6px',
+                          }}
+                        >
+                          {genre.name}
+                        </Typography>
+                      </Link>
+                    ))}
+                  </Box>
+                )}
 
                 {/* #3 trailer, website, imdb */}
                 <Box
@@ -369,54 +405,59 @@ export default function MovieInformation() {
                   }}
                 >
                   {/* website */}
-                  <Button
-                    href={movie?.homepage}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    variant='outlined'
-                    endIcon={<Language />}
-                    sx={{
-                      color: theme.palette.text.primary,
-                      borderColor: theme.palette.text.primary,
-                      textTransform: 'capitalize',
-                      '&:hover': { borderColor: theme.palette.text.primary },
-                    }}
-                  >
-                    Website
-                  </Button>
+                  {movie?.homepage && (
+                    <Button
+                      href={movie.homepage}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      variant='outlined'
+                      endIcon={<Language />}
+                      sx={{
+                        color: theme.palette.text.primary,
+                        borderColor: theme.palette.text.primary,
+                        textTransform: 'capitalize',
+                        '&:hover': { borderColor: theme.palette.text.primary },
+                      }}
+                    >
+                      Website
+                    </Button>
+                  )}
 
                   {/* trailer */}
-                  <Button
-                    href='#'
-                    onClick={() => setOpenTrailerModal(true)}
-                    variant='outlined'
-                    endIcon={<Theaters />}
-                    disabled={!movie?.videos?.results.length}
-                    sx={{
-                      color: theme.palette.text.primary,
-                      borderColor: theme.palette.text.primary,
-                      textTransform: 'capitalize',
-                      '&:hover': { borderColor: theme.palette.text.primary },
-                    }}
-                  >
-                    Trailer
-                  </Button>
+                  {movie?.videos?.results.length > 0 && (
+                    <Button
+                      href='#'
+                      onClick={() => setOpenTrailerModal(true)}
+                      variant='outlined'
+                      endIcon={<Theaters />}
+                      sx={{
+                        color: theme.palette.text.primary,
+                        borderColor: theme.palette.text.primary,
+                        textTransform: 'capitalize',
+                        '&:hover': { borderColor: theme.palette.text.primary },
+                      }}
+                    >
+                      Trailer
+                    </Button>
+                  )}
 
                   {/* IMDB */}
-                  <Button
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    href={`https://www.imdb.com/title/${movie?.imdb_id}`}
-                    variant='outlined'
-                    endIcon={<MovieIcon />}
-                    sx={{
-                      color: theme.palette.text.primary,
-                      borderColor: theme.palette.text.primary,
-                      '&:hover': { borderColor: theme.palette.text.primary },
-                    }}
-                  >
-                    IMDB
-                  </Button>
+                  {movie?.imdb_id && (
+                    <Button
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      href={`https://www.imdb.com/title/${movie?.imdb_id}`}
+                      variant='outlined'
+                      endIcon={<MovieIcon />}
+                      sx={{
+                        color: theme.palette.text.primary,
+                        borderColor: theme.palette.text.primary,
+                        '&:hover': { borderColor: theme.palette.text.primary },
+                      }}
+                    >
+                      IMDB
+                    </Button>
+                  )}
                 </Box>
               </Grid>
             </Grid>
@@ -428,8 +469,8 @@ export default function MovieInformation() {
               Top cast
             </Typography>
             <Grid container>
-              {movie &&
-                movie.credits?.cast.slice(0, 12).map((actor) => (
+              {movie.credits?.cast.length > 0 ? (
+                movie.credits.cast.slice(0, 12).map((actor) => (
                   <Grid
                     component={Link}
                     to={`/actors/${actor.id}`}
@@ -485,7 +526,15 @@ export default function MovieInformation() {
                       </Typography>
                     </Box>
                   </Grid>
-                ))}
+                ))
+              ) : (
+                <Typography
+                  variant='body1'
+                  sx={{ color: theme.palette.text.disabled }}
+                >
+                  No cast
+                </Typography>
+              )}
             </Grid>
           </Grid>
 
@@ -494,16 +543,21 @@ export default function MovieInformation() {
             <Typography variant='h5' sx={{ marginBottom: '12px' }}>
               You may also like
             </Typography>
-            {recommendations ? (
+            {recommendations.results.length > 0 ? (
               <MovieList movies={recommendations?.results.slice(0, 12)} />
             ) : (
-              <Typography>Sorry nothing was found</Typography>
+              <Typography
+                variant='body1'
+                sx={{ color: theme.palette.text.disabled }}
+              >
+                No movies
+              </Typography>
             )}
           </Grid>
         </Grid>
 
         {/* trailer modal */}
-        {movie?.videos?.results.length && (
+        {movie?.videos?.results.length > 0 && (
           <Modal
             closeAfterTransition
             open={openTrailerModal}
