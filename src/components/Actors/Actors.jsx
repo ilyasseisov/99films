@@ -16,7 +16,7 @@ import {
   useGetMoviesByActorIdQuery,
 } from '../../services/TMDB';
 // router
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 export default function Actors() {
   // hooks
   const [page, setPage] = useState(1);
@@ -35,6 +35,9 @@ export default function Actors() {
 
   // local variables
   // functions
+  const splitIntoParagraphs = (text) => {
+    return text.split('\n').filter((paragraph) => paragraph.trim() !== '');
+  };
   // return
 
   // while fetching stage
@@ -71,8 +74,8 @@ export default function Actors() {
             xs={12}
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', lg: 'row' },
-              alignItems: 'center',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
               marginBottom: { xs: '32px', lg: '40px' },
             }}
           >
@@ -80,10 +83,9 @@ export default function Actors() {
             <Grid
               item
               xs={12}
-              lg={5}
               sx={{
                 display: 'flex',
-                alignItems: { xs: 'center', lg: 'flex-start' },
+                alignSelf: 'center',
                 flexDirection: 'column',
                 marginBottom: '24px',
               }}
@@ -99,14 +101,14 @@ export default function Actors() {
                   style={{
                     borderRadius: '12px',
                   }}
-                  className='MovieInformation__cover'
+                  className='Actors__cover'
                 />
               </Box>
             </Grid>
 
             {/* text and imdb */}
 
-            <Grid item lg={7}>
+            <Grid item xs={12}>
               {/* text */}
               <Grid item xs={12} sx={{ marginBottom: '32px' }}>
                 <Typography
@@ -120,8 +122,15 @@ export default function Actors() {
                   {actor?.name || 'Sorry, no name yet ...'}
                 </Typography>
 
-                <Typography variant='h6' sx={{ fontWeight: 'normal' }}>
-                  {actor?.biography || 'Sorry, no biography yet ...'}
+                <Typography
+                  variant='h6'
+                  sx={{
+                    fontWeight: 'normal',
+                  }}
+                >
+                  {splitIntoParagraphs(actor?.biography).map(
+                    (paragraph, index) => <p key={index}>{paragraph}</p>
+                  ) || 'Sorry, no biography yet ...'}
                 </Typography>
               </Grid>
 

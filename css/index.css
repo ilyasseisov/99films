@@ -51,6 +51,20 @@
   }
 }
 
+.Actors__cover {
+  width: 240px;
+}
+@media (min-width: 600px) {
+  .Actors__cover {
+    width: 320px;
+  }
+}
+@media (min-width: 1200px) {
+  .Actors__cover {
+    width: 400px;
+  }
+}
+
 swiper-container {
   width: 100%;
   height: 600px;

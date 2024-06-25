@@ -48,6 +48,22 @@
 }
 // END MovieInformation
 
+// Actors
+
+.Actors__cover {
+  width: 240px;
+  //
+  @media (min-width: 600px) {
+    width: 320px;
+  }
+  //
+  @media (min-width: 1200px) {
+    width: 400px;
+  }
+  //
+}
+// END Actors
+
 // Slider
 
 swiper-container {
