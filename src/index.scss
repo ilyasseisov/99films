@@ -7,27 +7,23 @@
 
 // MovieInformation
 .MovieInformation__cover {
-  width: 200px;
+  width: 240px;
   //
   @media (min-width: 600px) {
-    width: 240px;
-  }
-  //
-  @media (min-width: 1200px) {
-    width: 280px;
-  }
-  //
-  @media (min-width: 1536px) {
     width: 320px;
   }
   //
-  @media (min-width: 1800px) {
-    width: 360px;
-  }
-  //
-  //
-  @media (min-width: 1920px) {
+  @media (min-width: 1536px) {
     width: 400px;
+  }
+  // //
+  @media (min-width: 1800px) {
+    width: 480px;
+  }
+  // //
+  // //
+  @media (min-width: 1920px) {
+    width: 560px;
   }
 }
 

@@ -6,31 +6,26 @@
 }
 
 .MovieInformation__cover {
-  width: 200px;
+  width: 240px;
 }
 @media (min-width: 600px) {
-  .MovieInformation__cover {
-    width: 240px;
-  }
-}
-@media (min-width: 1200px) {
-  .MovieInformation__cover {
-    width: 280px;
-  }
-}
-@media (min-width: 1536px) {
   .MovieInformation__cover {
     width: 320px;
   }
 }
+@media (min-width: 1536px) {
+  .MovieInformation__cover {
+    width: 400px;
+  }
+}
 @media (min-width: 1800px) {
   .MovieInformation__cover {
-    width: 360px;
+    width: 480px;
   }
 }
 @media (min-width: 1920px) {
   .MovieInformation__cover {
-    width: 400px;
+    width: 560px;
   }
 }
 
