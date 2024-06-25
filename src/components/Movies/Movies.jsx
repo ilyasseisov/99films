@@ -70,20 +70,22 @@ export default function Movies() {
       </Box>
 
       {/* pagination */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: '48px',
-        }}
-      >
-        <PaginationCustom
-          currentPage={page}
-          setPage={setPage}
-          totalPages={movies?.total_pages}
-        />
-      </Box>
+      {movies.total_pages > 1 && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '48px',
+          }}
+        >
+          <PaginationCustom
+            currentPage={page}
+            setPage={setPage}
+            totalPages={movies?.total_pages}
+          />
+        </Box>
+      )}
     </>
   );
 }

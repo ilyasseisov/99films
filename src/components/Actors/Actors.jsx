@@ -184,20 +184,22 @@ export default function Actors() {
           </Grid>
         </Grid>
         {/* pagination */}
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: '48px',
-          }}
-        >
-          <PaginationCustom
-            currentPage={page}
-            setPage={setPage}
-            totalPages={actorMovies?.total_pages}
-          />
-        </Box>
+        {actorMovies?.total_pages > 1 && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '48px',
+            }}
+          >
+            <PaginationCustom
+              currentPage={page}
+              setPage={setPage}
+              totalPages={actorMovies?.total_pages}
+            />
+          </Box>
+        )}
       </Container>
     </>
   );
