@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 // rtk query hooks
 import { useGetMoviesQuery } from '../../services/TMDB';
 // redux actions
-import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
 export default function Movies() {
   // hooks
   const [page, setPage] = useState(1);

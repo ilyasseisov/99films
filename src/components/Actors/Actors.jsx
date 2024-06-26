@@ -35,8 +35,8 @@ export default function Actors() {
 
   // local variables
   // functions
-  const splitIntoParagraphs = (text) => {
-    return text.split('\n').filter((paragraph) => paragraph.trim() !== '');
+  const splitText = (text) => {
+    return text.split('\n').filter((part) => part.trim() !== '');
   };
   // return
 
@@ -128,9 +128,9 @@ export default function Actors() {
                     fontWeight: 'normal',
                   }}
                 >
-                  {splitIntoParagraphs(actor?.biography).map(
-                    (paragraph, index) => <p key={index}>{paragraph}</p>
-                  ) || 'Sorry, no biography yet ...'}
+                  {splitText(actor?.biography).map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  )) || 'Sorry, no biography yet ...'}
                 </Typography>
               </Grid>
 

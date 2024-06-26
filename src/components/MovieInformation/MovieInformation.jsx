@@ -100,6 +100,7 @@ export default function MovieInformation() {
   // local variables
   const tmdbApiKey = 'c3e422a2ea4fbce1b97cbebce6616f71';
 
+  //// functions
   // add to favorite
   async function addToFavorites() {
     await axios.post(
@@ -497,6 +498,7 @@ export default function MovieInformation() {
                         borderRadius: '50%',
                         overflow: 'hidden',
                         position: 'relative',
+                        flexShrink: 0,
                       }}
                     >
                       <img
@@ -517,12 +519,12 @@ export default function MovieInformation() {
                       />
                     </Box>
 
-                    <Box>
+                    <Box sx={{ flexGrow: 1 }}>
                       <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
                         {actor?.name}
                       </Typography>
                       <Typography variant='body1'>
-                        {actor?.character}
+                        {actor?.character || 'Sorry, no biography yet ...'}
                       </Typography>
                     </Box>
                   </Grid>
