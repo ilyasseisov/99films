@@ -112,52 +112,36 @@ export default function Actors() {
               {/* text */}
               <Grid item xs={12} sx={{ marginBottom: '32px' }}>
                 {/* name */}
-                {actor?.name ? (
-                  <Typography
-                    variant='h4'
-                    sx={{
-                      textAlign: 'center',
-                      fontWeight: 'bold',
-                      marginBottom: '6px',
-                    }}
-                  >
-                    {actor.name}
-                  </Typography>
-                ) : (
-                  <Typography
-                    variant='h4'
-                    sx={{
-                      marginBottom: '6px',
-                      color: theme.palette.text.disabled,
-                    }}
-                  >
-                    No name
-                  </Typography>
-                )}
+                <Typography
+                  variant='h4'
+                  sx={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    marginBottom: '6px',
+                    color: actor?.name
+                      ? 'inherit'
+                      : theme.palette.text.disabled,
+                  }}
+                >
+                  {actor?.name || 'No name'}
+                </Typography>
 
                 {/* bio */}
-                {actor?.biography ? (
-                  <Typography
-                    variant='h6'
-                    sx={{
-                      fontWeight: 'normal',
-                    }}
-                  >
-                    {splitText(actor?.biography).map((paragraph, index) => (
-                      <p key={index}>{paragraph}</p>
-                    ))}
-                  </Typography>
-                ) : (
-                  <Typography
-                    variant='h6'
-                    sx={{
-                      fontWeight: 'normal',
-                      color: theme.palette.text.disabled,
-                    }}
-                  >
-                    No biography
-                  </Typography>
-                )}
+                <Typography
+                  variant='h6'
+                  sx={{
+                    fontWeight: 'normal',
+                    color: actor?.biography
+                      ? 'inherit'
+                      : theme.palette.text.disabled,
+                  }}
+                >
+                  {actor?.biography
+                    ? splitText(actor.biography).map((paragraph, index) => (
+                        <p key={index}>{paragraph}</p>
+                      ))
+                    : 'No biography'}
+                </Typography>
               </Grid>
 
               {/* Details */}
