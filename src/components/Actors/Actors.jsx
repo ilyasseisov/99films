@@ -111,27 +111,53 @@ export default function Actors() {
             <Grid item xs={12}>
               {/* text */}
               <Grid item xs={12} sx={{ marginBottom: '32px' }}>
-                <Typography
-                  variant='h4'
-                  sx={{
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    marginBottom: '6px',
-                  }}
-                >
-                  {actor?.name || 'Sorry, no name yet ...'}
-                </Typography>
+                {/* name */}
+                {actor?.name ? (
+                  <Typography
+                    variant='h4'
+                    sx={{
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    {actor.name}
+                  </Typography>
+                ) : (
+                  <Typography
+                    variant='h4'
+                    sx={{
+                      marginBottom: '6px',
+                      color: theme.palette.text.disabled,
+                    }}
+                  >
+                    No name
+                  </Typography>
+                )}
 
-                <Typography
-                  variant='h6'
-                  sx={{
-                    fontWeight: 'normal',
-                  }}
-                >
-                  {splitText(actor?.biography).map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  )) || 'Sorry, no biography yet ...'}
-                </Typography>
+                {/* bio */}
+                {actor?.biography ? (
+                  <Typography
+                    variant='h6'
+                    sx={{
+                      fontWeight: 'normal',
+                    }}
+                  >
+                    {splitText(actor?.biography).map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                  </Typography>
+                ) : (
+                  <Typography
+                    variant='h6'
+                    sx={{
+                      fontWeight: 'normal',
+                      color: theme.palette.text.disabled,
+                    }}
+                  >
+                    No biography
+                  </Typography>
+                )}
               </Grid>
 
               {/* Details */}
@@ -145,28 +171,32 @@ export default function Actors() {
                 </Typography>
 
                 {/* imdb */}
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '12px',
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  <Button
-                    href={`https://www.imdb.com/name/${actor?.imdb_id}` || '#'}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    variant='outlined'
-                    endIcon={<MovieIcon />}
+                {actor?.imdb_id && (
+                  <Box
                     sx={{
-                      color: theme.palette.text.primary,
-                      borderColor: theme.palette.text.primary,
-                      '&:hover': { borderColor: theme.palette.text.primary },
+                      display: 'flex',
+                      gap: '12px',
+                      flexWrap: 'wrap',
                     }}
                   >
-                    IMDB
-                  </Button>
-                </Box>
+                    <Button
+                      href={
+                        `https://www.imdb.com/name/${actor?.imdb_id}` || '#'
+                      }
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      variant='outlined'
+                      endIcon={<MovieIcon />}
+                      sx={{
+                        color: theme.palette.text.primary,
+                        borderColor: theme.palette.text.primary,
+                        '&:hover': { borderColor: theme.palette.text.primary },
+                      }}
+                    >
+                      IMDB
+                    </Button>
+                  </Box>
+                )}
               </Grid>
             </Grid>
           </Grid>
@@ -176,10 +206,15 @@ export default function Actors() {
             <Typography variant='h5' sx={{ marginBottom: '12px' }}>
               Movies
             </Typography>
-            {actorMovies ? (
+            {actorMovies.results.length > 0 ? (
               <MovieList movies={actorMovies?.results.slice(0, 12)} />
             ) : (
-              <Typography>Sorry nothing was found</Typography>
+              <Typography
+                variant='body1'
+                sx={{ color: theme.palette.text.disabled }}
+              >
+                No movies
+              </Typography>
             )}
           </Grid>
         </Grid>

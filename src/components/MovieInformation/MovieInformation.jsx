@@ -250,8 +250,8 @@ export default function MovieInformation() {
                   )}
                 </IconButton>
               </Box>
-              {/* rating */}
 
+              {/* rating */}
               <Box
                 sx={{
                   display: 'flex',
@@ -289,29 +289,46 @@ export default function MovieInformation() {
               {/* name, slogan and description */}
               <Grid item xs={12} sx={{ marginBottom: '32px' }}>
                 {/* title */}
-
                 <Typography
                   variant='h4'
                   sx={{
                     textAlign: 'center',
                     fontWeight: 'bold',
                     marginBottom: '6px',
+                    color: movie?.title
+                      ? 'inherit'
+                      : theme.palette.text.disabled,
                   }}
                 >
-                  {movie?.title || 'No title 🤔'}
+                  {movie?.title || 'No title'}
                 </Typography>
 
                 {/* tagline */}
                 <Typography
                   variant='h5'
-                  sx={{ textAlign: 'center', marginBottom: '12px' }}
+                  sx={{
+                    textAlign: 'center',
+                    marginBottom: '12px',
+                    color: movie?.tagline
+                      ? 'inherit'
+                      : theme.palette.text.disabled,
+                  }}
                 >
-                  • {movie?.tagline} •
+                  {`• ${movie?.tagline} •` || 'No tagline'}
                 </Typography>
 
                 {/* description */}
-                <Typography variant='h6' sx={{ fontWeight: 'normal' }}>
-                  {movie?.overview || 'No description 🤔'}
+                <Typography
+                  variant='h6'
+                  sx={{
+                    fontWeight: 'normal',
+                    textAlign: movie?.overview ? 'left' : 'center',
+                    color: movie?.overview
+                      ? 'inherit'
+                      : theme.palette.text.disabled,
+                  }}
+                >
+                  {movie?.overview || 'No description'}
                 </Typography>
               </Grid>
 
@@ -520,11 +537,29 @@ export default function MovieInformation() {
                     </Box>
 
                     <Box sx={{ flexGrow: 1 }}>
-                      <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
-                        {actor?.name}
+                      {/* name */}
+                      <Typography
+                        variant='body1'
+                        sx={{
+                          fontWeight: 'bold',
+                          color: actor?.name
+                            ? 'inherit'
+                            : theme.palette.text.disabled,
+                        }}
+                      >
+                        {actor?.name || 'No name'}
                       </Typography>
-                      <Typography variant='body1'>
-                        {actor?.character || 'Sorry, no biography yet ...'}
+
+                      {/* character */}
+                      <Typography
+                        variant='body1'
+                        sx={{
+                          color: actor?.character
+                            ? 'inherit'
+                            : theme.palette.text.disabled,
+                        }}
+                      >
+                        {actor?.character || 'No character'}
                       </Typography>
                     </Box>
                   </Grid>
