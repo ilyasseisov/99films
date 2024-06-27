@@ -286,8 +286,8 @@ export default function MovieInformation() {
             {/* text and details */}
 
             <Grid item lg={7}>
-              {/* name, slogan and description */}
-              <Grid item xs={12} sx={{ marginBottom: '32px' }}>
+              {/* title, slogan and description */}
+              <Grid item xs={12}>
                 {/* title */}
                 <Typography
                   variant='h4'
@@ -331,154 +331,150 @@ export default function MovieInformation() {
                   {movie?.overview || 'No description'}
                 </Typography>
               </Grid>
+            </Grid>
+          </Grid>
 
-              {/* Details */}
-              <Grid
-                item
-                xs={12}
-                sx={{ marginBottom: '32px', alignSelf: 'flex-start' }}
-              >
-                <Typography variant='h5' sx={{ marginBottom: '12px' }}>
-                  Details
-                </Typography>
-                {/* #1 year, duration, language */}
-                <Box
-                  sx={{ display: 'flex', gap: '12px', marginBottom: '12px' }}
-                >
-                  {/* year */}
-                  {movie?.release_date && movie.release_date !== 'null' && (
-                    <>
-                      <Typography variant='body1'>
-                        {movie?.release_date.split('-')[0]}
-                      </Typography>
-                      <span style={{ lineHeight: '1.2' }}>•</span>
-                    </>
-                  )}
+          {/* Details */}
+          <Grid
+            item
+            xs={12}
+            sx={{ marginBottom: '40px', alignSelf: 'flex-start' }}
+          >
+            <Typography variant='h5' sx={{ marginBottom: '12px' }}>
+              Details
+            </Typography>
+            {/* #1 year, duration, language */}
+            <Box sx={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+              {/* year */}
+              {movie?.release_date && movie.release_date !== 'null' && (
+                <>
+                  <Typography variant='body1'>
+                    {movie?.release_date.split('-')[0]}
+                  </Typography>
+                  <span style={{ lineHeight: '1.2' }}>•</span>
+                </>
+              )}
 
-                  {/* duration */}
-                  {Number.isFinite(movie?.runtime) && movie.runtime !== 0 && (
-                    <>
-                      <Typography variant='body1'>
-                        {`
+              {/* duration */}
+              {Number.isFinite(movie?.runtime) && movie.runtime !== 0 && (
+                <>
+                  <Typography variant='body1'>
+                    {`
                       ${Math.floor(movie?.runtime / 60)}h
                       ${movie?.runtime % 60}m
                     `}
-                      </Typography>
-                      <span style={{ lineHeight: '1.2' }}>•</span>
-                    </>
-                  )}
+                  </Typography>
+                  <span style={{ lineHeight: '1.2' }}>•</span>
+                </>
+              )}
 
-                  {/* language */}
-                  {movie?.original_language &&
-                    movie.original_language !== 'null' && (
-                      <Typography variant='body1'>
-                        {movie?.original_language.toUpperCase()}
-                      </Typography>
-                    )}
-                </Box>
+              {/* language */}
+              {movie?.original_language &&
+                movie.original_language !== 'null' && (
+                  <Typography variant='body1'>
+                    {movie?.original_language.toUpperCase()}
+                  </Typography>
+                )}
+            </Box>
 
-                {/* #2 genres */}
-                {movie?.genres.length > 0 && (
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      gap: '12px',
-                      flexWrap: 'wrap',
-                      marginBottom: '24px',
+            {/* #2 genres */}
+            {movie?.genres.length > 0 && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: '12px',
+                  flexWrap: 'wrap',
+                  marginBottom: '24px',
+                }}
+              >
+                {movie?.genres.map((genre) => (
+                  <Link
+                    to='/'
+                    key={genre.id}
+                    style={{
+                      textDecoration: 'none',
+                      color: theme.palette.text.primary,
                     }}
                   >
-                    {movie?.genres.map((genre) => (
-                      <Link
-                        to='/'
-                        key={genre.id}
-                        style={{
-                          textDecoration: 'none',
-                          color: theme.palette.text.primary,
-                        }}
-                      >
-                        <Typography
-                          onClick={() =>
-                            dispatch(selectGenreOrCategory(genre.id))
-                          }
-                          variant='body1'
-                          sx={{
-                            border: `1px solid ${theme.palette.text.primary}`,
-                            borderRadius: '20px',
-                            padding: '0 6px 0 6px',
-                          }}
-                        >
-                          {genre.name}
-                        </Typography>
-                      </Link>
-                    ))}
-                  </Box>
-                )}
+                    <Typography
+                      onClick={() => dispatch(selectGenreOrCategory(genre.id))}
+                      variant='body1'
+                      sx={{
+                        border: `1px solid ${theme.palette.text.primary}`,
+                        borderRadius: '20px',
+                        padding: '0 6px 0 6px',
+                      }}
+                    >
+                      {genre.name}
+                    </Typography>
+                  </Link>
+                ))}
+              </Box>
+            )}
 
-                {/* #3 trailer, website, imdb */}
-                <Box
+            {/* #3 trailer, website, imdb */}
+            <Box
+              sx={{
+                display: 'flex',
+                gap: '12px',
+                flexWrap: 'wrap',
+              }}
+            >
+              {/* website */}
+              {movie?.homepage && (
+                <Button
+                  href={movie.homepage}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  variant='outlined'
+                  endIcon={<Language />}
                   sx={{
-                    display: 'flex',
-                    gap: '12px',
-                    flexWrap: 'wrap',
+                    color: theme.palette.text.primary,
+                    borderColor: theme.palette.text.primary,
+                    textTransform: 'capitalize',
+                    '&:hover': { borderColor: theme.palette.text.primary },
                   }}
                 >
-                  {/* website */}
-                  {movie?.homepage && (
-                    <Button
-                      href={movie.homepage}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      variant='outlined'
-                      endIcon={<Language />}
-                      sx={{
-                        color: theme.palette.text.primary,
-                        borderColor: theme.palette.text.primary,
-                        textTransform: 'capitalize',
-                        '&:hover': { borderColor: theme.palette.text.primary },
-                      }}
-                    >
-                      Website
-                    </Button>
-                  )}
+                  Website
+                </Button>
+              )}
 
-                  {/* trailer */}
-                  {movie?.videos?.results.length > 0 && (
-                    <Button
-                      href='#'
-                      onClick={() => setOpenTrailerModal(true)}
-                      variant='outlined'
-                      endIcon={<Theaters />}
-                      sx={{
-                        color: theme.palette.text.primary,
-                        borderColor: theme.palette.text.primary,
-                        textTransform: 'capitalize',
-                        '&:hover': { borderColor: theme.palette.text.primary },
-                      }}
-                    >
-                      Trailer
-                    </Button>
-                  )}
+              {/* trailer */}
+              {movie?.videos?.results.length > 0 && (
+                <Button
+                  href='#'
+                  onClick={() => setOpenTrailerModal(true)}
+                  variant='outlined'
+                  endIcon={<Theaters />}
+                  sx={{
+                    color: theme.palette.text.primary,
+                    borderColor: theme.palette.text.primary,
+                    textTransform: 'capitalize',
+                    '&:hover': { borderColor: theme.palette.text.primary },
+                  }}
+                >
+                  Trailer
+                </Button>
+              )}
 
-                  {/* IMDB */}
-                  {movie?.imdb_id && (
-                    <Button
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      href={`https://www.imdb.com/title/${movie?.imdb_id}`}
-                      variant='outlined'
-                      endIcon={<MovieIcon />}
-                      sx={{
-                        color: theme.palette.text.primary,
-                        borderColor: theme.palette.text.primary,
-                        '&:hover': { borderColor: theme.palette.text.primary },
-                      }}
-                    >
-                      IMDB
-                    </Button>
-                  )}
-                </Box>
-              </Grid>
-            </Grid>
+              {/* IMDB */}
+              {movie?.imdb_id && (
+                <Button
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href={`https://www.imdb.com/title/${movie?.imdb_id}`}
+                  variant='outlined'
+                  endIcon={<MovieIcon />}
+                  sx={{
+                    color: theme.palette.text.primary,
+                    borderColor: theme.palette.text.primary,
+                    '&:hover': { borderColor: theme.palette.text.primary },
+                  }}
+                >
+                  IMDB
+                </Button>
+              )}
+            </Box>
           </Grid>
 
           {/* Top cast */}
