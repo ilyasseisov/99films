@@ -48,7 +48,11 @@ export default function Slider({ movies }) {
         {movies.map((movie) => (
           <swiper-slide key={movie.id}>
             {/* img */}
-            <Box className='img-container'>
+            <Box
+              component={Link}
+              to={`/movie/${movie.id}`}
+              className='img-container'
+            >
               <img
                 alt={movie?.name}
                 src={
