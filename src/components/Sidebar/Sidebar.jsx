@@ -74,7 +74,9 @@ export default function Sidebar() {
       >
         {/* categories */}
         <List>
-          <ListSubheader sx={{ bgcolor: 'inherit' }}>Categories</ListSubheader>
+          <ListSubheader disableSticky sx={{ bgcolor: 'inherit' }}>
+            Categories
+          </ListSubheader>
 
           {categories.map((category) => (
             <Link
@@ -108,7 +110,9 @@ export default function Sidebar() {
 
         {/* genres */}
         <List>
-          <ListSubheader sx={{ bgcolor: 'inherit' }}>Genres</ListSubheader>
+          <ListSubheader disableSticky sx={{ bgcolor: 'inherit' }}>
+            Genres
+          </ListSubheader>
 
           {data?.genres?.map((genre) => (
             <Link
