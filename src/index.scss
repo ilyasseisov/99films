@@ -8,6 +8,8 @@
 // MovieInformation
 .MovieInformation__cover {
   width: 240px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 50px;
+
   //
   @media (min-width: 600px) {
     width: 320px;
@@ -48,6 +50,7 @@
 
 .Actors__cover {
   width: 240px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 50px;
   //
   @media (min-width: 600px) {
     width: 320px;

@@ -43,6 +43,7 @@ export default function MovieSingle({ movie, index }) {
               width: '200px',
               marginBottom: '12px',
               borderRadius: '12px',
+              boxShadow: 'rgba(0, 0, 0, 0.4) 0px 10px 50px',
             }}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
