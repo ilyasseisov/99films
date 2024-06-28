@@ -213,6 +213,7 @@ export default function MovieInformation() {
                 />
                 {/* add to favorites */}
                 <IconButton
+                  disableRipple
                   onClick={addToFavorites}
                   sx={{
                     backgroundColor: theme.palette.background.default,
@@ -227,12 +228,16 @@ export default function MovieInformation() {
                     />
                   ) : (
                     <FavoriteBorderRounded
-                      sx={{ fontSize: 32, color: theme.palette.primary.main }}
+                      sx={{
+                        fontSize: 32,
+                        color: theme.palette.primary.main,
+                      }}
                     />
                   )}
                 </IconButton>
                 {/* add to watchlist */}
                 <IconButton
+                  disableRipple
                   onClick={addToWatchlist}
                   sx={{
                     backgroundColor: theme.palette.background.default,
