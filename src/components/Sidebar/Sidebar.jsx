@@ -64,7 +64,10 @@ export default function Sidebar() {
     <>
       <Box
         sx={{
-          bgcolor: theme.palette.action.hover,
+          bgcolor:
+            theme.palette.mode === 'light'
+              ? theme.palette.dark.main
+              : theme.palette.dark.dark,
           position: 'fixed',
           overflowY: 'auto',
           height: '100%',
@@ -74,7 +77,10 @@ export default function Sidebar() {
       >
         {/* categories */}
         <List>
-          <ListSubheader disableSticky sx={{ bgcolor: 'inherit' }}>
+          <ListSubheader
+            disableSticky
+            sx={{ bgcolor: 'inherit', color: theme.palette.light.main }}
+          >
             Categories
           </ListSubheader>
 
@@ -84,7 +90,7 @@ export default function Sidebar() {
               key={category.id}
               style={{
                 textDecoration: 'none',
-                color: theme.palette.text.primary,
+                color: theme.palette.light.main,
               }}
             >
               <ListItemButton
@@ -92,7 +98,7 @@ export default function Sidebar() {
               >
                 <ListItemIcon>
                   <SlideshowRounded
-                    sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                    sx={{ fontSize: 32, color: theme.palette.light.main }}
                   />
                 </ListItemIcon>
                 <ListItemText
@@ -110,7 +116,10 @@ export default function Sidebar() {
 
         {/* genres */}
         <List>
-          <ListSubheader disableSticky sx={{ bgcolor: 'inherit' }}>
+          <ListSubheader
+            disableSticky
+            sx={{ bgcolor: 'inherit', color: theme.palette.light.main }}
+          >
             Genres
           </ListSubheader>
 
@@ -120,7 +129,7 @@ export default function Sidebar() {
               key={genre.id}
               style={{
                 textDecoration: 'none',
-                color: theme.palette.text.primary,
+                color: theme.palette.light.main,
               }}
             >
               <ListItemButton
@@ -128,7 +137,7 @@ export default function Sidebar() {
               >
                 <ListItemIcon>
                   <SlideshowRounded
-                    sx={{ fontSize: 32, color: theme.palette.text.primary }}
+                    sx={{ fontSize: 32, color: theme.palette.light.main }}
                   />
                 </ListItemIcon>
                 <ListItemText

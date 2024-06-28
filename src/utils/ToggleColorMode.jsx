@@ -18,6 +18,13 @@ export default function ToggleColorMode({ children }) {
             main: '#E50914',
             dark: '#B20710',
           },
+          dark: {
+            main: '#292929',
+            dark: '#000000',
+          },
+          light: {
+            main: '#FFFFFF',
+          },
         },
 
         //
