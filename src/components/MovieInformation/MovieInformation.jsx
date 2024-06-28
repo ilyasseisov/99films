@@ -604,6 +604,13 @@ export default function MovieInformation() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              '& .MuiBackdrop-root': {
+                backdropFilter: 'blur(8px)',
+                backgroundColor:
+                  theme.palette.mode === 'light'
+                    ? 'rgba(255, 255, 255, 0.5)'
+                    : 'rgba(0, 0, 0, 0.5)',
+              },
             }}
           >
             {movie?.videos?.results?.length > 0 && (

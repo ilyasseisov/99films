@@ -211,6 +211,15 @@ export default function Navbar() {
       </Box>
 
       <Drawer
+        sx={{
+          '& .MuiBackdrop-root': {
+            backdropFilter: 'blur(8px)',
+            backgroundColor:
+              theme.palette.mode === 'light'
+                ? 'rgba(255, 255, 255, 0.5)'
+                : 'rgba(0, 0, 0, 0.5)',
+          },
+        }}
         open={isDrawerOpened}
         anchor='right'
         onClose={() => {
