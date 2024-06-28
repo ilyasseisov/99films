@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 // components
 import { MovieSingle } from '..';
 
-export default function MovieList({ centerAlign, movies }) {
+export default function MovieList({ movies }) {
   // hooks
   // local variables
   // functions
@@ -20,10 +20,10 @@ export default function MovieList({ centerAlign, movies }) {
             xxl={2}
             key={movie.id}
             sx={{
+              marginBottom: '12px',
               display: 'flex',
               justifyContent: {
                 xs: 'center',
-                sm: centerAlign ? 'center' : 'flex-start',
               },
             }}
           >

@@ -62,10 +62,7 @@ export default function Movies() {
         <Slider movies={movies.results.slice(0, numberOfSlides)} />
       </Box>
       <Box sx={{ marginBottom: '48px' }}>
-        <MovieList
-          movies={movies.results.slice(numberOfSlides, 20)}
-          centerAlign
-        />
+        <MovieList movies={movies.results.slice(numberOfSlides, 20)} />
       </Box>
 
       {/* pagination */}

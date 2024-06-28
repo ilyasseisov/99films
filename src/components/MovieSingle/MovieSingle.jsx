@@ -1,5 +1,5 @@
 // mui
-import { Typography, Box, Grow } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 // router
 import { Link } from 'react-router-dom';
 // images
