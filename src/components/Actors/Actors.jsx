@@ -1,5 +1,3 @@
-// react hooks
-import { useState } from 'react';
 // mui
 import { Grid, Container, Typography, Box, Button } from '@mui/material';
 // mui icons
@@ -10,6 +8,10 @@ import imgs from '../../assets/imgs';
 import { MovieList, PaginationCustom } from '..';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+// redux actions
+import { setPage } from '../../features/currentGenreOrCategorySlice';
 // rtk query hooks
 import {
   useGetActorQuery,
@@ -19,12 +21,14 @@ import {
 import { useParams } from 'react-router-dom';
 export default function Actors() {
   // hooks
-  const [page, setPage] = useState(1);
 
   // mui
   const theme = useTheme();
   // router
   const { id } = useParams();
+  // redux
+  const dispatch = useDispatch();
+  const { page } = useSelector((state) => state.currentGenreOrCategory);
   // rtk
   const { data: actor, isFetching, error } = useGetActorQuery(id);
   const {
@@ -214,7 +218,7 @@ export default function Actors() {
           >
             <PaginationCustom
               currentPage={page}
-              setPage={setPage}
+              setPage={(page) => dispatch(setPage(page))}
               totalPages={actorMovies?.total_pages}
             />
           </Box>

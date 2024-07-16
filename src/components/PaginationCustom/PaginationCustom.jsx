@@ -8,15 +8,20 @@ import {
 // mui icons
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
-export default function PaginationCustom({ totalPages, setPage, currentPage }) {
+// redux
+import { useDispatch } from 'react-redux';
+// redux actions
+import { setPage } from '../../features/currentGenreOrCategorySlice';
+
+export default function PaginationCustom({ totalPages, currentPage }) {
   // hooks
+  const dispatch = useDispatch();
   const isSmBreakpoint = useMediaQuery('(min-width: 600px)');
   const isLgBreakpoint = useMediaQuery('(min-width: 1200px)');
   // local variables
   // functions
-
   function handlePageChange(event, value) {
-    setPage(value);
+    dispatch(setPage(value));
   }
   // return
   if (totalPages === 0) return null;

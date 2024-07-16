@@ -60,7 +60,7 @@ export default function MovieInformation() {
     isFetching: isRecommendationsFetching,
     error: recommendationsError,
   } = useGetRecommendationsQuery({
-    list: '/recommendations',
+    list: 'recommendations',
     movieId: id,
   });
   // user favorite movies

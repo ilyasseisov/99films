@@ -1,24 +1,23 @@
-// hooks
-import { useState } from 'react';
 // mui
 import { Box, Typography, useMediaQuery } from '@mui/material';
 // components
 import { MovieList, Slider, PaginationCustom } from '..';
 // redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // rtk query hooks
 import { useGetMoviesQuery } from '../../services/TMDB';
 // redux actions
+import { setPage } from '../../features/currentGenreOrCategorySlice';
 export default function Movies() {
   // hooks
-  const [page, setPage] = useState(1);
   const isLgBreakpoint = useMediaQuery(
     '(min-width: 1200px) and (max-width: 1535.99px)'
   );
   const isXxlBreakpoint = useMediaQuery('(min-width: 1800px)');
 
   // redux
-  const { genreIdOrCategoryName, searchQuery } = useSelector(
+  const dispatch = useDispatch();
+  const { genreIdOrCategoryName, searchQuery, page } = useSelector(
     (state) => state.currentGenreOrCategory
   );
   // rtk query
@@ -77,7 +76,7 @@ export default function Movies() {
         >
           <PaginationCustom
             currentPage={page}
-            setPage={setPage}
+            setPage={(page) => dispatch(setPage(page))}
             totalPages={movies?.total_pages}
           />
         </Box>
