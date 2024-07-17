@@ -94,7 +94,6 @@ export default function Profile() {
               No favorite movies
             </Typography>
           )}
-          <MovieList movies={favoriteMovies?.results} />
         </Grid>
 
         {/* watchlist */}
