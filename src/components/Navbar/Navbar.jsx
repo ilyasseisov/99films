@@ -122,10 +122,15 @@ export default function Navbar() {
                 </IconButton>
 
                 <Typography
+                  component={Link}
+                  to='/'
                   variant='h6'
                   noWrap
-                  component='div'
-                  sx={{ flexGrow: 1 }}
+                  sx={{
+                    flexGrow: 1,
+                    textDecoration: 'none',
+                    color: theme.palette.light.main,
+                  }}
                 >
                   Logo
                 </Typography>
