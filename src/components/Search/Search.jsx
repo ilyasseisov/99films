@@ -51,6 +51,7 @@ export default function Search() {
   // hooks
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
+  const location = useLocation();
   // local variables
   // functions
   function handleKeyDown(e) {
@@ -59,6 +60,10 @@ export default function Search() {
     }
   }
   // return
+  // display only when on homepage
+  if (location.pathname !== '/') return null;
+
+  // primary return
   return (
     <>
       <SearchInput>
