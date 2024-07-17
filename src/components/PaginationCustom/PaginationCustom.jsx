@@ -31,7 +31,7 @@ export default function PaginationCustom({ totalPages, currentPage }) {
       <Stack spacing={2}>
         <Pagination
           size={isLgBreakpoint ? 'large' : isSmBreakpoint ? '' : 'small'}
-          count={totalPages}
+          count={totalPages > 500 ? 500 : totalPages}
           page={currentPage}
           onChange={handlePageChange}
           siblingCount={isSmBreakpoint ? 1 : 0}
