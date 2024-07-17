@@ -1,3 +1,5 @@
+// react
+import { useEffect } from 'react';
 // mui
 import { Grid, Container, Typography, Box, Button } from '@mui/material';
 // mui icons
@@ -36,6 +38,11 @@ export default function Actors() {
     isFetching: isFetchingMovies,
     error: moviesError,
   } = useGetMoviesByActorIdQuery({ id, page });
+
+  // Reset page to 1 when the Actors component mounts or when the actor ID changes
+  useEffect(() => {
+    dispatch(setPage(1));
+  }, [id, dispatch]);
 
   // local variables
   // functions
