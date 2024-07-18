@@ -42,7 +42,7 @@ import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlic
 import axios from 'axios';
 export default function MovieInformation() {
   // redux
-  const { user } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   // mui theme
   const theme = useTheme();
   // state for trailer modal
@@ -212,48 +212,53 @@ export default function MovieInformation() {
                   className='MovieInformation__cover'
                 />
                 {/* add to favorites */}
-                <IconButton
-                  disableRipple
-                  onClick={addToFavorites}
-                  sx={{
-                    backgroundColor: theme.palette.background.default,
-                    position: 'absolute',
-                    top: '8px',
-                    left: '8px',
-                  }}
-                >
-                  {movieStatus[movie.id]?.isFavorited ? (
-                    <FavoriteRounded
-                      sx={{ fontSize: 32, color: theme.palette.primary.main }}
-                    />
-                  ) : (
-                    <FavoriteBorderRounded
-                      sx={{
-                        fontSize: 32,
-                        color: theme.palette.primary.main,
-                      }}
-                    />
-                  )}
-                </IconButton>
+                {isAuthenticated && (
+                  <IconButton
+                    disableRipple
+                    onClick={addToFavorites}
+                    sx={{
+                      backgroundColor: theme.palette.background.default,
+                      position: 'absolute',
+                      top: '8px',
+                      left: '8px',
+                    }}
+                  >
+                    {movieStatus[movie.id]?.isFavorited ? (
+                      <FavoriteRounded
+                        sx={{ fontSize: 32, color: theme.palette.primary.main }}
+                      />
+                    ) : (
+                      <FavoriteBorderRounded
+                        sx={{
+                          fontSize: 32,
+                          color: theme.palette.primary.main,
+                        }}
+                      />
+                    )}
+                  </IconButton>
+                )}
+
                 {/* add to watchlist */}
-                <IconButton
-                  disableRipple
-                  onClick={addToWatchlist}
-                  sx={{
-                    backgroundColor: theme.palette.background.default,
-                    position: 'absolute',
-                    top: '8px',
-                    right: '8px',
-                  }}
-                >
-                  {movieStatus[movie.id]?.isWatchlisted ? (
-                    <StarRounded sx={{ fontSize: 32, color: '#F1B80D' }} />
-                  ) : (
-                    <StarBorderRounded
-                      sx={{ fontSize: 32, color: '#F1B80D' }}
-                    />
-                  )}
-                </IconButton>
+                {isAuthenticated && (
+                  <IconButton
+                    disableRipple
+                    onClick={addToWatchlist}
+                    sx={{
+                      backgroundColor: theme.palette.background.default,
+                      position: 'absolute',
+                      top: '8px',
+                      right: '8px',
+                    }}
+                  >
+                    {movieStatus[movie.id]?.isWatchlisted ? (
+                      <StarRounded sx={{ fontSize: 32, color: '#F1B80D' }} />
+                    ) : (
+                      <StarBorderRounded
+                        sx={{ fontSize: 32, color: '#F1B80D' }}
+                      />
+                    )}
+                  </IconButton>
+                )}
               </Box>
 
               {/* rating */}
