@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 // rtk query hooks
 import { useGetListQuery } from '../../services/TMDB';
+// react router
+import { useNavigate } from 'react-router-dom';
 // mui
 import { Container, Grid, Box, Button, Typography } from '@mui/material';
 // mui icons
@@ -16,8 +18,9 @@ import { MovieList } from '..';
 export default function Profile() {
   // hooks
   const theme = useTheme();
+  const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const { data: favoriteMovies, refetch: refetchFavorites } = useGetListQuery({
     listName: 'favorite/movies',
     accountId: user.id,
@@ -33,11 +36,20 @@ export default function Profile() {
       page: 1,
     });
 
+  // Redirect to home if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
+
   // to have updates on page reload (rtk query functionality)
   useEffect(() => {
-    refetchFavorites();
-    refetchWatchlisted();
-  }, []);
+    if (user?.id) {
+      refetchFavorites();
+      refetchWatchlisted();
+    }
+  }, [refetchFavorites, refetchWatchlisted, user?.id]);
 
   // local variables
   // functions
