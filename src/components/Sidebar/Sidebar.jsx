@@ -95,6 +95,19 @@ export default function Sidebar() {
             >
               <ListItemButton
                 onClick={() => dispatch(selectGenreOrCategory(category.id))}
+                selected={category.id === genreIdOrCategoryName}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                  },
+                  '&.Mui-selected': {
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.light.main,
+                    '&:hover': {
+                      backgroundColor: theme.palette.primary.main,
+                    },
+                  },
+                }}
               >
                 <ListItemIcon>
                   <SlideshowRounded
@@ -131,9 +144,23 @@ export default function Sidebar() {
                 textDecoration: 'none',
                 color: theme.palette.light.main,
               }}
+              className={genre.id === genreIdOrCategoryName ? 'active' : ''}
             >
               <ListItemButton
                 onClick={() => dispatch(selectGenreOrCategory(genre.id))}
+                selected={genre.id === genreIdOrCategoryName}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                  },
+                  '&.Mui-selected': {
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.light.main,
+                    '&:hover': {
+                      backgroundColor: theme.palette.primary.main,
+                    },
+                  },
+                }}
               >
                 <ListItemIcon>
                   <SlideshowRounded
