@@ -170,6 +170,7 @@ export default function Navbar() {
                       sx={{
                         color: '#fff',
                         borderColor: '#fff',
+                        textTransform: 'capitalize',
                         '&:hover': {
                           borderColor: '#fff',
                         },
@@ -185,6 +186,7 @@ export default function Navbar() {
                     sx={{
                       color: '#fff',
                       borderColor: '#fff',
+                      textTransform: 'capitalize',
                       '&:hover': {
                         borderColor: '#fff',
                       },

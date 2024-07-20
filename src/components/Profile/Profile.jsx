@@ -81,7 +81,10 @@ export default function Profile() {
               color: theme.palette.text.primary,
               borderColor: theme.palette.text.primary,
               textTransform: 'capitalize',
-              '&:hover': { borderColor: theme.palette.text.primary },
+              '&:hover': {
+                borderColor: theme.palette.text.primary,
+                bgcolor: 'transparent',
+              },
             }}
             variant='outlined'
             startIcon={<ExitToAppRounded />}
