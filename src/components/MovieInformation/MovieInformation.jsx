@@ -17,6 +17,7 @@ import {
   FavoriteRounded,
   StarBorderRounded,
   StarRounded,
+  ArrowBackRounded,
 } from '@mui/icons-material';
 // images
 import imgs from '../../assets/imgs';
@@ -27,7 +28,7 @@ import { MovieList } from '..';
 // react hooks
 import { useState, useEffect } from 'react';
 // router
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 // rtk query hooks
@@ -40,6 +41,7 @@ import {
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
 // axios
 import axios from 'axios';
+
 export default function MovieInformation() {
   // redux
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -51,6 +53,8 @@ export default function MovieInformation() {
   const [movieStatus, setMovieStatus] = useState({});
   // router - to get param from URL
   const { id } = useParams();
+  // router - to navigate back
+  const navigate = useNavigate();
   //// rtk query
   // single movie
   const { data: movie, isFetching, error } = useGetMovieQuery(id);
@@ -146,6 +150,11 @@ export default function MovieInformation() {
       },
     }));
   }
+
+  // go back
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   // while fetching stage
   if (isFetching) {
@@ -598,6 +607,27 @@ export default function MovieInformation() {
             )}
           </Grid>
         </Grid>
+
+        {/* back button */}
+        <Button
+          onClick={handleGoBack}
+          sx={{
+            position: 'absolute',
+            top: '100px',
+            right: '16px',
+            color: theme.palette.text.primary,
+            borderColor: theme.palette.text.primary,
+            textTransform: 'capitalize',
+            '&:hover': {
+              borderColor: theme.palette.text.primary,
+              bgcolor: 'transparent',
+            },
+          }}
+          variant='outlined'
+          endIcon={<ArrowBackRounded />}
+        >
+          Back
+        </Button>
 
         {/* trailer modal */}
         {movie?.videos?.results.length > 0 && (

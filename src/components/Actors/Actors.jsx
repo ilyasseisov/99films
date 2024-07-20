@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 // mui
 import { Grid, Container, Typography, Box, Button } from '@mui/material';
 // mui icons
-import { Movie as MovieIcon } from '@mui/icons-material';
+import { Movie as MovieIcon, ArrowBackRounded } from '@mui/icons-material';
 // images
 import imgs from '../../assets/imgs';
 // components
@@ -20,7 +20,7 @@ import {
   useGetMoviesByActorIdQuery,
 } from '../../services/TMDB';
 // router
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 export default function Actors() {
   // hooks
 
@@ -28,6 +28,8 @@ export default function Actors() {
   const theme = useTheme();
   // router
   const { id } = useParams();
+  // router - to navigate back
+  const navigate = useNavigate();
   // redux
   const dispatch = useDispatch();
   const { page } = useSelector((state) => state.currentGenreOrCategory);
@@ -49,6 +51,12 @@ export default function Actors() {
   const splitText = (text) => {
     return text.split('\n').filter((part) => part.trim() !== '');
   };
+
+  // go back
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   // return
 
   // while fetching stage
@@ -213,6 +221,28 @@ export default function Actors() {
             )}
           </Grid>
         </Grid>
+
+        {/* back button */}
+        <Button
+          onClick={handleGoBack}
+          sx={{
+            position: 'absolute',
+            top: '100px',
+            right: '16px',
+            color: theme.palette.text.primary,
+            borderColor: theme.palette.text.primary,
+            textTransform: 'capitalize',
+            '&:hover': {
+              borderColor: theme.palette.text.primary,
+              bgcolor: 'transparent',
+            },
+          }}
+          variant='outlined'
+          endIcon={<ArrowBackRounded />}
+        >
+          Back
+        </Button>
+
         {/* pagination */}
         {actorMovies?.total_pages > 1 && (
           <Box
