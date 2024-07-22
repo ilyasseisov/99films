@@ -7,7 +7,7 @@ export const genreOrCategorySlice = createSlice({
   name: 'genreOrCategory',
   // initial state
   initialState: {
-    genreIdOrCategoryName: '',
+    genreIdOrCategoryName: 'popular',
     page: 1,
     searchQuery: '',
   },
