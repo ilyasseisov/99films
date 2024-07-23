@@ -1,5 +1,12 @@
 // mui
-import { Box, Typography, useMediaQuery } from '@mui/material';
+import {
+  Container,
+  Box,
+  Typography,
+  Grid,
+  Skeleton,
+  useMediaQuery,
+} from '@mui/material';
 // components
 import { MovieList, Slider, PaginationCustom } from '..';
 // redux
@@ -41,7 +48,55 @@ export default function Movies() {
 
   // while fetching stage
   if (isFetching) {
-    return <Typography>Fetching...</Typography>;
+    return (
+      <>
+        <Container maxWidth='xl' sx={{ marginTop: '32px' }}>
+          <Box sx={{ marginBottom: '24px' }}>
+            <Skeleton
+              sx={{ borderRadius: '12px' }}
+              variant='rectangular'
+              width='100%'
+              height={400}
+            />
+          </Box>
+          <Box sx={{ marginBottom: '48px' }}>
+            <Grid container spacing={2}>
+              {[...Array(12)].map((_, index) => (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  lg={4}
+                  xl={3}
+                  xxl={2}
+                  key={index}
+                  sx={{ marginBottom: '12px' }}
+                >
+                  <Skeleton
+                    sx={{ borderRadius: '12px', marginBottom: '12px' }}
+                    variant='rectangular'
+                    width='100%'
+                    height={300}
+                  />
+                  <Skeleton
+                    sx={{ margin: '0 auto' }}
+                    variant='text'
+                    width={'24%'}
+                    height={36}
+                  />
+                  <Skeleton
+                    sx={{ margin: '0 auto' }}
+                    variant='text'
+                    width={'80%'}
+                    height={32}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Container>
+      </>
+    );
   }
 
   // if no movies were returned

@@ -7,6 +7,7 @@ import {
   Button,
   IconButton,
   Modal,
+  Skeleton,
 } from '@mui/material';
 // mui icons
 import {
@@ -157,18 +158,148 @@ export default function MovieInformation() {
   };
 
   // while fetching stage
-  if (isFetching) {
-    return <Typography>Fetching...</Typography>;
+  if (isFetching || isRecommendationsFetching) {
+    return (
+      <>
+        <Container
+          maxWidth='xxl'
+          sx={{ padding: { xs: '12px', md: '32px 12px 12px 12px' } }}
+        >
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', lg: 'row' },
+                alignItems: 'center',
+                marginBottom: { xs: '32px', lg: '40px' },
+              }}
+            >
+              <Grid
+                item
+                xs={12}
+                lg={5}
+                sx={{
+                  display: 'flex',
+                  alignItems: { xs: 'center', lg: 'flex-start' },
+                  flexDirection: 'column',
+                  marginBottom: '24px',
+                }}
+              >
+                <Box sx={{ marginBottom: '16px', position: 'relative' }}>
+                  <Skeleton
+                    variant='rectangular'
+                    width={300}
+                    height={450}
+                    sx={{ borderRadius: '12px' }}
+                  />
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <Skeleton variant='circular' width={32} height={32} />
+                  <Skeleton variant='text' width={40} />
+                </Box>
+              </Grid>
+              <Grid item lg={7}>
+                <Grid item xs={12}>
+                  <Skeleton variant='text' width='80%' height={60} />
+                  <Skeleton variant='text' width='60%' height={40} />
+                  <Skeleton variant='text' width='92%' height={100} />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{ marginBottom: '40px', alignSelf: 'flex-start' }}
+            >
+              <Box sx={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                <Skeleton variant='text' width='10%' />
+                <Skeleton variant='text' width='10%' />
+                <Skeleton variant='text' width='10%' />
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: '12px',
+                  flexWrap: 'wrap',
+                  marginBottom: '24px',
+                }}
+              >
+                <Skeleton
+                  variant='rectangular'
+                  width={80}
+                  height={30}
+                  sx={{ borderRadius: '20px' }}
+                />
+                <Skeleton
+                  variant='rectangular'
+                  width={80}
+                  height={30}
+                  sx={{ borderRadius: '20px' }}
+                />
+                <Skeleton
+                  variant='rectangular'
+                  width={80}
+                  height={30}
+                  sx={{ borderRadius: '20px' }}
+                />
+              </Box>
+              <Box sx={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <Skeleton variant='rectangular' width={80} height={30} />
+                <Skeleton variant='rectangular' width={80} height={30} />
+                <Skeleton variant='rectangular' width={80} height={30} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} sx={{ marginBottom: '32px' }}>
+              <Grid container>
+                {Array.from(new Array(12)).map((_, index) => (
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    lg={4}
+                    xl={3}
+                    key={index}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      marginBottom: '12px',
+                    }}
+                  >
+                    <Skeleton variant='circular' width={80} height={80} />
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Skeleton variant='text' width='60%' />
+                      <Skeleton variant='text' width='40%' />
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                {Array.from(new Array(12)).map((_, index) => (
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                    <Skeleton
+                      sx={{ borderRadius: '12px' }}
+                      variant='rectangular'
+                      width='100%'
+                      height={300}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
+        </Container>
+      </>
+    );
   }
 
   // if error
   if (error) {
     return <Typography>Error</Typography>;
-  }
-
-  // while fetching stage (recommendations)
-  if (isRecommendationsFetching) {
-    return <Typography>Fetching...</Typography>;
   }
 
   // if error (recommendations)

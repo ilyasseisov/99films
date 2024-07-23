@@ -1,7 +1,14 @@
 // react
 import { useEffect } from 'react';
 // mui
-import { Grid, Container, Typography, Box, Button } from '@mui/material';
+import {
+  Grid,
+  Container,
+  Typography,
+  Box,
+  Button,
+  Skeleton,
+} from '@mui/material';
 // mui icons
 import { Movie as MovieIcon, ArrowBackRounded } from '@mui/icons-material';
 // images
@@ -60,18 +67,131 @@ export default function Actors() {
   // return
 
   // while fetching stage
-  if (isFetching) {
-    return <Typography>Fetching...</Typography>;
+  if (isFetching || isFetchingMovies) {
+    return (
+      <>
+        <Container
+          maxWidth='xxl'
+          sx={{ padding: { xs: '12px', md: '32px 12px 12px 12px' } }}
+        >
+          <Grid container sx={{ marginBottom: '48px' }}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginBottom: { xs: '32px', lg: '40px' },
+              }}
+            >
+              {/* actor skeleton */}
+              {
+                <>
+                  <Box sx={{ marginBottom: '16px', position: 'relative' }}>
+                    <Skeleton
+                      variant='rectangular'
+                      width={300}
+                      height={450}
+                      sx={{ borderRadius: '12px' }}
+                    />
+                    <Skeleton
+                      sx={{ margin: '0 auto' }}
+                      variant='text'
+                      width={'20%'}
+                      height={36}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '12px',
+                      width: '100%',
+                    }}
+                  >
+                    <Skeleton variant='text' width={'100%'} height={40} />
+                    <Skeleton variant='text' width={'100%'} height={40} />
+                    <Skeleton variant='text' width={'100%'} height={40} />
+                    <Skeleton variant='text' width={'100%'} height={40} />
+                    <Skeleton variant='text' width={'100%'} height={40} />
+                    <Skeleton variant='text' width={'100%'} height={40} />
+                  </Box>
+                </>
+              }
+            </Grid>
+
+            {/* movies skeleton */}
+            <Grid item xs={12}>
+              {
+                <>
+                  <Box sx={{ marginBottom: '48px' }}>
+                    <Grid container spacing={2}>
+                      {[...Array(12)].map((_, index) => (
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          lg={4}
+                          xl={3}
+                          xxl={2}
+                          key={index}
+                          sx={{ marginBottom: '12px' }}
+                        >
+                          <Skeleton
+                            sx={{ borderRadius: '12px', marginBottom: '12px' }}
+                            variant='rectangular'
+                            width='100%'
+                            height={300}
+                          />
+                          <Skeleton
+                            sx={{ margin: '0 auto' }}
+                            variant='text'
+                            width={'24%'}
+                            height={36}
+                          />
+                          <Skeleton
+                            sx={{ margin: '0 auto' }}
+                            variant='text'
+                            width={'80%'}
+                            height={32}
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Box>
+                </>
+              }
+            </Grid>
+          </Grid>
+          <Button
+            onClick={handleGoBack}
+            sx={{
+              position: 'absolute',
+              top: '100px',
+              right: '16px',
+              color: theme.palette.text.primary,
+              borderColor: theme.palette.text.primary,
+              textTransform: 'capitalize',
+              '&:hover': {
+                borderColor: theme.palette.text.primary,
+                bgcolor: 'transparent',
+              },
+            }}
+            variant='outlined'
+            endIcon={<ArrowBackRounded />}
+          >
+            Back
+          </Button>
+        </Container>
+      </>
+    );
   }
 
   // if error
   if (error) {
     return <Typography>Error</Typography>;
-  }
-
-  // while fetching stage (movies)
-  if (isFetchingMovies) {
-    return <Typography>Fetching...</Typography>;
   }
 
   // if error (movies)

@@ -8,6 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  Skeleton,
 } from '@mui/material';
 // mui icons
 import { SlideshowRounded } from '@mui/icons-material';
@@ -45,7 +46,20 @@ export default function Sidebar() {
 
   // while fetching stage
   if (isFetching) {
-    return <Typography>Fetching...</Typography>;
+    return (
+      <>
+        {[...Array(20)].map((_, index) => (
+          <ListItemButton key={index}>
+            <ListItemIcon>
+              <Skeleton variant='circular' width={32} height={32} />
+            </ListItemIcon>
+            <ListItemText
+              primary={<Skeleton variant='text' width={'100%'} height={32} />}
+            />
+          </ListItemButton>
+        ))}
+      </>
+    );
   }
 
   // if no movies were returned
