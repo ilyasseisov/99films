@@ -119,7 +119,7 @@ export default function Movies() {
   }
 
   // if error
-  if (!error) {
+  if (error) {
     return (
       <>
         <ErrorNetwork />
