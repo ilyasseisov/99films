@@ -1,3 +1,5 @@
+// react
+import { useEffect } from 'react';
 // mui
 import {
   Container,
@@ -8,11 +10,13 @@ import {
   useMediaQuery,
 } from '@mui/material';
 // components
-import { MovieList, Slider, PaginationCustom } from '..';
+import { MovieList, Slider, PaginationCustom, ErrorNetwork } from '..';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 // rtk query hooks
 import { useGetMoviesQuery } from '../../services/TMDB';
+// router
+import { useNavigate } from 'react-router-dom';
 // redux actions
 import { setPage } from '../../features/currentGenreOrCategorySlice';
 export default function Movies() {
@@ -37,6 +41,16 @@ export default function Movies() {
     page,
     searchQuery,
   });
+
+  // router
+  const navigate = useNavigate();
+
+  // to navigate to 'root/error'
+  useEffect(() => {
+    if (error) {
+      navigate('/error');
+    }
+  }, [error, navigate]);
 
   // local variables
   // to make sure that rows are symmetrical
@@ -105,8 +119,12 @@ export default function Movies() {
   }
 
   // if error
-  if (error) {
-    return <Typography>Error</Typography>;
+  if (!error) {
+    return (
+      <>
+        <ErrorNetwork />
+      </>
+    );
   }
 
   // primary return

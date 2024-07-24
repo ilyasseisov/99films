@@ -11,3 +11,4 @@ export { default as PaginationCustom } from './PaginationCustom/PaginationCustom
 export { default as Search } from './Search/Search';
 export { default as Error404 } from './Error404/Error404';
 export { default as Layout } from './Layout/Layout';
+export { default as ErrorNetwork } from './ErrorNetwork/ErrorNetwork';

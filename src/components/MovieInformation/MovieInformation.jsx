@@ -20,6 +20,8 @@ import {
   StarRounded,
   ArrowBackRounded,
 } from '@mui/icons-material';
+// components
+import { ErrorNetwork } from '..';
 // images
 import imgs from '../../assets/imgs';
 // useTheme (mui)
@@ -99,6 +101,13 @@ export default function MovieInformation() {
       }));
     }
   }, [favoriteMovies, watchlistMovies, movie]);
+
+  // to navigate to 'root/error'
+  useEffect(() => {
+    if (error) {
+      navigate('/error');
+    }
+  }, [error, navigate]);
 
   // redux
   const dispatch = useDispatch();
@@ -299,12 +308,20 @@ export default function MovieInformation() {
 
   // if error
   if (error) {
-    return <Typography>Error</Typography>;
+    return (
+      <>
+        <ErrorNetwork />
+      </>
+    );
   }
 
   // if error (recommendations)
   if (recommendationsError) {
-    return <Typography>Error</Typography>;
+    return (
+      <>
+        <ErrorNetwork />
+      </>
+    );
   }
 
   return (

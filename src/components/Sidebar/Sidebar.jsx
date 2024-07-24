@@ -14,6 +14,7 @@ import {
 import { SlideshowRounded } from '@mui/icons-material';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
+
 // router
 import { Link } from 'react-router-dom';
 // rtk query hooks
@@ -69,7 +70,22 @@ export default function Sidebar() {
 
   // if error
   if (error) {
-    return <Typography>Error</Typography>;
+    return (
+      <>
+        <Box
+          sx={{
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Typography sx={{ color: theme.palette.text.disabled }} variant='p'>
+            Error fetching categories
+          </Typography>
+        </Box>
+      </>
+    );
   }
 
   // primary return

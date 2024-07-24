@@ -6,6 +6,7 @@ import {
   Profile,
   MovieInformation,
   Error404,
+  ErrorNetwork,
 } from './';
 
 // router
@@ -29,6 +30,7 @@ export default function App() {
           <Route path='/profile/:id' element={<Profile />} />
         </Route>
         <Route path='*' element={<Error404 />} />
+        <Route path='/error' element={<ErrorNetwork />} />
       </Routes>
     </>
   );

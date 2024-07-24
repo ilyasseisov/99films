@@ -14,7 +14,7 @@ import { Movie as MovieIcon, ArrowBackRounded } from '@mui/icons-material';
 // images
 import imgs from '../../assets/imgs';
 // components
-import { MovieList, PaginationCustom } from '..';
+import { MovieList, PaginationCustom, ErrorNetwork } from '..';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
 // redux
@@ -53,6 +53,13 @@ export default function Actors() {
     dispatch(setPage(1));
   }, [id, dispatch]);
 
+  // to navigate to 'root/error'
+  useEffect(() => {
+    if (error) {
+      navigate('/error');
+    }
+  }, [error, navigate]);
+
   // local variables
   // functions
   const splitText = (text) => {
@@ -66,7 +73,7 @@ export default function Actors() {
 
   // return
 
-  // while fetching stage
+  // while fetching stage (skeleton)
   if (isFetching || isFetchingMovies) {
     return (
       <>
@@ -191,12 +198,20 @@ export default function Actors() {
 
   // if error
   if (error) {
-    return <Typography>Error</Typography>;
+    return (
+      <>
+        <ErrorNetwork />
+      </>
+    );
   }
 
   // if error (movies)
   if (moviesError) {
-    return <Typography>Error</Typography>;
+    return (
+      <>
+        <ErrorNetwork />
+      </>
+    );
   }
 
   // primary return
