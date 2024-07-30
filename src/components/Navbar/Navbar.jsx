@@ -85,13 +85,11 @@ export default function Navbar() {
   // framer
   const variants = {
     hidden: {
-      opacity: 0,
       y: '-100px',
     },
     visible: {
-      opacity: 1,
       y: '0px',
-      transition: { duration: 0.5 },
+      transition: { duration: 0.3, ease: 'easeOut' },
     },
   };
   // functions
