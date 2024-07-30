@@ -99,88 +99,111 @@ export default function Navbar() {
   // return
   return (
     <>
-      <motion.div initial='hidden' animate='visible' variants={variants}>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar
-            position='fixed'
-            elevation={0}
-            sx={{
-              bgcolor:
-                theme.palette.mode === 'light'
-                  ? theme.palette.primary.main
-                  : theme.palette.primary.dark,
-              padding: { xs: '8px 0px 20px 0px', md: '8px 0px 8px 0px' },
-            }}
-          >
-            <Toolbar>
-              <Grid container>
-                <Grid
-                  item
-                  xs={6}
-                  md={4}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    order: { xs: '1', md: '1' },
-                  }}
-                >
-                  <IconButton
-                    size='large'
-                    edge='start'
-                    color='inherit'
-                    aria-label='open drawer'
-                    sx={{ display: { xs: 'block', md: 'none' } }}
-                    onClick={toggleDrawer}
-                  >
-                    <Menu />
-                  </IconButton>
-
-                  <Typography
-                    component={Link}
-                    to='/'
-                    variant='h6'
-                    noWrap
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar
+          position='fixed'
+          elevation={0}
+          sx={{
+            bgcolor: 'transparent',
+          }}
+        >
+          <motion.div initial='hidden' animate='visible' variants={variants}>
+            <Box
+              sx={{
+                padding: { xs: '8px 0px 20px 0px', md: '8px 0px 8px 0px' },
+                width: '100%',
+                height: '100%',
+                bgcolor:
+                  theme.palette.mode === 'light'
+                    ? theme.palette.primary.main
+                    : theme.palette.primary.dark,
+              }}
+            >
+              <Toolbar>
+                <Grid container>
+                  <Grid
+                    item
+                    xs={6}
+                    md={4}
                     sx={{
-                      flexGrow: 1,
-                      textDecoration: 'none',
-                      color: theme.palette.light.main,
+                      display: 'flex',
+                      alignItems: 'center',
+                      order: { xs: '1', md: '1' },
                     }}
                   >
-                    Logo
-                  </Typography>
-                </Grid>
+                    <IconButton
+                      size='large'
+                      edge='start'
+                      color='inherit'
+                      aria-label='open drawer'
+                      sx={{ display: { xs: 'block', md: 'none' } }}
+                      onClick={toggleDrawer}
+                    >
+                      <Menu />
+                    </IconButton>
 
-                <Grid
-                  item
-                  xs={12}
-                  md={4}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    order: { xs: '3', md: '2' },
-                  }}
-                >
-                  {/* search */}
-                  <Search />
-                </Grid>
+                    <Typography
+                      component={Link}
+                      to='/'
+                      variant='h6'
+                      noWrap
+                      sx={{
+                        flexGrow: 1,
+                        textDecoration: 'none',
+                        color: theme.palette.light.main,
+                      }}
+                    >
+                      Logo
+                    </Typography>
+                  </Grid>
 
-                <Grid
-                  item
-                  xs={6}
-                  md={4}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    order: { xs: '2', md: '3' },
-                  }}
-                >
-                  {isAuthenticated ? (
-                    <>
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      order: { xs: '3', md: '2' },
+                    }}
+                  >
+                    {/* search */}
+                    <Search />
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={6}
+                    md={4}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-end',
+                      order: { xs: '2', md: '3' },
+                    }}
+                  >
+                    {isAuthenticated ? (
+                      <>
+                        <Button
+                          component={Link}
+                          to={`/profile/${user.id}`}
+                          sx={{
+                            color: '#fff',
+                            borderColor: '#fff',
+                            textTransform: 'capitalize',
+                            '&:hover': {
+                              borderColor: '#fff',
+                            },
+                          }}
+                          variant='outlined'
+                        >
+                          Account
+                        </Button>
+                      </>
+                    ) : (
                       <Button
-                        component={Link}
-                        to={`/profile/${user.id}`}
+                        onClick={fetchToken}
                         sx={{
                           color: '#fff',
                           borderColor: '#fff',
@@ -191,46 +214,31 @@ export default function Navbar() {
                         }}
                         variant='outlined'
                       >
-                        Account
+                        Login
                       </Button>
-                    </>
-                  ) : (
-                    <Button
-                      onClick={fetchToken}
-                      sx={{
-                        color: '#fff',
-                        borderColor: '#fff',
-                        textTransform: 'capitalize',
-                        '&:hover': {
-                          borderColor: '#fff',
-                        },
-                      }}
-                      variant='outlined'
-                    >
-                      Login
-                    </Button>
-                  )}
-
-                  <IconButton
-                    size='large'
-                    edge='end'
-                    color='inherit'
-                    aria-label='theme color mode'
-                    sx={{ marginLeft: '12px' }}
-                    onClick={colorMode.toggleColorMode}
-                  >
-                    {theme.palette.mode === 'dark' ? (
-                      <DarkModeOutlined />
-                    ) : (
-                      <LightMode />
                     )}
-                  </IconButton>
+
+                    <IconButton
+                      size='large'
+                      edge='end'
+                      color='inherit'
+                      aria-label='theme color mode'
+                      sx={{ marginLeft: '12px' }}
+                      onClick={colorMode.toggleColorMode}
+                    >
+                      {theme.palette.mode === 'dark' ? (
+                        <DarkModeOutlined />
+                      ) : (
+                        <LightMode />
+                      )}
+                    </IconButton>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Toolbar>
-          </AppBar>
-        </Box>
-      </motion.div>
+              </Toolbar>
+            </Box>
+          </motion.div>
+        </AppBar>
+      </Box>
 
       <Drawer
         sx={{
