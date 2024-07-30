@@ -65,7 +65,22 @@ export default function Sidebar() {
 
   // if no movies were returned
   if (!data.genres.length) {
-    return <Typography>No categories</Typography>;
+    return (
+      <>
+        <Box
+          sx={{
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Typography sx={{ color: theme.palette.text.disabled }} variant='p'>
+            No categories
+          </Typography>
+        </Box>
+      </>
+    );
   }
 
   // if error
