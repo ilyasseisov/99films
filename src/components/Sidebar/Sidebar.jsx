@@ -14,15 +14,17 @@ import {
 import { SlideshowRounded } from '@mui/icons-material';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
-
 // router
 import { Link } from 'react-router-dom';
 // rtk query hooks
 import { useGetGenresQuery } from '../../services/TMDB';
 // react redux hooks
 import { useDispatch, useSelector } from 'react-redux';
+// framer
+import { motion } from 'framer-motion';
 // redux actions
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
+
 // categories (hardcoded)
 const categories = [
   { name: 'Popular', id: 'popular' },
@@ -43,6 +45,32 @@ export default function Sidebar() {
   );
 
   // local variables
+  // framer
+  const sidebar = {
+    //
+    hidden: {
+      // opacity: 0,
+      transition: {
+        when: 'afterChildren',
+      },
+    },
+    //
+    visible: {
+      // opacity: 1,
+      transition: {
+        ease: 'easeOut',
+        duration: 0.3,
+        when: 'beforeChildren',
+        staggerChildren: 0.05,
+      },
+    },
+    //
+  };
+
+  const sidebarItem = {
+    visible: { opacity: 1, x: 0, transition: { ease: 'backInOut' } },
+    hidden: { opacity: 0, x: -100 },
+  };
   // functions
 
   // while fetching stage
@@ -107,122 +135,129 @@ export default function Sidebar() {
   // return
   return (
     <>
-      <Box
-        sx={{
-          bgcolor:
-            theme.palette.mode === 'light'
-              ? theme.palette.dark.main
-              : theme.palette.dark.dark,
-          position: 'fixed',
-          overflowY: 'auto',
-          height: '100%',
-          width: { xs: '100%', md: '33.333%', lg: '25%', xl: '16.666%' },
-          paddingBottom: '20px',
-        }}
-      >
-        {/* categories */}
-        <List>
-          <ListSubheader
-            disableSticky
-            sx={{ bgcolor: 'inherit', color: theme.palette.light.main }}
-          >
-            Categories
-          </ListSubheader>
-
-          {categories.map((category) => (
-            <Link
-              to='/'
-              key={category.id}
-              style={{
-                textDecoration: 'none',
-                color: theme.palette.light.main,
-              }}
-            >
-              <ListItemButton
-                onClick={() => dispatch(selectGenreOrCategory(category.id))}
-                selected={category.id === genreIdOrCategoryName}
-                sx={{
-                  '&:hover': {
-                    backgroundColor: theme.palette.primary.dark,
-                  },
-                  '&.Mui-selected': {
-                    backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.light.main,
-                    '&:hover': {
-                      backgroundColor: theme.palette.primary.main,
-                    },
-                  },
-                }}
+      <motion.div initial='hidden' animate='visible' variants={sidebar}>
+        <Box
+          sx={{
+            bgcolor:
+              theme.palette.mode === 'light'
+                ? theme.palette.dark.main
+                : theme.palette.dark.dark,
+            position: 'fixed',
+            overflowY: 'auto',
+            height: '100%',
+            width: { xs: '100%', md: '33.333%', lg: '25%', xl: '16.666%' },
+          }}
+        >
+          {/* categories */}
+          <List>
+            <motion.div variants={sidebarItem}>
+              <ListSubheader
+                disableSticky
+                sx={{ bgcolor: 'inherit', color: theme.palette.light.main }}
               >
-                <ListItemIcon>
-                  <SlideshowRounded
-                    sx={{ fontSize: 32, color: theme.palette.light.main }}
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{
-                    fontSize: 20,
-                  }}
-                  primary={category.name}
-                />
-              </ListItemButton>
-            </Link>
-          ))}
-        </List>
+                Categories
+              </ListSubheader>
+            </motion.div>
 
-        <Divider />
-
-        {/* genres */}
-        <List>
-          <ListSubheader
-            disableSticky
-            sx={{ bgcolor: 'inherit', color: theme.palette.light.main }}
-          >
-            Genres
-          </ListSubheader>
-
-          {data?.genres?.map((genre) => (
-            <Link
-              to='/'
-              key={genre.id}
-              style={{
-                textDecoration: 'none',
-                color: theme.palette.light.main,
-              }}
-              className={genre.id === genreIdOrCategoryName ? 'active' : ''}
-            >
-              <ListItemButton
-                onClick={() => dispatch(selectGenreOrCategory(genre.id))}
-                selected={genre.id === genreIdOrCategoryName}
-                sx={{
-                  '&:hover': {
-                    backgroundColor: theme.palette.primary.dark,
-                  },
-                  '&.Mui-selected': {
-                    backgroundColor: theme.palette.primary.main,
+            {categories.map((category) => (
+              <motion.div key={category.id} variants={sidebarItem}>
+                <Link
+                  to='/'
+                  style={{
+                    textDecoration: 'none',
                     color: theme.palette.light.main,
-                    '&:hover': {
-                      backgroundColor: theme.palette.primary.main,
-                    },
-                  },
-                }}
-              >
-                <ListItemIcon>
-                  <SlideshowRounded
-                    sx={{ fontSize: 32, color: theme.palette.light.main }}
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{
-                    fontSize: 20,
                   }}
-                  primary={genre.name}
-                />
-              </ListItemButton>
-            </Link>
-          ))}
-        </List>
-      </Box>
+                >
+                  <ListItemButton
+                    onClick={() => dispatch(selectGenreOrCategory(category.id))}
+                    selected={category.id === genreIdOrCategoryName}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: theme.palette.primary.dark,
+                      },
+                      '&.Mui-selected': {
+                        backgroundColor: theme.palette.primary.main,
+                        color: theme.palette.light.main,
+                        '&:hover': {
+                          backgroundColor: theme.palette.primary.main,
+                        },
+                      },
+                    }}
+                  >
+                    <ListItemIcon>
+                      <SlideshowRounded
+                        sx={{ fontSize: 32, color: theme.palette.light.main }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primaryTypographyProps={{
+                        fontSize: 20,
+                      }}
+                      primary={category.name}
+                    />
+                  </ListItemButton>
+                </Link>
+              </motion.div>
+            ))}
+          </List>
+
+          <Divider />
+
+          {/* genres */}
+          <List sx={{ marginBottom: '100px' }}>
+            <motion.div variants={sidebarItem}>
+              <ListSubheader
+                disableSticky
+                sx={{ bgcolor: 'inherit', color: theme.palette.light.main }}
+              >
+                Genres
+              </ListSubheader>
+            </motion.div>
+
+            {data?.genres?.map((genre) => (
+              <motion.div key={genre.id} variants={sidebarItem}>
+                <Link
+                  to='/'
+                  style={{
+                    textDecoration: 'none',
+                    color: theme.palette.light.main,
+                  }}
+                  className={genre.id === genreIdOrCategoryName ? 'active' : ''}
+                >
+                  <ListItemButton
+                    onClick={() => dispatch(selectGenreOrCategory(genre.id))}
+                    selected={genre.id === genreIdOrCategoryName}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: theme.palette.primary.dark,
+                      },
+                      '&.Mui-selected': {
+                        backgroundColor: theme.palette.primary.main,
+                        color: theme.palette.light.main,
+                        '&:hover': {
+                          backgroundColor: theme.palette.primary.main,
+                        },
+                      },
+                    }}
+                  >
+                    <ListItemIcon>
+                      <SlideshowRounded
+                        sx={{ fontSize: 32, color: theme.palette.light.main }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primaryTypographyProps={{
+                        fontSize: 20,
+                      }}
+                      primary={genre.name}
+                    />
+                  </ListItemButton>
+                </Link>
+              </motion.div>
+            ))}
+          </List>
+        </Box>
+      </motion.div>
     </>
   );
 }
