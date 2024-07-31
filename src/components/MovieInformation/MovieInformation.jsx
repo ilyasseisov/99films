@@ -20,6 +20,8 @@ import {
   StarRounded,
   ArrowBackRounded,
 } from '@mui/icons-material';
+// framer
+import { motion } from 'framer-motion';
 // components
 import { ErrorNetwork } from '..';
 // images
@@ -113,6 +115,17 @@ export default function MovieInformation() {
   const dispatch = useDispatch();
   // local variables
   const tmdbApiKey = 'c3e422a2ea4fbce1b97cbebce6616f71';
+
+  // framer
+  const containerAnimation = {
+    hidden: {
+      y: '100px',
+    },
+    visible: {
+      y: '0px',
+      transition: { duration: 0.5, ease: 'easeOut' },
+    },
+  };
 
   //// functions
   // add to favorite
@@ -326,489 +339,500 @@ export default function MovieInformation() {
 
   return (
     <>
-      <Container
-        maxWidth='xxl'
-        sx={{ padding: { xs: '12px', md: '32px 12px 12px 12px' } }}
+      <motion.div
+        initial='hidden'
+        animate='visible'
+        variants={containerAnimation}
       >
-        <Grid container>
-          {/* cover and text */}
-          <Grid
-            item
-            xs={12}
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', lg: 'row' },
-              alignItems: 'center',
-              marginBottom: { xs: '32px', lg: '40px' },
-            }}
-          >
-            {/* cover and rating */}
+        <Container
+          maxWidth='xxl'
+          sx={{ padding: { xs: '12px', md: '32px 12px 12px 12px' } }}
+        >
+          <Grid container>
+            {/* cover and text */}
             <Grid
               item
               xs={12}
-              lg={5}
               sx={{
                 display: 'flex',
-                alignItems: { xs: 'center', lg: 'flex-start' },
-                flexDirection: 'column',
-                marginBottom: '24px',
+                flexDirection: { xs: 'column', lg: 'row' },
+                alignItems: 'center',
+                marginBottom: { xs: '32px', lg: '40px' },
               }}
             >
-              {/* cover */}
-              <Box sx={{ marginBottom: '16px', position: 'relative' }}>
-                <img
-                  alt={movie?.title}
-                  src={
-                    movie?.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                      : imgs.defaultMovieImage
-                  }
-                  style={{
-                    borderRadius: '12px',
-                  }}
-                  className='MovieInformation__cover'
-                />
-                {/* add to favorites */}
-                {isAuthenticated && (
-                  <IconButton
-                    disableRipple
-                    onClick={addToFavorites}
-                    sx={{
-                      backgroundColor: theme.palette.background.default,
-                      position: 'absolute',
-                      top: '8px',
-                      left: '8px',
-                    }}
-                  >
-                    {movieStatus[movie.id]?.isFavorited ? (
-                      <FavoriteRounded
-                        sx={{ fontSize: 32, color: theme.palette.primary.main }}
-                      />
-                    ) : (
-                      <FavoriteBorderRounded
-                        sx={{
-                          fontSize: 32,
-                          color: theme.palette.primary.main,
-                        }}
-                      />
-                    )}
-                  </IconButton>
-                )}
-
-                {/* add to watchlist */}
-                {isAuthenticated && (
-                  <IconButton
-                    disableRipple
-                    onClick={addToWatchlist}
-                    sx={{
-                      backgroundColor: theme.palette.background.default,
-                      position: 'absolute',
-                      top: '8px',
-                      right: '8px',
-                    }}
-                  >
-                    {movieStatus[movie.id]?.isWatchlisted ? (
-                      <StarRounded sx={{ fontSize: 32, color: '#F1B80D' }} />
-                    ) : (
-                      <StarBorderRounded
-                        sx={{ fontSize: 32, color: '#F1B80D' }}
-                      />
-                    )}
-                  </IconButton>
-                )}
-              </Box>
-
-              {/* rating */}
-              <Box
+              {/* cover and rating */}
+              <Grid
+                item
+                xs={12}
+                lg={5}
                 sx={{
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
+                  alignItems: { xs: 'center', lg: 'flex-start' },
+                  flexDirection: 'column',
+                  marginBottom: '24px',
                 }}
               >
-                <img
-                  style={{ width: '32px' }}
-                  alt='movie rating'
-                  src={imgs.star}
-                />
-                {movie?.vote_average ? (
-                  <Typography variant='h6' sx={{ opacity: 0.8 }}>
-                    <span style={{ fontWeight: 'bold' }}>
-                      {movie?.vote_average &&
-                        parseFloat(movie.vote_average).toFixed(1)}
-                    </span>
-                    /10
+                {/* cover */}
+                <Box sx={{ marginBottom: '16px', position: 'relative' }}>
+                  <img
+                    alt={movie?.title}
+                    src={
+                      movie?.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : imgs.defaultMovieImage
+                    }
+                    style={{
+                      borderRadius: '12px',
+                    }}
+                    className='MovieInformation__cover'
+                  />
+                  {/* add to favorites */}
+                  {isAuthenticated && (
+                    <IconButton
+                      disableRipple
+                      onClick={addToFavorites}
+                      sx={{
+                        backgroundColor: theme.palette.background.default,
+                        position: 'absolute',
+                        top: '8px',
+                        left: '8px',
+                      }}
+                    >
+                      {movieStatus[movie.id]?.isFavorited ? (
+                        <FavoriteRounded
+                          sx={{
+                            fontSize: 32,
+                            color: theme.palette.primary.main,
+                          }}
+                        />
+                      ) : (
+                        <FavoriteBorderRounded
+                          sx={{
+                            fontSize: 32,
+                            color: theme.palette.primary.main,
+                          }}
+                        />
+                      )}
+                    </IconButton>
+                  )}
+
+                  {/* add to watchlist */}
+                  {isAuthenticated && (
+                    <IconButton
+                      disableRipple
+                      onClick={addToWatchlist}
+                      sx={{
+                        backgroundColor: theme.palette.background.default,
+                        position: 'absolute',
+                        top: '8px',
+                        right: '8px',
+                      }}
+                    >
+                      {movieStatus[movie.id]?.isWatchlisted ? (
+                        <StarRounded sx={{ fontSize: 32, color: '#F1B80D' }} />
+                      ) : (
+                        <StarBorderRounded
+                          sx={{ fontSize: 32, color: '#F1B80D' }}
+                        />
+                      )}
+                    </IconButton>
+                  )}
+                </Box>
+
+                {/* rating */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <img
+                    style={{ width: '32px' }}
+                    alt='movie rating'
+                    src={imgs.star}
+                  />
+                  {movie?.vote_average ? (
+                    <Typography variant='h6' sx={{ opacity: 0.8 }}>
+                      <span style={{ fontWeight: 'bold' }}>
+                        {movie?.vote_average &&
+                          parseFloat(movie.vote_average).toFixed(1)}
+                      </span>
+                      /10
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant='h6'
+                      sx={{ color: theme.palette.text.disabled }}
+                    >
+                      No rating
+                    </Typography>
+                  )}
+                </Box>
+              </Grid>
+
+              {/* text and details */}
+
+              <Grid item lg={7}>
+                {/* title, slogan and description */}
+                <Grid item xs={12}>
+                  {/* title */}
+                  <Typography
+                    variant='h4'
+                    sx={{
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      marginBottom: '6px',
+                      color: movie?.title
+                        ? 'inherit'
+                        : theme.palette.text.disabled,
+                    }}
+                  >
+                    {movie?.title || 'No title'}
                   </Typography>
-                ) : (
+
+                  {/* tagline */}
+                  <Typography
+                    variant='h5'
+                    sx={{
+                      textAlign: 'center',
+                      marginBottom: '12px',
+                      color: movie?.tagline
+                        ? 'inherit'
+                        : theme.palette.text.disabled,
+                    }}
+                  >
+                    {`• ${movie?.tagline} •` || 'No tagline'}
+                  </Typography>
+
+                  {/* description */}
                   <Typography
                     variant='h6'
-                    sx={{ color: theme.palette.text.disabled }}
+                    sx={{
+                      fontWeight: 'normal',
+                      textAlign: movie?.overview ? 'left' : 'center',
+                      color: movie?.overview
+                        ? 'inherit'
+                        : theme.palette.text.disabled,
+                    }}
                   >
-                    No rating
+                    {movie?.overview || 'No description'}
                   </Typography>
-                )}
-              </Box>
-            </Grid>
-
-            {/* text and details */}
-
-            <Grid item lg={7}>
-              {/* title, slogan and description */}
-              <Grid item xs={12}>
-                {/* title */}
-                <Typography
-                  variant='h4'
-                  sx={{
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    marginBottom: '6px',
-                    color: movie?.title
-                      ? 'inherit'
-                      : theme.palette.text.disabled,
-                  }}
-                >
-                  {movie?.title || 'No title'}
-                </Typography>
-
-                {/* tagline */}
-                <Typography
-                  variant='h5'
-                  sx={{
-                    textAlign: 'center',
-                    marginBottom: '12px',
-                    color: movie?.tagline
-                      ? 'inherit'
-                      : theme.palette.text.disabled,
-                  }}
-                >
-                  {`• ${movie?.tagline} •` || 'No tagline'}
-                </Typography>
-
-                {/* description */}
-                <Typography
-                  variant='h6'
-                  sx={{
-                    fontWeight: 'normal',
-                    textAlign: movie?.overview ? 'left' : 'center',
-                    color: movie?.overview
-                      ? 'inherit'
-                      : theme.palette.text.disabled,
-                  }}
-                >
-                  {movie?.overview || 'No description'}
-                </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
 
-          {/* Details */}
-          <Grid
-            item
-            xs={12}
-            sx={{ marginBottom: '40px', alignSelf: 'flex-start' }}
-          >
-            <Typography variant='h5' sx={{ marginBottom: '12px' }}>
-              Details
-            </Typography>
-            {/* #1 year, duration, language */}
-            <Box sx={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-              {/* year */}
-              {movie?.release_date && movie.release_date !== 'null' && (
-                <>
-                  <Typography variant='body1'>
-                    {movie?.release_date.split('-')[0]}
-                  </Typography>
-                  <span style={{ lineHeight: '1.2' }}>•</span>
-                </>
-              )}
+            {/* Details */}
+            <Grid
+              item
+              xs={12}
+              sx={{ marginBottom: '40px', alignSelf: 'flex-start' }}
+            >
+              <Typography variant='h5' sx={{ marginBottom: '12px' }}>
+                Details
+              </Typography>
+              {/* #1 year, duration, language */}
+              <Box sx={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                {/* year */}
+                {movie?.release_date && movie.release_date !== 'null' && (
+                  <>
+                    <Typography variant='body1'>
+                      {movie?.release_date.split('-')[0]}
+                    </Typography>
+                    <span style={{ lineHeight: '1.2' }}>•</span>
+                  </>
+                )}
 
-              {/* duration */}
-              {Number.isFinite(movie?.runtime) && movie.runtime !== 0 && (
-                <>
-                  <Typography variant='body1'>
-                    {`
+                {/* duration */}
+                {Number.isFinite(movie?.runtime) && movie.runtime !== 0 && (
+                  <>
+                    <Typography variant='body1'>
+                      {`
                       ${Math.floor(movie?.runtime / 60)}h
                       ${movie?.runtime % 60}m
                     `}
-                  </Typography>
-                  <span style={{ lineHeight: '1.2' }}>•</span>
-                </>
+                    </Typography>
+                    <span style={{ lineHeight: '1.2' }}>•</span>
+                  </>
+                )}
+
+                {/* language */}
+                {movie?.original_language &&
+                  movie.original_language !== 'null' && (
+                    <Typography variant='body1'>
+                      {movie?.original_language.toUpperCase()}
+                    </Typography>
+                  )}
+              </Box>
+
+              {/* #2 genres */}
+              {movie?.genres.length > 0 && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: '12px',
+                    flexWrap: 'wrap',
+                    marginBottom: '24px',
+                  }}
+                >
+                  {movie?.genres.map((genre) => (
+                    <Link
+                      to='/'
+                      key={genre.id}
+                      style={{
+                        textDecoration: 'none',
+                        color: theme.palette.text.primary,
+                      }}
+                    >
+                      <Typography
+                        onClick={() =>
+                          dispatch(selectGenreOrCategory(genre.id))
+                        }
+                        variant='body1'
+                        sx={{
+                          border: `1px solid ${theme.palette.text.primary}`,
+                          borderRadius: '20px',
+                          padding: '0 6px 0 6px',
+                        }}
+                      >
+                        {genre.name}
+                      </Typography>
+                    </Link>
+                  ))}
+                </Box>
               )}
 
-              {/* language */}
-              {movie?.original_language &&
-                movie.original_language !== 'null' && (
-                  <Typography variant='body1'>
-                    {movie?.original_language.toUpperCase()}
-                  </Typography>
-                )}
-            </Box>
-
-            {/* #2 genres */}
-            {movie?.genres.length > 0 && (
+              {/* #3 trailer, website, imdb */}
               <Box
                 sx={{
                   display: 'flex',
                   gap: '12px',
                   flexWrap: 'wrap',
-                  marginBottom: '24px',
                 }}
               >
-                {movie?.genres.map((genre) => (
-                  <Link
-                    to='/'
-                    key={genre.id}
-                    style={{
-                      textDecoration: 'none',
-                      color: theme.palette.text.primary,
-                    }}
-                  >
-                    <Typography
-                      onClick={() => dispatch(selectGenreOrCategory(genre.id))}
-                      variant='body1'
-                      sx={{
-                        border: `1px solid ${theme.palette.text.primary}`,
-                        borderRadius: '20px',
-                        padding: '0 6px 0 6px',
-                      }}
-                    >
-                      {genre.name}
-                    </Typography>
-                  </Link>
-                ))}
-              </Box>
-            )}
-
-            {/* #3 trailer, website, imdb */}
-            <Box
-              sx={{
-                display: 'flex',
-                gap: '12px',
-                flexWrap: 'wrap',
-              }}
-            >
-              {/* website */}
-              {movie?.homepage && (
-                <Button
-                  href={movie.homepage}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  variant='outlined'
-                  endIcon={<Language />}
-                  sx={{
-                    color: theme.palette.text.primary,
-                    borderColor: theme.palette.text.primary,
-                    textTransform: 'capitalize',
-                    '&:hover': { borderColor: theme.palette.text.primary },
-                  }}
-                >
-                  Website
-                </Button>
-              )}
-
-              {/* trailer */}
-              {movie?.videos?.results.length > 0 && (
-                <Button
-                  href='#'
-                  onClick={() => setOpenTrailerModal(true)}
-                  variant='outlined'
-                  endIcon={<Theaters />}
-                  sx={{
-                    color: theme.palette.text.primary,
-                    borderColor: theme.palette.text.primary,
-                    textTransform: 'capitalize',
-                    '&:hover': { borderColor: theme.palette.text.primary },
-                  }}
-                >
-                  Trailer
-                </Button>
-              )}
-
-              {/* IMDB */}
-              {movie?.imdb_id && (
-                <Button
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  href={`https://www.imdb.com/title/${movie?.imdb_id}`}
-                  variant='outlined'
-                  endIcon={<MovieIcon />}
-                  sx={{
-                    color: theme.palette.text.primary,
-                    borderColor: theme.palette.text.primary,
-                    '&:hover': { borderColor: theme.palette.text.primary },
-                  }}
-                >
-                  IMDB
-                </Button>
-              )}
-            </Box>
-          </Grid>
-
-          {/* Top cast */}
-          <Grid item xs={12} sx={{ marginBottom: '32px' }}>
-            <Typography variant='h5' sx={{ marginBottom: '12px' }}>
-              Top cast
-            </Typography>
-            <Grid container>
-              {movie.credits?.cast.length > 0 ? (
-                movie.credits.cast.slice(0, 12).map((actor) => (
-                  <Grid
-                    component={Link}
-                    to={`/actors/${actor.id}`}
-                    key={actor.id}
-                    item
-                    xs={12}
-                    sm={6}
-                    lg={4}
-                    xl={3}
+                {/* website */}
+                {movie?.homepage && (
+                  <Button
+                    href={movie.homepage}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    variant='outlined'
+                    endIcon={<Language />}
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      marginBottom: '12px',
-                      textDecoration: 'none',
                       color: theme.palette.text.primary,
+                      borderColor: theme.palette.text.primary,
+                      textTransform: 'capitalize',
+                      '&:hover': { borderColor: theme.palette.text.primary },
                     }}
                   >
-                    <Box
+                    Website
+                  </Button>
+                )}
+
+                {/* trailer */}
+                {movie?.videos?.results.length > 0 && (
+                  <Button
+                    href='#'
+                    onClick={() => setOpenTrailerModal(true)}
+                    variant='outlined'
+                    endIcon={<Theaters />}
+                    sx={{
+                      color: theme.palette.text.primary,
+                      borderColor: theme.palette.text.primary,
+                      textTransform: 'capitalize',
+                      '&:hover': { borderColor: theme.palette.text.primary },
+                    }}
+                  >
+                    Trailer
+                  </Button>
+                )}
+
+                {/* IMDB */}
+                {movie?.imdb_id && (
+                  <Button
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href={`https://www.imdb.com/title/${movie?.imdb_id}`}
+                    variant='outlined'
+                    endIcon={<MovieIcon />}
+                    sx={{
+                      color: theme.palette.text.primary,
+                      borderColor: theme.palette.text.primary,
+                      '&:hover': { borderColor: theme.palette.text.primary },
+                    }}
+                  >
+                    IMDB
+                  </Button>
+                )}
+              </Box>
+            </Grid>
+
+            {/* Top cast */}
+            <Grid item xs={12} sx={{ marginBottom: '32px' }}>
+              <Typography variant='h5' sx={{ marginBottom: '12px' }}>
+                Top cast
+              </Typography>
+              <Grid container>
+                {movie.credits?.cast.length > 0 ? (
+                  movie.credits.cast.slice(0, 12).map((actor) => (
+                    <Grid
+                      component={Link}
+                      to={`/actors/${actor.id}`}
+                      key={actor.id}
+                      item
+                      xs={12}
+                      sm={6}
+                      lg={4}
+                      xl={3}
                       sx={{
-                        width: '80px',
-                        height: '80px',
-                        backgroundColor: '#D9D9D9',
-                        borderRadius: '50%',
-                        overflow: 'hidden',
-                        position: 'relative',
-                        flexShrink: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        marginBottom: '12px',
+                        textDecoration: 'none',
+                        color: theme.palette.text.primary,
                       }}
                     >
-                      <img
-                        style={{
-                          objectFit: 'cover',
-                          maxWidth: '100%',
-                          position: 'absolute',
-                          top: '60%',
-                          left: '50%',
-                          transform: 'translate(-50%,-50%)',
-                        }}
-                        alt={actor?.name}
-                        src={
-                          actor?.profile_path
-                            ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                            : imgs.defaultCastImage
-                        }
-                      />
-                    </Box>
-
-                    <Box sx={{ flexGrow: 1 }}>
-                      {/* name */}
-                      <Typography
-                        variant='body1'
+                      <Box
                         sx={{
-                          fontWeight: 'bold',
-                          color: actor?.name
-                            ? 'inherit'
-                            : theme.palette.text.disabled,
+                          width: '80px',
+                          height: '80px',
+                          backgroundColor: '#D9D9D9',
+                          borderRadius: '50%',
+                          overflow: 'hidden',
+                          position: 'relative',
+                          flexShrink: 0,
                         }}
                       >
-                        {actor?.name || 'No name'}
-                      </Typography>
+                        <img
+                          style={{
+                            objectFit: 'cover',
+                            maxWidth: '100%',
+                            position: 'absolute',
+                            top: '60%',
+                            left: '50%',
+                            transform: 'translate(-50%,-50%)',
+                          }}
+                          alt={actor?.name}
+                          src={
+                            actor?.profile_path
+                              ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+                              : imgs.defaultCastImage
+                          }
+                        />
+                      </Box>
 
-                      {/* character */}
-                      <Typography
-                        variant='body1'
-                        sx={{
-                          color: actor?.character
-                            ? 'inherit'
-                            : theme.palette.text.disabled,
-                        }}
-                      >
-                        {actor?.character || 'No character'}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                ))
+                      <Box sx={{ flexGrow: 1 }}>
+                        {/* name */}
+                        <Typography
+                          variant='body1'
+                          sx={{
+                            fontWeight: 'bold',
+                            color: actor?.name
+                              ? 'inherit'
+                              : theme.palette.text.disabled,
+                          }}
+                        >
+                          {actor?.name || 'No name'}
+                        </Typography>
+
+                        {/* character */}
+                        <Typography
+                          variant='body1'
+                          sx={{
+                            color: actor?.character
+                              ? 'inherit'
+                              : theme.palette.text.disabled,
+                          }}
+                        >
+                          {actor?.character || 'No character'}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  ))
+                ) : (
+                  <Typography
+                    variant='body1'
+                    sx={{ color: theme.palette.text.disabled }}
+                  >
+                    No cast
+                  </Typography>
+                )}
+              </Grid>
+            </Grid>
+
+            {/* You may also like */}
+            <Grid item xs={12}>
+              <Typography variant='h5' sx={{ marginBottom: '12px' }}>
+                You may also like
+              </Typography>
+              {recommendations.results.length > 0 ? (
+                <MovieList movies={recommendations?.results.slice(0, 12)} />
               ) : (
                 <Typography
                   variant='body1'
                   sx={{ color: theme.palette.text.disabled }}
                 >
-                  No cast
+                  No movies
                 </Typography>
               )}
             </Grid>
           </Grid>
 
-          {/* You may also like */}
-          <Grid item xs={12}>
-            <Typography variant='h5' sx={{ marginBottom: '12px' }}>
-              You may also like
-            </Typography>
-            {recommendations.results.length > 0 ? (
-              <MovieList movies={recommendations?.results.slice(0, 12)} />
-            ) : (
-              <Typography
-                variant='body1'
-                sx={{ color: theme.palette.text.disabled }}
-              >
-                No movies
-              </Typography>
-            )}
-          </Grid>
-        </Grid>
-
-        {/* back button */}
-        <Button
-          onClick={handleGoBack}
-          sx={{
-            position: 'absolute',
-            top: '100px',
-            right: '16px',
-            color: theme.palette.text.primary,
-            borderColor: theme.palette.text.primary,
-            textTransform: 'capitalize',
-            '&:hover': {
-              borderColor: theme.palette.text.primary,
-              bgcolor: 'transparent',
-            },
-          }}
-          variant='outlined'
-          endIcon={<ArrowBackRounded />}
-        >
-          Back
-        </Button>
-
-        {/* trailer modal */}
-        {movie?.videos?.results.length > 0 && (
-          <Modal
-            closeAfterTransition
-            open={openTrailerModal}
-            onClose={() => setOpenTrailerModal(false)}
+          {/* back button */}
+          <Button
+            onClick={handleGoBack}
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              '& .MuiBackdrop-root': {
-                backdropFilter: 'blur(8px)',
-                backgroundColor:
-                  theme.palette.mode === 'light'
-                    ? 'rgba(255, 255, 255, 0.5)'
-                    : 'rgba(0, 0, 0, 0.5)',
+              position: 'absolute',
+              top: '100px',
+              right: '16px',
+              color: theme.palette.text.primary,
+              borderColor: theme.palette.text.primary,
+              textTransform: 'capitalize',
+              '&:hover': {
+                borderColor: theme.palette.text.primary,
+                bgcolor: 'transparent',
               },
             }}
+            variant='outlined'
+            endIcon={<ArrowBackRounded />}
           >
-            {movie?.videos?.results?.length > 0 && (
-              <iframe
-                className='MovieInformation__video'
-                autoPlay
-                allow='autoplay'
-                frameBorder='0'
-                title='Movie trailer'
-                src={`https://www.youtube.com/embed/${movie?.videos?.results[0]?.key}`}
-              />
-            )}
-          </Modal>
-        )}
-      </Container>
+            Back
+          </Button>
+
+          {/* trailer modal */}
+          {movie?.videos?.results.length > 0 && (
+            <Modal
+              closeAfterTransition
+              open={openTrailerModal}
+              onClose={() => setOpenTrailerModal(false)}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '& .MuiBackdrop-root': {
+                  backdropFilter: 'blur(8px)',
+                  backgroundColor:
+                    theme.palette.mode === 'light'
+                      ? 'rgba(255, 255, 255, 0.5)'
+                      : 'rgba(0, 0, 0, 0.5)',
+                },
+              }}
+            >
+              {movie?.videos?.results?.length > 0 && (
+                <iframe
+                  className='MovieInformation__video'
+                  autoPlay
+                  allow='autoplay'
+                  frameBorder='0'
+                  title='Movie trailer'
+                  src={`https://www.youtube.com/embed/${movie?.videos?.results[0]?.key}`}
+                />
+              )}
+            </Modal>
+          )}
+        </Container>
+      </motion.div>
     </>
   );
 }
