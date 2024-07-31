@@ -12,6 +12,8 @@ import { Container, Grid, Box, Button, Typography } from '@mui/material';
 import { ExitToAppRounded } from '@mui/icons-material';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
+// framer
+import { motion } from 'framer-motion';
 // components
 import { MovieList } from '..';
 //
@@ -52,6 +54,16 @@ export default function Profile() {
   }, [refetchFavorites, refetchWatchlisted, user?.id]);
 
   // local variables
+  // framer
+  const containerAnimation = {
+    hidden: {
+      y: '100px',
+    },
+    visible: {
+      y: '0px',
+      transition: { duration: 0.5, ease: 'easeOut' },
+    },
+  };
   // functions
   function logout() {
     localStorage.clear();
@@ -60,74 +72,80 @@ export default function Profile() {
   // return
   return (
     <>
-      <Container
-        maxWidth='xxl'
-        sx={{ padding: { xs: '12px', md: '32px 12px 12px 12px' } }}
+      <motion.div
+        initial='hidden'
+        animate='visible'
+        variants={containerAnimation}
       >
-        {/* title and logout */}
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '64px',
-          }}
+        <Container
+          maxWidth='xxl'
+          sx={{ padding: { xs: '12px', md: '32px 12px 12px 12px' } }}
         >
-          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            My movies
-          </Typography>
-          <Button
+          {/* title and logout */}
+          <Box
             sx={{
-              color: theme.palette.text.primary,
-              borderColor: theme.palette.text.primary,
-              textTransform: 'capitalize',
-              '&:hover': {
-                borderColor: theme.palette.text.primary,
-                bgcolor: 'transparent',
-              },
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '64px',
             }}
-            variant='outlined'
-            startIcon={<ExitToAppRounded />}
-            onClick={logout}
           >
-            Logout
-          </Button>
-        </Box>
-
-        {/* favorite movies */}
-        <Grid item xs={12} sx={{ marginBottom: '32px' }}>
-          <Typography variant='h5' sx={{ marginBottom: '16px' }}>
-            Favorite
-          </Typography>
-          {favoriteMovies?.results.length > 0 ? (
-            <MovieList movies={favoriteMovies?.results} />
-          ) : (
-            <Typography
-              variant='h6'
-              sx={{ color: theme.palette.text.disabled }}
-            >
-              No favorite movies
+            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+              My movies
             </Typography>
-          )}
-        </Grid>
-
-        {/* watchlist */}
-        <Grid item xs={12}>
-          <Typography variant='h5' sx={{ marginBottom: '16px' }}>
-            Watchlist
-          </Typography>
-          {watchlistMovies?.results.length > 0 ? (
-            <MovieList movies={watchlistMovies?.results} />
-          ) : (
-            <Typography
-              variant='h6'
-              sx={{ color: theme.palette.text.disabled }}
+            <Button
+              sx={{
+                color: theme.palette.text.primary,
+                borderColor: theme.palette.text.primary,
+                textTransform: 'capitalize',
+                '&:hover': {
+                  borderColor: theme.palette.text.primary,
+                  bgcolor: 'transparent',
+                },
+              }}
+              variant='outlined'
+              startIcon={<ExitToAppRounded />}
+              onClick={logout}
             >
-              No watchlist movies
+              Logout
+            </Button>
+          </Box>
+
+          {/* favorite movies */}
+          <Grid item xs={12} sx={{ marginBottom: '32px' }}>
+            <Typography variant='h5' sx={{ marginBottom: '16px' }}>
+              Favorite
             </Typography>
-          )}
-        </Grid>
-      </Container>
+            {favoriteMovies?.results.length > 0 ? (
+              <MovieList movies={favoriteMovies?.results} />
+            ) : (
+              <Typography
+                variant='h6'
+                sx={{ color: theme.palette.text.disabled }}
+              >
+                No favorite movies
+              </Typography>
+            )}
+          </Grid>
+
+          {/* watchlist */}
+          <Grid item xs={12}>
+            <Typography variant='h5' sx={{ marginBottom: '16px' }}>
+              Watchlist
+            </Typography>
+            {watchlistMovies?.results.length > 0 ? (
+              <MovieList movies={watchlistMovies?.results} />
+            ) : (
+              <Typography
+                variant='h6'
+                sx={{ color: theme.palette.text.disabled }}
+              >
+                No watchlist movies
+              </Typography>
+            )}
+          </Grid>
+        </Container>
+      </motion.div>
     </>
   );
 }
