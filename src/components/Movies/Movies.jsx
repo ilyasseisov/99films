@@ -9,6 +9,10 @@ import {
   Skeleton,
   useMediaQuery,
 } from '@mui/material';
+// useTheme (mui)
+import { useTheme } from '@mui/material/styles';
+// framer
+import { motion } from 'framer-motion';
 // components
 import { MovieList, Slider, PaginationCustom, ErrorNetwork } from '..';
 // redux
@@ -17,10 +21,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useGetMoviesQuery } from '../../services/TMDB';
 // router
 import { useNavigate } from 'react-router-dom';
+
 // redux actions
 import { setPage } from '../../features/currentGenreOrCategorySlice';
 export default function Movies() {
   // hooks
+  // mui theme
+  const theme = useTheme();
+
+  // media queries
   const isLgBreakpoint = useMediaQuery(
     '(min-width: 1200px) and (max-width: 1535.99px)'
   );
@@ -56,6 +65,17 @@ export default function Movies() {
   // to make sure that rows are symmetrical
   const numberOfMovies = isLgBreakpoint || isXxlBreakpoint ? 12 : 16;
   const numberOfSlides = 20 - numberOfMovies;
+
+  // framer
+  const variants = {
+    hidden: {
+      y: '100px',
+    },
+    visible: {
+      y: '0px',
+      transition: { duration: 0.3, ease: 'easeOut' },
+    },
+  };
 
   // functions
   // return
@@ -115,7 +135,22 @@ export default function Movies() {
 
   // if no movies were returned
   if (!movies.results.length) {
-    return <Typography>No movies</Typography>;
+    return (
+      <>
+        <Box
+          sx={{
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Typography sx={{ color: theme.palette.text.disabled }} variant='p'>
+            No movies
+          </Typography>
+        </Box>
+      </>
+    );
   }
 
   // if error
@@ -130,30 +165,32 @@ export default function Movies() {
   // primary return
   return (
     <>
-      <Box sx={{ marginBottom: '24px' }}>
-        <Slider movies={movies.results.slice(0, numberOfSlides)} />
-      </Box>
-      <Box sx={{ marginBottom: '48px' }}>
-        <MovieList movies={movies.results.slice(numberOfSlides, 20)} />
-      </Box>
-
-      {/* pagination */}
-      {movies.total_pages > 1 && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: '48px',
-          }}
-        >
-          <PaginationCustom
-            currentPage={page}
-            setPage={(page) => dispatch(setPage(page))}
-            totalPages={movies?.total_pages}
-          />
+      <motion.div initial='hidden' animate='visible' variants={variants}>
+        <Box sx={{ marginBottom: '24px' }}>
+          <Slider movies={movies.results.slice(0, numberOfSlides)} />
         </Box>
-      )}
+        <Box sx={{ marginBottom: '48px' }}>
+          <MovieList movies={movies.results.slice(numberOfSlides, 20)} />
+        </Box>
+
+        {/* pagination */}
+        {movies.total_pages > 1 && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '48px',
+            }}
+          >
+            <PaginationCustom
+              currentPage={page}
+              setPage={(page) => dispatch(setPage(page))}
+              totalPages={movies?.total_pages}
+            />
+          </Box>
+        )}
+      </motion.div>
     </>
   );
 }
