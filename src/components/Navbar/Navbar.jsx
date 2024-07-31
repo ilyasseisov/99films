@@ -35,6 +35,10 @@ import { ColorModeContext } from '../../utils/ToggleColorMode';
 // auth
 import { fetchToken, createSessionId, moviesApi } from '../../utils/auth';
 import { setUser } from '../../features/authSlice';
+//
+// framer animation
+import { containerAnimationFromTop } from '../../utils/framerAnimations';
+//
 
 export default function Navbar() {
   // hooks
@@ -82,16 +86,7 @@ export default function Navbar() {
   }, [tokenFromLocalStorage]);
 
   // local variables
-  // framer
-  const variants = {
-    hidden: {
-      y: '-100px',
-    },
-    visible: {
-      y: '0px',
-      transition: { duration: 0.3, ease: 'easeOut' },
-    },
-  };
+
   // functions
   function toggleDrawer() {
     setIsDrawerOpened((prev) => !prev);
@@ -107,7 +102,11 @@ export default function Navbar() {
             bgcolor: 'transparent',
           }}
         >
-          <motion.div initial='hidden' animate='visible' variants={variants}>
+          <motion.div
+            initial='hidden'
+            animate='visible'
+            variants={containerAnimationFromTop}
+          >
             <Box
               sx={{
                 padding: { xs: '8px 0px 20px 0px', md: '8px 0px 8px 0px' },

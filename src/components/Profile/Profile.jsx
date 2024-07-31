@@ -17,6 +17,9 @@ import { motion } from 'framer-motion';
 // components
 import { MovieList } from '..';
 //
+// framer animation
+import { containerAnimationFromBottom } from '../../utils/framerAnimations';
+//
 export default function Profile() {
   // hooks
   const theme = useTheme();
@@ -54,16 +57,7 @@ export default function Profile() {
   }, [refetchFavorites, refetchWatchlisted, user?.id]);
 
   // local variables
-  // framer
-  const containerAnimation = {
-    hidden: {
-      y: '100px',
-    },
-    visible: {
-      y: '0px',
-      transition: { duration: 0.5, ease: 'easeOut' },
-    },
-  };
+
   // functions
   function logout() {
     localStorage.clear();
@@ -75,7 +69,7 @@ export default function Profile() {
       <motion.div
         initial='hidden'
         animate='visible'
-        variants={containerAnimation}
+        variants={containerAnimationFromBottom}
       >
         <Container
           maxWidth='xxl'

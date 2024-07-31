@@ -46,6 +46,8 @@ import {
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
 // axios
 import axios from 'axios';
+// framer animation
+import { containerAnimationFromBottom } from '../../utils/framerAnimations';
 
 export default function MovieInformation() {
   // redux
@@ -115,17 +117,6 @@ export default function MovieInformation() {
   const dispatch = useDispatch();
   // local variables
   const tmdbApiKey = 'c3e422a2ea4fbce1b97cbebce6616f71';
-
-  // framer
-  const containerAnimation = {
-    hidden: {
-      y: '100px',
-    },
-    visible: {
-      y: '0px',
-      transition: { duration: 0.5, ease: 'easeOut' },
-    },
-  };
 
   //// functions
   // add to favorite
@@ -342,7 +333,7 @@ export default function MovieInformation() {
       <motion.div
         initial='hidden'
         animate='visible'
-        variants={containerAnimation}
+        variants={containerAnimationFromBottom}
       >
         <Container
           maxWidth='xxl'

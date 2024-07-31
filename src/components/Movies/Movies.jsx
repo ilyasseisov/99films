@@ -24,6 +24,9 @@ import { useNavigate } from 'react-router-dom';
 
 // redux actions
 import { setPage } from '../../features/currentGenreOrCategorySlice';
+// framer animation
+import { containerAnimationFromBottom } from '../../utils/framerAnimations';
+//
 export default function Movies() {
   // hooks
   // mui theme
@@ -65,17 +68,6 @@ export default function Movies() {
   // to make sure that rows are symmetrical
   const numberOfMovies = isLgBreakpoint || isXxlBreakpoint ? 12 : 16;
   const numberOfSlides = 20 - numberOfMovies;
-
-  // framer
-  const variants = {
-    hidden: {
-      y: '100px',
-    },
-    visible: {
-      y: '0px',
-      transition: { duration: 0.5, ease: 'easeOut' },
-    },
-  };
 
   // functions
   // return
@@ -165,7 +157,11 @@ export default function Movies() {
   // primary return
   return (
     <>
-      <motion.div initial='hidden' animate='visible' variants={variants}>
+      <motion.div
+        initial='hidden'
+        animate='visible'
+        variants={containerAnimationFromBottom}
+      >
         <Box sx={{ marginBottom: '24px' }}>
           <Slider movies={movies.results.slice(0, numberOfSlides)} />
         </Box>

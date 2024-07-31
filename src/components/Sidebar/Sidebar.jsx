@@ -24,7 +24,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 // redux actions
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
-
+// framer animations
+import {
+  sidebarContainerAnimation,
+  sidebarChildrenAnimation,
+} from '../../utils/framerAnimations';
+//
 // categories (hardcoded)
 const categories = [
   { name: 'Popular', id: 'popular' },
@@ -45,23 +50,7 @@ export default function Sidebar() {
   );
 
   // local variables
-  // framer
-  const sidebar = {
-    //
-    hidden: {},
-    //
-    visible: {
-      transition: {
-        staggerChildren: 0.05,
-      },
-    },
-    //
-  };
 
-  const sidebarItem = {
-    visible: { opacity: 1, x: 0, transition: { ease: 'backInOut' } },
-    hidden: { opacity: 0, x: -100 },
-  };
   // functions
 
   // while fetching stage
@@ -126,7 +115,11 @@ export default function Sidebar() {
   // return
   return (
     <>
-      <motion.div initial='hidden' animate='visible' variants={sidebar}>
+      <motion.div
+        initial='hidden'
+        animate='visible'
+        variants={sidebarContainerAnimation}
+      >
         <Box
           sx={{
             bgcolor:
@@ -141,7 +134,7 @@ export default function Sidebar() {
         >
           {/* categories */}
           <List>
-            <motion.div variants={sidebarItem}>
+            <motion.div variants={sidebarChildrenAnimation}>
               <ListSubheader
                 disableSticky
                 sx={{ bgcolor: 'inherit', color: theme.palette.light.main }}
@@ -151,7 +144,7 @@ export default function Sidebar() {
             </motion.div>
 
             {categories.map((category) => (
-              <motion.div key={category.id} variants={sidebarItem}>
+              <motion.div key={category.id} variants={sidebarChildrenAnimation}>
                 <Link
                   to='/'
                   style={{
@@ -196,7 +189,7 @@ export default function Sidebar() {
 
           {/* genres */}
           <List sx={{ marginBottom: '100px' }}>
-            <motion.div variants={sidebarItem}>
+            <motion.div variants={sidebarChildrenAnimation}>
               <ListSubheader
                 disableSticky
                 sx={{ bgcolor: 'inherit', color: theme.palette.light.main }}
@@ -206,7 +199,7 @@ export default function Sidebar() {
             </motion.div>
 
             {data?.genres?.map((genre) => (
-              <motion.div key={genre.id} variants={sidebarItem}>
+              <motion.div key={genre.id} variants={sidebarChildrenAnimation}>
                 <Link
                   to='/'
                   style={{

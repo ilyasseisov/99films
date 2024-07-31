@@ -30,6 +30,10 @@ import {
 } from '../../services/TMDB';
 // router
 import { useParams, useNavigate } from 'react-router-dom';
+//
+// framer animation
+import { containerAnimationFromBottom } from '../../utils/framerAnimations';
+//
 export default function Actors() {
   // hooks
 
@@ -63,16 +67,7 @@ export default function Actors() {
   }, [error, navigate]);
 
   // local variables
-  // framer
-  const containerAnimation = {
-    hidden: {
-      y: '100px',
-    },
-    visible: {
-      y: '0px',
-      transition: { duration: 0.5, ease: 'easeOut' },
-    },
-  };
+
   // functions
   const splitText = (text) => {
     return text.split('\n').filter((part) => part.trim() !== '');
@@ -232,7 +227,7 @@ export default function Actors() {
       <motion.div
         initial='hidden'
         animate='visible'
-        variants={containerAnimation}
+        variants={containerAnimationFromBottom}
       >
         <Container
           maxWidth='xxl'
