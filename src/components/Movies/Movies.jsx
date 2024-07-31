@@ -73,7 +73,7 @@ export default function Movies() {
     },
     visible: {
       y: '0px',
-      transition: { duration: 0.3, ease: 'easeOut' },
+      transition: { duration: 0.5, ease: 'easeOut' },
     },
   };
 
