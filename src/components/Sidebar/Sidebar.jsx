@@ -48,19 +48,10 @@ export default function Sidebar() {
   // framer
   const sidebar = {
     //
-    hidden: {
-      // opacity: 0,
-      transition: {
-        when: 'afterChildren',
-      },
-    },
+    hidden: {},
     //
     visible: {
-      // opacity: 1,
       transition: {
-        ease: 'easeOut',
-        duration: 0.3,
-        when: 'beforeChildren',
         staggerChildren: 0.05,
       },
     },
