@@ -784,7 +784,7 @@ export default function MovieInformation() {
             onClick={handleGoBack}
             sx={{
               position: 'absolute',
-              top: '100px',
+              top: { xs: '-40px', md: '12px' },
               right: '16px',
               color: theme.palette.text.primary,
               borderColor: theme.palette.text.primary,
