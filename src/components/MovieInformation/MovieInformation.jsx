@@ -613,7 +613,10 @@ export default function MovieInformation() {
                       color: theme.palette.text.primary,
                       borderColor: theme.palette.text.primary,
                       textTransform: 'capitalize',
-                      '&:hover': { borderColor: theme.palette.text.primary },
+                      '&:hover': {
+                        borderColor: theme.palette.text.primary,
+                        bgcolor: 'transparent',
+                      },
                     }}
                   >
                     Website
@@ -631,7 +634,10 @@ export default function MovieInformation() {
                       color: theme.palette.text.primary,
                       borderColor: theme.palette.text.primary,
                       textTransform: 'capitalize',
-                      '&:hover': { borderColor: theme.palette.text.primary },
+                      '&:hover': {
+                        borderColor: theme.palette.text.primary,
+                        bgcolor: 'transparent',
+                      },
                     }}
                   >
                     Trailer
@@ -649,7 +655,10 @@ export default function MovieInformation() {
                     sx={{
                       color: theme.palette.text.primary,
                       borderColor: theme.palette.text.primary,
-                      '&:hover': { borderColor: theme.palette.text.primary },
+                      '&:hover': {
+                        borderColor: theme.palette.text.primary,
+                        bgcolor: 'transparent',
+                      },
                     }}
                   >
                     IMDB

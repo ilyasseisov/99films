@@ -342,6 +342,7 @@ export default function Actors() {
                           borderColor: theme.palette.text.primary,
                           '&:hover': {
                             borderColor: theme.palette.text.primary,
+                            bgcolor: 'transparent',
                           },
                         }}
                       >
