@@ -321,9 +321,11 @@ export default function Actors() {
                         sx={{
                           color: theme.palette.text.primary,
                           borderColor: theme.palette.text.primary,
+                          transition: 'all 0.3s ease-out',
                           '&:hover': {
                             borderColor: theme.palette.text.primary,
-                            bgcolor: 'transparent',
+                            bgcolor: theme.palette.text.primary,
+                            color: '#fff',
                           },
                         }}
                       >
@@ -363,9 +365,11 @@ export default function Actors() {
               color: theme.palette.text.primary,
               borderColor: theme.palette.text.primary,
               textTransform: 'capitalize',
+              transition: 'all 0.3s ease-out',
               '&:hover': {
                 borderColor: theme.palette.text.primary,
-                bgcolor: 'transparent',
+                bgcolor: theme.palette.text.primary,
+                color: '#fff',
               },
             }}
             variant='outlined'

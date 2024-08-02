@@ -92,9 +92,11 @@ export default function Profile() {
                 color: theme.palette.text.primary,
                 borderColor: theme.palette.text.primary,
                 textTransform: 'capitalize',
+                transition: 'all 0.3s ease-out',
                 '&:hover': {
                   borderColor: theme.palette.text.primary,
-                  bgcolor: 'transparent',
+                  bgcolor: theme.palette.text.primary,
+                  color: '#fff',
                 },
               }}
               variant='outlined'

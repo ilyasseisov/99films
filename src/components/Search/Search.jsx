@@ -21,6 +21,7 @@ const SearchInput = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.25),
+  transition: 'all 0.3s ease-out',
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.35),
   },

@@ -1,4 +1,7 @@
+// mui
 import { Grid } from '@mui/material';
+// framer
+import { motion } from 'framer-motion';
 // components
 import { MovieSingle } from '..';
 
@@ -27,7 +30,15 @@ export default function MovieList({ movies }) {
               },
             }}
           >
-            <MovieSingle movie={movie} index={index} />
+            <motion.div
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.3 },
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <MovieSingle movie={movie} index={index} />
+            </motion.div>
           </Grid>
         ))}
       </Grid>

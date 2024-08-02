@@ -387,6 +387,10 @@ export default function MovieInformation() {
                         position: 'absolute',
                         top: '8px',
                         left: '8px',
+                        transition: 'all 0.3s ease-out',
+                        '&:hover': {
+                          transform: 'scale(1.05)',
+                        },
                       }}
                     >
                       {movieStatus[movie.id]?.isFavorited ? (
@@ -417,6 +421,10 @@ export default function MovieInformation() {
                         position: 'absolute',
                         top: '8px',
                         right: '8px',
+                        transition: 'all 0.3s ease-out',
+                        '&:hover': {
+                          transform: 'scale(1.05)',
+                        },
                       }}
                     >
                       {movieStatus[movie.id]?.isWatchlisted ? (
@@ -583,7 +591,15 @@ export default function MovieInformation() {
                         sx={{
                           border: `1px solid ${theme.palette.text.primary}`,
                           borderRadius: '20px',
-                          padding: '0 6px 0 6px',
+                          padding: '0 8px 2px 8px',
+                          transition: 'all 0.3s ease-out',
+                          //
+                          '&:hover': {
+                            bgcolor: theme.palette.text.primary,
+                            color: '#fff',
+                          },
+
+                          //
                         }}
                       >
                         {genre.name}
@@ -613,9 +629,11 @@ export default function MovieInformation() {
                       color: theme.palette.text.primary,
                       borderColor: theme.palette.text.primary,
                       textTransform: 'capitalize',
+                      transition: 'all 0.3s ease-out',
                       '&:hover': {
                         borderColor: theme.palette.text.primary,
-                        bgcolor: 'transparent',
+                        bgcolor: theme.palette.text.primary,
+                        color: '#fff',
                       },
                     }}
                   >
@@ -634,9 +652,11 @@ export default function MovieInformation() {
                       color: theme.palette.text.primary,
                       borderColor: theme.palette.text.primary,
                       textTransform: 'capitalize',
+                      transition: 'all 0.3s ease-out',
                       '&:hover': {
                         borderColor: theme.palette.text.primary,
-                        bgcolor: 'transparent',
+                        bgcolor: theme.palette.text.primary,
+                        color: '#fff',
                       },
                     }}
                   >
@@ -655,9 +675,12 @@ export default function MovieInformation() {
                     sx={{
                       color: theme.palette.text.primary,
                       borderColor: theme.palette.text.primary,
+                      textTransform: 'capitalize',
+                      transition: 'all 0.3s ease-out',
                       '&:hover': {
                         borderColor: theme.palette.text.primary,
-                        bgcolor: 'transparent',
+                        bgcolor: theme.palette.text.primary,
+                        color: '#fff',
                       },
                     }}
                   >
@@ -685,69 +708,79 @@ export default function MovieInformation() {
                       lg={4}
                       xl={3}
                       sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
                         marginBottom: '12px',
                         textDecoration: 'none',
                         color: theme.palette.text.primary,
                       }}
                     >
-                      <Box
-                        sx={{
-                          width: '80px',
-                          height: '80px',
-                          backgroundColor: '#D9D9D9',
-                          borderRadius: '50%',
-                          overflow: 'hidden',
-                          position: 'relative',
-                          flexShrink: 0,
+                      <motion.div
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.3 },
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
                         }}
                       >
-                        <img
-                          style={{
-                            objectFit: 'cover',
-                            maxWidth: '100%',
-                            position: 'absolute',
-                            top: '60%',
-                            left: '50%',
-                            transform: 'translate(-50%,-50%)',
-                          }}
-                          alt={actor?.name}
-                          src={
-                            actor?.profile_path
-                              ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                              : imgs.defaultCastImage
-                          }
-                        />
-                      </Box>
-
-                      <Box sx={{ flexGrow: 1 }}>
-                        {/* name */}
-                        <Typography
-                          variant='body1'
+                        <Box
                           sx={{
-                            fontWeight: 'bold',
-                            color: actor?.name
-                              ? 'inherit'
-                              : theme.palette.text.disabled,
+                            width: '80px',
+                            height: '80px',
+                            backgroundColor: '#D9D9D9',
+                            borderRadius: '50%',
+                            overflow: 'hidden',
+                            position: 'relative',
+                            flexShrink: 0,
                           }}
                         >
-                          {actor?.name || 'No name'}
-                        </Typography>
+                          <img
+                            style={{
+                              objectFit: 'cover',
+                              maxWidth: '100%',
+                              position: 'absolute',
+                              top: '60%',
+                              left: '50%',
+                              transform: 'translate(-50%,-50%)',
+                            }}
+                            alt={actor?.name}
+                            src={
+                              actor?.profile_path
+                                ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+                                : imgs.defaultCastImage
+                            }
+                          />
+                        </Box>
 
-                        {/* character */}
-                        <Typography
-                          variant='body1'
-                          sx={{
-                            color: actor?.character
-                              ? 'inherit'
-                              : theme.palette.text.disabled,
-                          }}
-                        >
-                          {actor?.character || 'No character'}
-                        </Typography>
-                      </Box>
+                        <Box sx={{ flexGrow: 1 }}>
+                          {/* name */}
+                          <Typography
+                            variant='body1'
+                            sx={{
+                              fontWeight: 'bold',
+                              color: actor?.name
+                                ? 'inherit'
+                                : theme.palette.text.disabled,
+                            }}
+                          >
+                            {actor?.name || 'No name'}
+                          </Typography>
+
+                          {/* character */}
+                          <Typography
+                            variant='body1'
+                            sx={{
+                              color: actor?.character
+                                ? 'inherit'
+                                : theme.palette.text.disabled,
+                            }}
+                          >
+                            {actor?.character || 'No character'}
+                          </Typography>
+                        </Box>
+                      </motion.div>
                     </Grid>
                   ))
                 ) : (
@@ -789,9 +822,11 @@ export default function MovieInformation() {
               color: theme.palette.text.primary,
               borderColor: theme.palette.text.primary,
               textTransform: 'capitalize',
+              transition: 'all 0.3s ease-out',
               '&:hover': {
                 borderColor: theme.palette.text.primary,
-                bgcolor: 'transparent',
+                bgcolor: theme.palette.text.primary,
+                color: '#fff',
               },
             }}
             variant='outlined'

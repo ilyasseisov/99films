@@ -191,8 +191,11 @@ export default function Navbar() {
                             color: '#fff',
                             borderColor: '#fff',
                             textTransform: 'capitalize',
+                            transition: 'all 0.3s ease-out',
                             '&:hover': {
                               borderColor: '#fff',
+                              bgcolor: '#fff',
+                              color: theme.palette.primary.main,
                             },
                           }}
                           variant='outlined'
@@ -207,8 +210,11 @@ export default function Navbar() {
                           color: '#fff',
                           borderColor: '#fff',
                           textTransform: 'capitalize',
+                          transition: 'all 0.3s ease-out',
                           '&:hover': {
                             borderColor: '#fff',
+                            bgcolor: '#fff',
+                            color: theme.palette.primary.main,
                           },
                         }}
                         variant='outlined'
