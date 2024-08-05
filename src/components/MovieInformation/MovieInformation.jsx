@@ -36,6 +36,8 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
+// rtk query
+import { skipToken } from '@reduxjs/toolkit/query';
 // rtk query hooks
 import {
   useGetMovieQuery,
@@ -75,19 +77,27 @@ export default function MovieInformation() {
     movieId: id,
   });
   // user favorite movies
-  const { data: favoriteMovies } = useGetListQuery({
-    listName: 'favorite/movies',
-    accountId: user.id,
-    sessionId: localStorage.getItem('session_id'),
-    page: 1,
-  });
+  const { data: favoriteMovies } = useGetListQuery(
+    user && localStorage.getItem('session_id')
+      ? {
+          listName: 'favorite/movies',
+          accountId: user.id,
+          sessionId: localStorage.getItem('session_id'),
+          page: 1,
+        }
+      : skipToken
+  );
   // user watchlist movies
-  const { data: watchlistMovies } = useGetListQuery({
-    listName: 'watchlist/movies',
-    accountId: user.id,
-    sessionId: localStorage.getItem('session_id'),
-    page: 1,
-  });
+  const { data: watchlistMovies } = useGetListQuery(
+    user && localStorage.getItem('session_id')
+      ? {
+          listName: 'watchlist/movies',
+          accountId: user.id,
+          sessionId: localStorage.getItem('session_id'),
+          page: 1,
+        }
+      : skipToken
+  );
 
   // to know whether movie is in favorite or in watchlist
   useEffect(() => {
