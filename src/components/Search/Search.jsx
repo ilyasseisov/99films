@@ -1,7 +1,7 @@
 // react
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // router
 import { useLocation } from 'react-router-dom';
 
