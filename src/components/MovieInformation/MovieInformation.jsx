@@ -126,7 +126,7 @@ export default function MovieInformation() {
   // redux
   const dispatch = useDispatch();
   // local variables
-  const tmdbApiKey = 'c3e422a2ea4fbce1b97cbebce6616f71';
+  const tmdbApiKey = import.meta.env.VITE_TMDB_API_KEY;
 
   //// functions
   // add to favorite

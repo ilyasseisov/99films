@@ -2,7 +2,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // api key
-const tmdbApiKey = 'c3e422a2ea4fbce1b97cbebce6616f71';
+const tmdbApiKey = import.meta.env.VITE_TMDB_API_KEY;
+
 // base URL
 const baseURL = 'https://api.themoviedb.org/3';
 
