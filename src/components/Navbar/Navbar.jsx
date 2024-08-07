@@ -9,9 +9,9 @@ import {
   Grid,
   IconButton,
   Toolbar,
-  Typography,
   Drawer,
   Button,
+  useMediaQuery,
 } from '@mui/material';
 
 // useTheme (mui)
@@ -42,13 +42,21 @@ import { clearGenreOrCategory } from '../../features/currentGenreOrCategorySlice
 // framer animation
 import { containerAnimationFromTop } from '../../utils/framerAnimations';
 //
+// images
+import imgs from '../../assets/imgs';
+//
 
 export default function Navbar() {
   // hooks
   const theme = useTheme();
+  // darkmode
   const colorMode = useContext(ColorModeContext);
-  const [isDrawerOpened, setIsDrawerOpened] = useState(false);
+  // redux
   const dispatch = useDispatch();
+  // drawer
+  const [isDrawerOpened, setIsDrawerOpened] = useState(false);
+  // media query
+  const isSmBreakpoint = useMediaQuery('(min-width: 600px)');
 
   // to use below for sidebar action
   const { genreIdOrCategoryName } = useSelector(
@@ -131,6 +139,7 @@ export default function Navbar() {
                       display: 'flex',
                       alignItems: 'center',
                       order: { xs: '1', md: '1' },
+                      verticalAlign: 'middle',
                     }}
                   >
                     <IconButton
@@ -144,19 +153,36 @@ export default function Navbar() {
                       <Menu />
                     </IconButton>
 
-                    <Typography
+                    <Box
                       component={Link}
                       to='/'
-                      variant='h6'
-                      noWrap
                       sx={{
                         flexGrow: 1,
                         textDecoration: 'none',
-                        color: theme.palette.light.main,
                       }}
                     >
-                      Logo
-                    </Typography>
+                      {isSmBreakpoint ? (
+                        <img
+                          src={imgs.logo}
+                          alt='logo'
+                          style={{
+                            width: '160px',
+                            height: 'auto',
+                            verticalAlign: 'middle',
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={imgs.logoSmall}
+                          alt='logo'
+                          style={{
+                            width: '72px',
+                            height: 'auto',
+                            verticalAlign: 'middle',
+                          }}
+                        />
+                      )}
+                    </Box>
                   </Grid>
 
                   <Grid
