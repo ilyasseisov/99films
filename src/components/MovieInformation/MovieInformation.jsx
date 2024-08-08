@@ -305,10 +305,22 @@ export default function MovieInformation() {
                 {Array.from(new Array(12)).map((_, index) => (
                   <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                     <Skeleton
-                      sx={{ borderRadius: '12px' }}
+                      sx={{ borderRadius: '12px', marginBottom: '12px' }}
                       variant='rectangular'
                       width='100%'
                       height={300}
+                    />
+                    <Skeleton
+                      sx={{ margin: '0 auto' }}
+                      variant='text'
+                      width={'24%'}
+                      height={36}
+                    />
+                    <Skeleton
+                      sx={{ margin: '0 auto' }}
+                      variant='text'
+                      width={'80%'}
+                      height={32}
                     />
                   </Grid>
                 ))}
