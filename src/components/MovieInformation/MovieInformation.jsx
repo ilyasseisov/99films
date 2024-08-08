@@ -605,8 +605,14 @@ export default function MovieInformation() {
                           transition: 'all 0.3s ease-out',
                           //
                           '&:hover': {
-                            bgcolor: theme.palette.text.primary,
-                            color: '#fff',
+                            bgcolor:
+                              theme.palette.mode === 'light'
+                                ? theme.palette.dark.main
+                                : '#fff',
+                            color:
+                              theme.palette.mode === 'light'
+                                ? '#fff'
+                                : theme.palette.dark.main,
                           },
 
                           //
@@ -642,8 +648,14 @@ export default function MovieInformation() {
                       transition: 'all 0.3s ease-out',
                       '&:hover': {
                         borderColor: theme.palette.text.primary,
-                        bgcolor: theme.palette.text.primary,
-                        color: '#fff',
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.dark.main
+                            : '#fff',
+                        color:
+                          theme.palette.mode === 'light'
+                            ? '#fff'
+                            : theme.palette.dark.main,
                       },
                     }}
                   >
@@ -665,8 +677,14 @@ export default function MovieInformation() {
                       transition: 'all 0.3s ease-out',
                       '&:hover': {
                         borderColor: theme.palette.text.primary,
-                        bgcolor: theme.palette.text.primary,
-                        color: '#fff',
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.dark.main
+                            : '#fff',
+                        color:
+                          theme.palette.mode === 'light'
+                            ? '#fff'
+                            : theme.palette.dark.main,
                       },
                     }}
                   >
@@ -689,8 +707,14 @@ export default function MovieInformation() {
                       transition: 'all 0.3s ease-out',
                       '&:hover': {
                         borderColor: theme.palette.text.primary,
-                        bgcolor: theme.palette.text.primary,
-                        color: '#fff',
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.dark.main
+                            : '#fff',
+                        color:
+                          theme.palette.mode === 'light'
+                            ? '#fff'
+                            : theme.palette.dark.main,
                       },
                     }}
                   >
@@ -835,8 +859,14 @@ export default function MovieInformation() {
               transition: 'all 0.3s ease-out',
               '&:hover': {
                 borderColor: theme.palette.text.primary,
-                bgcolor: theme.palette.text.primary,
-                color: '#fff',
+                bgcolor:
+                  theme.palette.mode === 'light'
+                    ? theme.palette.dark.main
+                    : '#fff',
+                color:
+                  theme.palette.mode === 'light'
+                    ? '#fff'
+                    : theme.palette.dark.main,
               },
             }}
             variant='outlined'
