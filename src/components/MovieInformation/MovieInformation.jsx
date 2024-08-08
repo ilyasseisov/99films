@@ -45,7 +45,10 @@ import {
   useGetListQuery,
 } from '../../services/TMDB';
 // redux actions
-import { selectGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
+import {
+  selectGenreOrCategory,
+  clearGenreOrCategory,
+} from '../../features/currentGenreOrCategorySlice';
 // axios
 import axios from 'axios';
 // framer animation
@@ -745,6 +748,7 @@ export default function MovieInformation() {
                 {movie.credits?.cast.length > 0 ? (
                   movie.credits.cast.slice(0, 12).map((actor) => (
                     <Grid
+                      onClick={() => dispatch(clearGenreOrCategory())}
                       component={Link}
                       to={`/actors/${actor.id}`}
                       key={actor.id}

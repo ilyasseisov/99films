@@ -2,11 +2,17 @@
 import { Grid } from '@mui/material';
 // framer
 import { motion } from 'framer-motion';
+// redux
+import { useDispatch } from 'react-redux';
+// redux actions
+import { clearGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
 // components
 import { MovieSingle } from '..';
 
 export default function MovieList({ movies }) {
   // hooks
+  // redux
+  const dispatch = useDispatch();
   // local variables
   // functions
   // return
@@ -37,7 +43,11 @@ export default function MovieList({ movies }) {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <MovieSingle movie={movie} index={index} />
+              <MovieSingle
+                onClick={() => dispatch(clearGenreOrCategory())}
+                movie={movie}
+                index={index}
+              />
             </motion.div>
           </Grid>
         ))}
