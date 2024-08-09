@@ -157,13 +157,22 @@ export default function Sidebar() {
                     selected={category.id === genreIdOrCategoryName}
                     sx={{
                       '&:hover': {
-                        backgroundColor: theme.palette.primary.dark,
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.primary.dark
+                            : theme.palette.primary.main,
                       },
                       '&.Mui-selected': {
-                        backgroundColor: theme.palette.primary.main,
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.primary.main
+                            : theme.palette.primary.dark,
                         color: theme.palette.light.main,
                         '&:hover': {
-                          backgroundColor: theme.palette.primary.main,
+                          bgcolor:
+                            theme.palette.mode === 'light'
+                              ? theme.palette.primary.main
+                              : theme.palette.primary.dark,
                         },
                       },
                     }}
@@ -213,13 +222,22 @@ export default function Sidebar() {
                     selected={genre.id === genreIdOrCategoryName}
                     sx={{
                       '&:hover': {
-                        backgroundColor: theme.palette.primary.dark,
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.primary.dark
+                            : theme.palette.primary.main,
                       },
                       '&.Mui-selected': {
-                        backgroundColor: theme.palette.primary.main,
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.primary.main
+                            : theme.palette.primary.dark,
                         color: theme.palette.light.main,
                         '&:hover': {
-                          backgroundColor: theme.palette.primary.main,
+                          bgcolor:
+                            theme.palette.mode === 'light'
+                              ? theme.palette.primary.main
+                              : theme.palette.primary.dark,
                         },
                       },
                     }}
