@@ -34,7 +34,6 @@ export default function Slider({ movies }) {
         pagination-clickable='true'
         autoplay='true'
         autoplay-delay='5000'
-        space-between='100'
         style={{
           '--swiper-pagination-color': '#fff',
           '--swiper-pagination-bullet-width': '48px',
