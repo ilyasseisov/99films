@@ -158,6 +158,7 @@ export default function Movies() {
   return (
     <>
       <motion.div
+        key={genreIdOrCategoryName}
         initial='hidden'
         animate='visible'
         variants={containerAnimationFromBottom}
@@ -165,28 +166,28 @@ export default function Movies() {
         <Box sx={{ marginBottom: '24px' }}>
           <Slider movies={movies.results.slice(0, numberOfSlides)} />
         </Box>
-        <Box sx={{ marginBottom: '48px' }}>
-          <MovieList movies={movies.results.slice(numberOfSlides, 20)} />
-        </Box>
-
-        {/* pagination */}
-        {movies.total_pages > 1 && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: '48px',
-            }}
-          >
-            <PaginationCustom
-              currentPage={page}
-              setPage={(page) => dispatch(setPage(page))}
-              totalPages={movies?.total_pages}
-            />
-          </Box>
-        )}
       </motion.div>
+      <Box sx={{ marginBottom: '48px' }}>
+        <MovieList movies={movies.results.slice(numberOfSlides, 20)} />
+      </Box>
+
+      {/* pagination */}
+      {movies.total_pages > 1 && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '48px',
+          }}
+        >
+          <PaginationCustom
+            currentPage={page}
+            setPage={(page) => dispatch(setPage(page))}
+            totalPages={movies?.total_pages}
+          />
+        </Box>
+      )}
     </>
   );
 }
