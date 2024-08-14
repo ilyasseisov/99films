@@ -126,6 +126,11 @@ export default function MovieInformation() {
     }
   }, [error, navigate]);
 
+  // scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [movie]);
+
   // redux
   const dispatch = useDispatch();
   // local variables

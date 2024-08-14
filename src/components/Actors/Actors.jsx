@@ -66,6 +66,11 @@ export default function Actors() {
     }
   }, [error, navigate]);
 
+  // scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // local variables
 
   // functions
