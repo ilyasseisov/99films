@@ -189,7 +189,7 @@ export default function MovieInformation() {
   };
 
   // while fetching stage
-  if (isFetching || isRecommendationsFetching) {
+  if (!isFetching || isRecommendationsFetching) {
     return (
       <>
         <Container
@@ -232,11 +232,25 @@ export default function MovieInformation() {
                 </Box>
               </Grid>
               <Grid item lg={7}>
-                <Grid item xs={12}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: {
+                      xs: '200px',
+                      sm: '300px',
+                      md: '440px',
+                      xl: '560px',
+                      xxl: '640px',
+                    },
+                  }}
+                >
                   <Skeleton variant='text' width='80%' height={60} />
                   <Skeleton variant='text' width='60%' height={40} />
                   <Skeleton variant='text' width='92%' height={100} />
-                </Grid>
+                </Box>
               </Grid>
             </Grid>
             <Grid
