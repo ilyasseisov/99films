@@ -189,7 +189,7 @@ export default function MovieInformation() {
   };
 
   // while fetching stage
-  if (!isFetching || isRecommendationsFetching) {
+  if (isFetching || isRecommendationsFetching) {
     return (
       <>
         <Container
