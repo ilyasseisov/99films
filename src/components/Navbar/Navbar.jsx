@@ -120,7 +120,7 @@ export default function Navbar() {
           >
             <Box
               sx={{
-                padding: { xs: '8px 0px 20px 0px', md: '8px 0px 8px 0px' },
+                padding: { xs: '8px 0px 12px 0px', md: '8px 0px 8px 0px' },
                 width: '100%',
                 height: '100%',
                 bgcolor:
@@ -131,6 +131,7 @@ export default function Navbar() {
             >
               <Toolbar>
                 <Grid container>
+                  {/* logo and burger */}
                   <Grid
                     item
                     xs={6}
@@ -140,6 +141,7 @@ export default function Navbar() {
                       alignItems: 'center',
                       order: { xs: '1', md: '1' },
                       verticalAlign: 'middle',
+                      marginBottom: { xs: '8px', md: '0px' },
                     }}
                   >
                     <IconButton
@@ -185,6 +187,7 @@ export default function Navbar() {
                     </Box>
                   </Grid>
 
+                  {/* search */}
                   <Grid
                     item
                     xs={12}
@@ -200,6 +203,7 @@ export default function Navbar() {
                     <Search />
                   </Grid>
 
+                  {/* button and mode */}
                   <Grid
                     item
                     xs={6}
