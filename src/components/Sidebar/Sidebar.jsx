@@ -197,7 +197,7 @@ export default function Sidebar() {
           <Divider />
 
           {/* genres */}
-          <List sx={{ marginBottom: '100px' }}>
+          <List sx={{ marginBottom: { xs: '32px', md: '100px' } }}>
             <motion.div variants={sidebarChildrenAnimation}>
               <ListSubheader
                 disableSticky
