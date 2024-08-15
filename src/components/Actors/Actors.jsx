@@ -260,7 +260,7 @@ export default function Actors() {
 
               {/* text and imdb */}
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ width: '100%' }}>
                 {/* text */}
                 <Grid item xs={12} sx={{ marginBottom: '32px' }}>
                   {/* name */}
