@@ -12,6 +12,9 @@ import {
 // router
 import { Route, Routes } from 'react-router-dom';
 
+// vercel speed insights
+import { SpeedInsights } from '@vercel/speed-insights/react';
+
 //
 export default function App() {
   //
@@ -32,6 +35,8 @@ export default function App() {
         <Route path='*' element={<Error404 />} />
         <Route path='/error' element={<ErrorNetwork />} />
       </Routes>
+
+      <SpeedInsights />
     </>
   );
 }
