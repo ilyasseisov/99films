@@ -20,6 +20,8 @@ import { Link } from 'react-router-dom';
 import { useGetGenresQuery } from '../../services/TMDB';
 // react redux hooks
 import { useDispatch, useSelector } from 'react-redux';
+// router
+import { useLocation } from 'react-router-dom';
 // framer
 import { motion } from 'framer-motion';
 // redux actions
@@ -48,8 +50,11 @@ export default function Sidebar() {
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
+  // router
+  const location = useLocation();
 
   // local variables
+  const isHomePage = location.pathname === '/';
 
   // functions
 
@@ -157,22 +162,25 @@ export default function Sidebar() {
                     selected={category.id === genreIdOrCategoryName}
                     sx={{
                       '&:hover': {
-                        bgcolor:
-                          theme.palette.mode === 'light'
-                            ? theme.palette.primary.dark
-                            : theme.palette.primary.main,
+                        bgcolor: !isHomePage
+                          ? 'transparent'
+                          : theme.palette.mode === 'light'
+                          ? theme.palette.primary.dark
+                          : theme.palette.primary.main,
                       },
                       '&.Mui-selected': {
-                        bgcolor:
-                          theme.palette.mode === 'light'
-                            ? theme.palette.primary.main
-                            : theme.palette.primary.dark,
+                        bgcolor: !isHomePage
+                          ? 'transparent'
+                          : theme.palette.mode === 'light'
+                          ? theme.palette.primary.main
+                          : theme.palette.primary.dark,
                         color: theme.palette.light.main,
                         '&:hover': {
-                          bgcolor:
-                            theme.palette.mode === 'light'
-                              ? theme.palette.primary.main
-                              : theme.palette.primary.dark,
+                          bgcolor: !isHomePage
+                            ? 'transparent'
+                            : theme.palette.mode === 'light'
+                            ? theme.palette.primary.main
+                            : theme.palette.primary.dark,
                         },
                       },
                     }}
@@ -222,22 +230,25 @@ export default function Sidebar() {
                     selected={genre.id === genreIdOrCategoryName}
                     sx={{
                       '&:hover': {
-                        bgcolor:
-                          theme.palette.mode === 'light'
-                            ? theme.palette.primary.dark
-                            : theme.palette.primary.main,
+                        bgcolor: !isHomePage
+                          ? 'transparent'
+                          : theme.palette.mode === 'light'
+                          ? theme.palette.primary.dark
+                          : theme.palette.primary.main,
                       },
                       '&.Mui-selected': {
-                        bgcolor:
-                          theme.palette.mode === 'light'
-                            ? theme.palette.primary.main
-                            : theme.palette.primary.dark,
+                        bgcolor: !isHomePage
+                          ? 'transparent'
+                          : theme.palette.mode === 'light'
+                          ? theme.palette.primary.main
+                          : theme.palette.primary.dark,
                         color: theme.palette.light.main,
                         '&:hover': {
-                          bgcolor:
-                            theme.palette.mode === 'light'
-                              ? theme.palette.primary.main
-                              : theme.palette.primary.dark,
+                          bgcolor: !isHomePage
+                            ? 'transparent'
+                            : theme.palette.mode === 'light'
+                            ? theme.palette.primary.main
+                            : theme.palette.primary.dark,
                         },
                       },
                     }}
