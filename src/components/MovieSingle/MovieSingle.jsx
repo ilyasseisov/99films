@@ -7,21 +7,16 @@ import imgs from '../../assets/imgs';
 // useTheme (mui)
 import { useTheme } from '@mui/material/styles';
 
-export default function MovieSingle({ movie, index, onClick }) {
+export default function MovieSingle({ movie, index }) {
   // hooks
   const theme = useTheme();
   // local variables
   // functions
 
-  // function from parent
-  const handleClick = (e) => {
-    e.preventDefault(); // Prevents the default link behavior
-    onClick(); // Calls the provided onClick handler
-  };
   // return
   return (
     <>
-      <Box onClick={handleClick}>
+      <Box>
         <Link
           to={`/movie/${movie?.id}`}
           style={{

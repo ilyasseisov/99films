@@ -3,9 +3,7 @@ import { Grid } from '@mui/material';
 // framer
 import { motion } from 'framer-motion';
 // redux
-import { useDispatch, useSelector } from 'react-redux';
-// redux actions
-import { clearGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
+import { useSelector } from 'react-redux';
 // components
 import { MovieSingle } from '..';
 // framer animations
@@ -17,7 +15,6 @@ import {
 export default function MovieList({ movies }) {
   // hooks
   // redux
-  const dispatch = useDispatch();
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
@@ -58,11 +55,7 @@ export default function MovieList({ movies }) {
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <MovieSingle
-                  onClick={() => dispatch(clearGenreOrCategory())}
-                  movie={movie}
-                  index={index}
-                />
+                <MovieSingle movie={movie} index={index} />
               </motion.div>
             </Grid>
           ))}

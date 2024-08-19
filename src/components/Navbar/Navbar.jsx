@@ -36,8 +36,7 @@ import { ColorModeContext } from '../../utils/ToggleColorMode';
 import { fetchToken, createSessionId, moviesApi } from '../../utils/auth';
 import { setUser } from '../../features/authSlice';
 //
-// redux actions
-import { clearGenreOrCategory } from '../../features/currentGenreOrCategorySlice';
+
 //
 // framer animation
 import { containerAnimationFromTop } from '../../utils/framerAnimations';
@@ -218,7 +217,6 @@ export default function Navbar() {
                     {isAuthenticated ? (
                       <>
                         <Button
-                          onClick={() => dispatch(clearGenreOrCategory())}
                           component={Link}
                           to={`/profile/${user.id}`}
                           sx={{

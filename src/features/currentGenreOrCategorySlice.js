@@ -30,22 +30,13 @@ export const genreOrCategorySlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload;
     },
-
-    //  clear genre or category
-    clearGenreOrCategory: (state) => {
-      state.genreIdOrCategoryName = '';
-    },
   },
 });
 
 //// export
 
 // actions
-export const {
-  selectGenreOrCategory,
-  searchMovie,
-  setPage,
-  clearGenreOrCategory,
-} = genreOrCategorySlice.actions;
+export const { selectGenreOrCategory, searchMovie, setPage } =
+  genreOrCategorySlice.actions;
 // reducer
 export const genreOrCategoryReducer = genreOrCategorySlice.reducer;
