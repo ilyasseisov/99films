@@ -162,11 +162,10 @@ export default function Sidebar() {
                     selected={category.id === genreIdOrCategoryName}
                     sx={{
                       '&:hover': {
-                        bgcolor: !isHomePage
-                          ? 'transparent'
-                          : theme.palette.mode === 'light'
-                          ? theme.palette.primary.dark
-                          : theme.palette.primary.main,
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.primary.main
+                            : theme.palette.primary.dark,
                       },
                       '&.Mui-selected': {
                         bgcolor: !isHomePage
@@ -176,11 +175,10 @@ export default function Sidebar() {
                           : theme.palette.primary.dark,
                         color: theme.palette.light.main,
                         '&:hover': {
-                          bgcolor: !isHomePage
-                            ? 'transparent'
-                            : theme.palette.mode === 'light'
-                            ? theme.palette.primary.main
-                            : theme.palette.primary.dark,
+                          bgcolor:
+                            theme.palette.mode === 'light'
+                              ? theme.palette.primary.main
+                              : theme.palette.primary.dark,
                         },
                       },
                     }}
@@ -230,11 +228,10 @@ export default function Sidebar() {
                     selected={genre.id === genreIdOrCategoryName}
                     sx={{
                       '&:hover': {
-                        bgcolor: !isHomePage
-                          ? 'transparent'
-                          : theme.palette.mode === 'light'
-                          ? theme.palette.primary.dark
-                          : theme.palette.primary.main,
+                        bgcolor:
+                          theme.palette.mode === 'light'
+                            ? theme.palette.primary.main
+                            : theme.palette.primary.dark,
                       },
                       '&.Mui-selected': {
                         bgcolor: !isHomePage
@@ -244,11 +241,10 @@ export default function Sidebar() {
                           : theme.palette.primary.dark,
                         color: theme.palette.light.main,
                         '&:hover': {
-                          bgcolor: !isHomePage
-                            ? 'transparent'
-                            : theme.palette.mode === 'light'
-                            ? theme.palette.primary.main
-                            : theme.palette.primary.dark,
+                          bgcolor:
+                            theme.palette.mode === 'light'
+                              ? theme.palette.primary.main
+                              : theme.palette.primary.dark,
                         },
                       },
                     }}
